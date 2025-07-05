@@ -35,23 +35,30 @@
       font-size: 1.8rem;
       margin-bottom: 0.2rem;
     }
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 1rem;
+      padding: 2rem;
+    }
+    .menu-card {
       background: white;
       padding: 1rem;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    nav a {
-      color: var(--primary);
-      font-weight: 600;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       text-decoration: none;
-      transition: 0.3s;
+      color: var(--primary);
     }
-    nav a:hover {
+    .menu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       color: var(--accent);
+    }
+    .menu-card i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
     }
     main {
       padding: 2rem;
@@ -95,14 +102,30 @@
     <h1><i class="fas fa-virus-covid"></i> Dashboard PPPR - Pandemic Preparedness</h1>
     <p>Toolkit untuk Organisasi Komunitas dan NGO</p>
   </header>
-  <nav>
-    <a href="#penilaian"><i class="fas fa-clipboard-check"></i> Penilaian Mandiri</a>
-    <a href="#pustaka"><i class="fas fa-book"></i> Pustaka Sumber Daya</a>
-    <a href="#rencana"><i class="fas fa-tasks"></i> Rencana & Aksi</a>
-    <a href="#komunikasi"><i class="fas fa-comments"></i> Komunikasi</a>
-    <a href="#pelatihan"><i class="fas fa-graduation-cap"></i> Pelatihan</a>
-    <a href="#data"><i class="fas fa-database"></i> Data Eksternal</a>
-  </nav>
+
+  <div class="menu-grid">
+    <a class="menu-card" href="#penilaian">
+      <i class="fas fa-clipboard-check"></i>
+      <div>Penilaian Mandiri</div>
+    </a>
+    <a class="menu-card" href="#pustaka">
+      <i class="fas fa-book"></i>
+      <div>Pustaka Sumber Daya</div>
+    </a>
+    <a class="menu-card" href="#rencana">
+      <i class="fas fa-tasks"></i>
+      <div>Rencana & Aksi</div>
+    </a>
+    <a class="menu-card" href="#komunikasi">
+      <i class="fas fa-comments"></i>
+      <div>Komunikasi</div>
+    </a>
+    <a class="menu-card" href="#pelatihan">
+      <i class="fas fa-graduation-cap"></i>
+      <div>Pelatihan</div>
+    </a>
+  </div>
+
   <main>
     <section class="card" id="penilaian">
       <h2><i class="fas fa-clipboard-check"></i> Modul Penilaian Mandiri</h2>
