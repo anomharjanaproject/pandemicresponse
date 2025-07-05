@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard PPPR - Publik</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0d9488;
+      --secondary: #f0fdfa;
+      --accent: #14b8a6;
+      --danger: #dc2626;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: #f8fafc;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
+    }
+    .language-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: white;
+      color: var(--primary);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .language-toggle:hover {
+      background: var(--secondary);
+    }
+    .content-placeholder {
+      text-align: center;
+      padding: 4rem 2rem;
+      font-size: 1.25rem;
+      color: #475569;
+    }
+    @media (max-width: 768px) {
+      .language-toggle {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+      }
+      .content-placeholder {
+        font-size: 1.1rem;
+        padding: 3rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="language-toggle" onclick="toggleLanguage()">
+      <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
+    </button>
+    <h1 id="title"><i class="fas fa-virus-covid"></i> Dashboard PPPR - Pandemic Preparedness</h1>
+    <p id="subtitle">Toolkit untuk Organisasi Komunitas dan NGO</p>
+  </header>
+
+  <main>
+    <div class="content-placeholder" id="development-text">Halaman Ini Sedang Dikembangkan</div>
+  </main>
+
+  <script>
+    let currentLang = 'id';
+
+    const translations = {
+      en: {
+        title: "PPPR Dashboard - Pandemic Preparedness",
+        subtitle: "Toolkit for Community Organizations and NGOs",
+        langLabel: "EN",
+        development: "This page is under development"
+      },
+      id: {
+        title: "Dashboard PPPR - Pandemic Preparedness",
+        subtitle: "Toolkit untuk Organisasi Komunitas dan NGO",
+        langLabel: "ID",
+        development: "Halaman Ini Sedang Dikembangkan"
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      const t = translations[currentLang];
+
+      document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('lang-label').textContent = t.langLabel;
+      document.getElementById('development-text').textContent = t.development;
+    }
+  </script>
+
+  <footer style="text-align:center; padding: 1rem; font-size: 0.85rem; color: #64748b;">
+    Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+  </footer>
+</body>
+</html>
