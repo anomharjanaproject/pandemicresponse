@@ -60,14 +60,36 @@
       font-size: 2rem;
       margin-bottom: 0.5rem;
     }
+    main {
+      padding: 1rem 2rem 3rem;
+    }
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 2rem;
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
     .responsive-iframe {
       width: 100%;
-      min-height: 300px;
+      height: 500px;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     @media (max-width: 768px) {
       .menu-grid {
+        padding: 1rem;
+      }
+      main {
         padding: 1rem;
       }
     }
