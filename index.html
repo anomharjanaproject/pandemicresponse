@@ -124,45 +124,87 @@
 <body>
   <header>
     <button class="language-toggle" onclick="toggleLanguage()">
-      <i class="fas fa-globe"></i> ID / EN
+      <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
     </button>
-    <h1><i class="fas fa-virus-covid"></i> Dashboard PPPR - Pandemic Preparedness</h1>
-    <p>Toolkit untuk Organisasi Komunitas dan NGO</p>
+    <h1 id="title"><i class="fas fa-virus-covid"></i> Dashboard PPPR - Pandemic Preparedness</h1>
+    <p id="subtitle">Toolkit untuk Organisasi Komunitas dan NGO</p>
   </header>
 
   <div class="menu-grid">
     <a class="menu-card" href="penilaian.html">
       <i class="fas fa-clipboard-check"></i>
-      <div>Penilaian Mandiri</div>
+      <div id="menu-penilaian">Penilaian Mandiri</div>
     </a>
     <a class="menu-card" href="pustaka.html">
       <i class="fas fa-book"></i>
-      <div>Pustaka Sumber Daya</div>
+      <div id="menu-pustaka">Pustaka Sumber Daya</div>
     </a>
     <a class="menu-card" href="rencana.html">
       <i class="fas fa-tasks"></i>
-      <div>Rencana & Aksi</div>
+      <div id="menu-rencana">Rencana & Aksi</div>
     </a>
     <a class="menu-card" href="komunikasi.html">
       <i class="fas fa-comments"></i>
-      <div>Komunikasi</div>
+      <div id="menu-komunikasi">Komunikasi</div>
     </a>
     <a class="menu-card" href="pelatihan.html">
       <i class="fas fa-graduation-cap"></i>
-      <div>Pelatihan</div>
+      <div id="menu-pelatihan">Pelatihan</div>
     </a>
   </div>
 
   <main>
     <section class="card" id="data">
-      <h2><i class="fas fa-database"></i> Integrasi Data Eksternal</h2>
+      <h2><i class="fas fa-database"></i> <span id="data-title">Integrasi Data Eksternal</span></h2>
       <iframe class="responsive-iframe" src="https://petarisikopie.id/"></iframe>
     </section>
   </main>
 
   <script>
+    let currentLang = 'id';
+
+    const translations = {
+      en: {
+        title: "PPPR Dashboard - Pandemic Preparedness",
+        subtitle: "Toolkit for Community Organizations and NGOs",
+        menu: {
+          penilaian: "Self-Assessment",
+          pustaka: "Resource Library",
+          rencana: "Action & Plan",
+          komunikasi: "Communication",
+          pelatihan: "Training"
+        },
+        data: "External Data Integration",
+        langLabel: "EN"
+      },
+      id: {
+        title: "Dashboard PPPR - Pandemic Preparedness",
+        subtitle: "Toolkit untuk Organisasi Komunitas dan NGO",
+        menu: {
+          penilaian: "Penilaian Mandiri",
+          pustaka: "Pustaka Sumber Daya",
+          rencana: "Rencana & Aksi",
+          komunikasi: "Komunikasi",
+          pelatihan: "Pelatihan"
+        },
+        data: "Integrasi Data Eksternal",
+        langLabel: "ID"
+      }
+    };
+
     function toggleLanguage() {
-      alert("Fitur multi bahasa akan segera tersedia.");
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      const t = translations[currentLang];
+
+      document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('menu-penilaian').textContent = t.menu.penilaian;
+      document.getElementById('menu-pustaka').textContent = t.menu.pustaka;
+      document.getElementById('menu-rencana').textContent = t.menu.rencana;
+      document.getElementById('menu-komunikasi').textContent = t.menu.komunikasi;
+      document.getElementById('menu-pelatihan').textContent = t.menu.pelatihan;
+      document.getElementById('data-title').textContent = t.data;
+      document.getElementById('lang-label').textContent = t.langLabel;
     }
   </script>
 </body>
