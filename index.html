@@ -60,30 +60,6 @@
       font-size: 2rem;
       margin-bottom: 0.5rem;
     }
-    main {
-      padding: 2rem;
-      display: grid;
-      gap: 2rem;
-    }
-    section.card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    section.card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-    }
-    section.card h2 {
-      display: flex;
-      align-items: center;
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-      gap: 0.5rem;
-      color: var(--primary);
-    }
     .responsive-iframe {
       width: 100%;
       min-height: 300px;
@@ -91,7 +67,7 @@
       border-radius: 0.5rem;
     }
     @media (max-width: 768px) {
-      main {
+      .menu-grid {
         padding: 1rem;
       }
     }
@@ -104,49 +80,29 @@
   </header>
 
   <div class="menu-grid">
-    <a class="menu-card" href="#penilaian">
+    <a class="menu-card" href="penilaian.html">
       <i class="fas fa-clipboard-check"></i>
       <div>Penilaian Mandiri</div>
     </a>
-    <a class="menu-card" href="#pustaka">
+    <a class="menu-card" href="pustaka.html">
       <i class="fas fa-book"></i>
       <div>Pustaka Sumber Daya</div>
     </a>
-    <a class="menu-card" href="#rencana">
+    <a class="menu-card" href="rencana.html">
       <i class="fas fa-tasks"></i>
       <div>Rencana & Aksi</div>
     </a>
-    <a class="menu-card" href="#komunikasi">
+    <a class="menu-card" href="komunikasi.html">
       <i class="fas fa-comments"></i>
       <div>Komunikasi</div>
     </a>
-    <a class="menu-card" href="#pelatihan">
+    <a class="menu-card" href="pelatihan.html">
       <i class="fas fa-graduation-cap"></i>
       <div>Pelatihan</div>
     </a>
   </div>
 
   <main>
-    <section class="card" id="penilaian">
-      <h2><i class="fas fa-clipboard-check"></i> Modul Penilaian Mandiri</h2>
-      <p>Ukur tingkat kesiapsiagaan organisasi Anda dengan checklist interaktif dan sistem skoring otomatis.</p>
-    </section>
-    <section class="card" id="pustaka">
-      <h2><i class="fas fa-book"></i> Pustaka Sumber Daya</h2>
-      <p>Akses panduan, template, dan dokumen penting untuk memperkuat respon pandemi Anda.</p>
-    </section>
-    <section class="card" id="rencana">
-      <h2><i class="fas fa-tasks"></i> Modul Perencanaan & Pelacakan Aksi</h2>
-      <p>Transformasi hasil penilaian menjadi rencana aksi yang konkret dan dapat dipantau secara visual.</p>
-    </section>
-    <section class="card" id="komunikasi">
-      <h2><i class="fas fa-comments"></i> Alat Komunikasi Internal</h2>
-      <p>Fasilitasi alur informasi dan laporan lapangan dalam tim Anda secara real-time.</p>
-    </section>
-    <section class="card" id="pelatihan">
-      <h2><i class="fas fa-graduation-cap"></i> Modul Pelatihan Singkat</h2>
-      <p>Tingkatkan kapasitas tim melalui video, infografis, dan FAQ tentang protokol pandemi.</p>
-    </section>
     <section class="card" id="data">
       <h2><i class="fas fa-database"></i> Integrasi Data Eksternal</h2>
       <iframe class="responsive-iframe" src="https://petarisikopie.id/"></iframe>
