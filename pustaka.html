@@ -55,18 +55,45 @@
     .language-toggle:hover {
       background: var(--secondary);
     }
-    .card-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Tampil 2 kolom */
-  gap: 1.5rem;
-  padding: 2rem;
-}
 
-@media (max-width: 768px) {
-  .card-grid {
-    grid-template-columns: 1fr; /* Tampil 1 kolom di mobile */
-  }
-}
+    .card-warning {
+      background-color: #fffbea;
+      border-left: 6px solid #facc15;
+      padding: 1.5rem;
+      margin: 2rem;
+      border-radius: 1rem;
+    }
+
+    .card-warning h2 {
+      margin-bottom: 0.5rem;
+      color: #92400e;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-warning ul {
+      margin-top: 0.8rem;
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+      color: #92400e;
+      line-height: 1.6;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .info-card {
       background: white;
       padding: 1.5rem;
@@ -74,10 +101,12 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .info-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
+
     .info-card h2 {
       color: var(--primary);
       font-size: 1.2rem;
@@ -86,40 +115,38 @@
       align-items: center;
       gap: 0.6rem;
     }
+
     .info-card p {
       color: #475569;
       font-size: 0.95rem;
       margin-top: 0.5rem;
     }
+
     .info-card ul {
       margin-top: 0.8rem;
       padding-left: 1rem;
       list-style: none;
     }
+
     .info-card li {
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .info-card li i {
       color: var(--primary);
       min-width: 18px;
     }
+
     .info-card a {
       color: var(--accent);
       text-decoration: none;
     }
+
     .info-card a:hover {
       text-decoration: underline;
-    }
-    @media (max-width: 768px) {
-      .language-toggle {
-        top: 0.5rem;
-        right: 0.5rem;
-        padding: 0.4rem 0.6rem;
-        font-size: 0.85rem;
-      }
     }
   </style>
 </head>
@@ -132,45 +159,59 @@
     <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
   </header>
 
+  <!-- Petunjuk Penggunaan (1 kolom) -->
+  <section class="card-warning" id="card-warning">
+    <h2><i class="fas fa-info-circle"></i> <span id="warning-title">Petunjuk Penggunaan</span></h2>
+    <ul id="warning-list">
+      <li>Gunakan tombol alih bahasa untuk beralih antara Bahasa Indonesia dan Bahasa Inggris.</li>
+      <li>Klik tautan dalam setiap kartu untuk mengunduh atau membuka sumber daya terkait.</li>
+      <li>Kartu “Template Dokumen” menyediakan contoh rencana, protokol, dan dokumen penting.</li>
+      <li>Kartu “Panduan Praktis” berisi panduan operasional dan manajemen krisis.</li>
+      <li>Kartu “Direktori Kontak” memuat kontak penting saat pandemi.</li>
+      <li>Kartu “Informasi Kebijakan” menyajikan regulasi dan perlindungan sosial terkini.</li>
+    </ul>
+  </section>
+
+  <!-- Kartu-kartu utama -->
   <main class="card-grid">
     <div class="info-card">
       <h2><i class="fas fa-file-alt"></i> <span id="card-title-1">Template Dokumen</span></h2>
       <p id="card-desc-1">Contoh rencana kontinjensi, MoU, formulir penilaian cepat, dan protokol kesehatan internal.</p>
       <ul id="card-list-1">
-        <li><i class="fas fa-briefcase"></i> <a href="#" target="_blank">Rencana Kontinuitas Bisnis</a></li>
-        <li><i class="fas fa-handshake"></i> <a href="#" target="_blank">MoU Kemitraan</a></li>
-        <li><i class="fas fa-clipboard-list"></i> <a href="#" target="_blank">Formulir Penilaian Cepat</a></li>
-        <li><i class="fas fa-shield-virus"></i> <a href="#" target="_blank">Protokol Kesehatan Internal</a></li>
+        <li><i class="fas fa-briefcase"></i> <a href="#">Rencana Kontinuitas Bisnis</a></li>
+        <li><i class="fas fa-handshake"></i> <a href="#">MoU Kemitraan</a></li>
+        <li><i class="fas fa-clipboard-list"></i> <a href="#">Formulir Penilaian Cepat</a></li>
+        <li><i class="fas fa-shield-virus"></i> <a href="#">Protokol Kesehatan Internal</a></li>
       </ul>
     </div>
     <div class="info-card">
       <h2><i class="fas fa-lightbulb"></i> <span id="card-title-2">Panduan Praktis</span></h2>
       <p id="card-desc-2">Panduan komunikasi risiko, manajemen donasi, advokasi efektif, dan membangun kemitraan strategis.</p>
       <ul id="card-list-2">
-        <li><i class="fas fa-comment-medical"></i> <a href="#" target="_blank">Panduan Komunikasi Risiko</a></li>
-        <li><i class="fas fa-donate"></i> <a href="#" target="_blank">Pedoman Pengelolaan Donasi</a></li>
-        <li><i class="fas fa-bullhorn"></i> <a href="#" target="_blank">Tips Advokasi Efektif</a></li>
-        <li><i class="fas fa-handshake-angle"></i> <a href="#" target="_blank">Panduan Kemitraan Strategis</a></li>
+        <li><i class="fas fa-comment-medical"></i> <a href="#">Panduan Komunikasi Risiko</a></li>
+        <li><i class="fas fa-donate"></i> <a href="#">Pedoman Pengelolaan Donasi</a></li>
+        <li><i class="fas fa-bullhorn"></i> <a href="#">Tips Advokasi Efektif</a></li>
+        <li><i class="fas fa-handshake-angle"></i> <a href="#">Panduan Kemitraan Strategis</a></li>
       </ul>
     </div>
     <div class="info-card">
       <h2><i class="fas fa-address-book"></i> <span id="card-title-3">Direktori Kontak Penting</span></h2>
       <p id="card-desc-3">Kontak darurat: Dinas Kesehatan, BPBD, rumah sakit, Kemenkes, dan mitra penting lainnya.</p>
       <ul id="card-list-3">
-        <li><i class="fas fa-hospital-symbol"></i> <a href="#" target="_blank">Dinas Kesehatan Provinsi</a></li>
-        <li><i class="fas fa-fire-extinguisher"></i> <a href="#" target="_blank">Kontak BPBD Lokal</a></li>
-        <li><i class="fas fa-ambulance"></i> <a href="#" target="_blank">Rumah Sakit Rujukan</a></li>
-        <li><i class="fas fa-building-columns"></i> <a href="#" target="_blank">Kemenkes & Lembaga Nasional</a></li>
+        <li><i class="fas fa-hospital-symbol"></i> <a href="#">Dinas Kesehatan Provinsi</a></li>
+        <li><i class="fas fa-fire-extinguisher"></i> <a href="#">Kontak BPBD Lokal</a></li>
+        <li><i class="fas fa-ambulance"></i> <a href="#">Rumah Sakit Rujukan</a></li>
+        <li><i class="fas fa-building-columns"></i> <a href="#">Kemenkes & Lembaga Nasional</a></li>
       </ul>
     </div>
     <div class="info-card">
       <h2><i class="fas fa-gavel"></i> <span id="card-title-4">Informasi Kebijakan</span></h2>
       <p id="card-desc-4">Ringkasan regulasi terbaru terkait pandemi dan perlindungan sosial untuk kelompok rentan.</p>
       <ul id="card-list-4">
-        <li><i class="fas fa-scale-balanced"></i> <a href="https://peraturan.bpk.go.id/details/258028/uu-no-17-tahun-2023" target="_blank">Peraturan Penanganan Pandemi</a></li>
-        <li><i class="fas fa-hands-helping"></i> <a href="#" target="_blank">Kebijakan Dukungan Sosial</a></li>
-        <li><i class="fas fa-book-medical"></i> <a href="#" target="_blank">Dokumen Kesehatan Masyarakat</a></li>
-        <li><i class="fas fa-exclamation-triangle"></i> <a href="#" target="_blank">Prosedur Darurat Nasional</a></li>
+        <li><i class="fas fa-scale-balanced"></i> <a href="#">Peraturan Penanganan Pandemi</a></li>
+        <li><i class="fas fa-hands-helping"></i> <a href="#">Kebijakan Dukungan Sosial</a></li>
+        <li><i class="fas fa-book-medical"></i> <a href="#">Dokumen Kesehatan Masyarakat</a></li>
+        <li><i class="fas fa-exclamation-triangle"></i> <a href="#">Prosedur Darurat Nasional</a></li>
       </ul>
     </div>
   </main>
@@ -183,14 +224,23 @@
         title: "Pandemic Prevention, Preparedness and Response (PPPR)",
         subtitle: "Toolkit for Civil Society Organizations and Communities",
         langLabel: "EN",
+        warningTitle: "How to Use",
+        warningList: [
+          "Use the language toggle button to switch between Indonesian and English.",
+          "Click links in each card to download or open relevant resources.",
+          "The 'Document Templates' card provides sample plans, protocols, and key forms.",
+          "The 'Practical Guides' card contains communication and crisis management tips.",
+          "The 'Contact Directory' card lists emergency health and response contacts.",
+          "The 'Policy Information' card includes regulations and social protection policies."
+        ],
         cards: [
           {
             title: "Document Templates",
-            desc: "Examples of continuity plans, MoUs, rapid assessment forms, and internal health protocols.",
+            desc: "Examples of contingency plans, MoUs, rapid assessment forms, and internal health protocols.",
             items: [
               "Business Continuity Plan",
               "Partnership MoU",
-              "Rapid Community Assessment Form",
+              "Rapid Assessment Form",
               "Internal Health Protocol"
             ]
           },
@@ -230,6 +280,15 @@
         title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
         subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
         langLabel: "ID",
+        warningTitle: "Petunjuk Penggunaan",
+        warningList: [
+          "Gunakan tombol alih bahasa untuk beralih antara Bahasa Indonesia dan Bahasa Inggris.",
+          "Klik tautan dalam setiap kartu untuk mengunduh atau membuka sumber daya terkait.",
+          "Kartu “Template Dokumen” menyediakan contoh rencana, protokol, dan dokumen penting.",
+          "Kartu “Panduan Praktis” berisi panduan operasional dan manajemen krisis.",
+          "Kartu “Direktori Kontak” memuat kontak penting saat pandemi.",
+          "Kartu “Informasi Kebijakan” menyajikan regulasi dan perlindungan sosial terkini."
+        ],
         cards: [
           {
             title: "Template Dokumen",
@@ -283,6 +342,17 @@
       document.getElementById('subtitle').textContent = t.subtitle;
       document.getElementById('lang-label').textContent = t.langLabel;
 
+      // Update petunjuk penggunaan
+      document.getElementById('warning-title').textContent = t.warningTitle;
+      const ul = document.getElementById('warning-list');
+      ul.innerHTML = '';
+      t.warningList.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        ul.appendChild(li);
+      });
+
+      // Update cards
       for (let i = 0; i < 4; i++) {
         document.getElementById(`card-title-${i + 1}`).textContent = t.cards[i].title;
         document.getElementById(`card-desc-${i + 1}`).textContent = t.cards[i].desc;
