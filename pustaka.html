@@ -55,11 +55,57 @@
     .language-toggle:hover {
       background: var(--secondary);
     }
-    .content-placeholder {
-      text-align: center;
-      padding: 4rem 2rem;
-      font-size: 1.25rem;
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .info-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    .info-card h2 {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .info-card p {
       color: #475569;
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+    }
+    .info-card ul {
+      margin-top: 0.8rem;
+      padding-left: 1rem;
+      list-style: none;
+    }
+    .info-card li {
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .info-card li i {
+      color: var(--primary);
+      min-width: 18px;
+    }
+    .info-card a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .info-card a:hover {
+      text-decoration: underline;
     }
     @media (max-width: 768px) {
       .language-toggle {
@@ -67,10 +113,6 @@
         right: 0.5rem;
         padding: 0.4rem 0.6rem;
         font-size: 0.85rem;
-      }
-      .content-placeholder {
-        font-size: 1.1rem;
-        padding: 3rem 1rem;
       }
     }
   </style>
@@ -84,8 +126,47 @@
     <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
   </header>
 
-  <main>
-    <div class="content-placeholder" id="development-text">Halaman Ini Sedang Dikembangkan</div>
+  <main class="card-grid">
+    <div class="info-card">
+      <h2><i class="fas fa-file-alt"></i> <span id="card-title-1">Template Dokumen</span></h2>
+      <p id="card-desc-1">Contoh rencana kontinjensi, MoU, formulir penilaian cepat, dan protokol kesehatan internal.</p>
+      <ul id="card-list-1">
+        <li><i class="fas fa-briefcase"></i> <a href="#" target="_blank">Rencana Kontinuitas Bisnis</a></li>
+        <li><i class="fas fa-handshake"></i> <a href="#" target="_blank">MoU Kemitraan</a></li>
+        <li><i class="fas fa-clipboard-list"></i> <a href="#" target="_blank">Formulir Penilaian Cepat</a></li>
+        <li><i class="fas fa-shield-virus"></i> <a href="#" target="_blank">Protokol Kesehatan Internal</a></li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h2><i class="fas fa-lightbulb"></i> <span id="card-title-2">Panduan Praktis</span></h2>
+      <p id="card-desc-2">Panduan komunikasi risiko, manajemen donasi, advokasi efektif, dan membangun kemitraan strategis.</p>
+      <ul id="card-list-2">
+        <li><i class="fas fa-comment-medical"></i> <a href="#" target="_blank">Panduan Komunikasi Risiko</a></li>
+        <li><i class="fas fa-donate"></i> <a href="#" target="_blank">Pedoman Pengelolaan Donasi</a></li>
+        <li><i class="fas fa-bullhorn"></i> <a href="#" target="_blank">Tips Advokasi Efektif</a></li>
+        <li><i class="fas fa-handshake-angle"></i> <a href="#" target="_blank">Panduan Kemitraan Strategis</a></li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h2><i class="fas fa-address-book"></i> <span id="card-title-3">Direktori Kontak Penting</span></h2>
+      <p id="card-desc-3">Kontak darurat: Dinas Kesehatan, BPBD, rumah sakit, Kemenkes, dan mitra penting lainnya.</p>
+      <ul id="card-list-3">
+        <li><i class="fas fa-hospital-symbol"></i> <a href="#" target="_blank">Dinas Kesehatan Provinsi</a></li>
+        <li><i class="fas fa-fire-extinguisher"></i> <a href="#" target="_blank">Kontak BPBD Lokal</a></li>
+        <li><i class="fas fa-ambulance"></i> <a href="#" target="_blank">Rumah Sakit Rujukan</a></li>
+        <li><i class="fas fa-building-columns"></i> <a href="#" target="_blank">Kemenkes & Lembaga Nasional</a></li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h2><i class="fas fa-gavel"></i> <span id="card-title-4">Informasi Kebijakan</span></h2>
+      <p id="card-desc-4">Ringkasan regulasi terbaru terkait pandemi dan perlindungan sosial untuk kelompok rentan.</p>
+      <ul id="card-list-4">
+        <li><i class="fas fa-scale-balanced"></i> <a href="#" target="_blank">Peraturan Penanganan Pandemi</a></li>
+        <li><i class="fas fa-hands-helping"></i> <a href="#" target="_blank">Kebijakan Dukungan Sosial</a></li>
+        <li><i class="fas fa-book-medical"></i> <a href="#" target="_blank">Dokumen Kesehatan Masyarakat</a></li>
+        <li><i class="fas fa-exclamation-triangle"></i> <a href="#" target="_blank">Prosedur Darurat Nasional</a></li>
+      </ul>
+    </div>
   </main>
 
   <script>
@@ -96,13 +177,95 @@
         title: "Pandemic Prevention, Preparedness and Response (PPPR)",
         subtitle: "Toolkit for Civil Society Organizations and Communities",
         langLabel: "EN",
-        development: "This page is under development"
+        cards: [
+          {
+            title: "Document Templates",
+            desc: "Examples of continuity plans, MoUs, rapid assessment forms, and internal health protocols.",
+            items: [
+              "Business Continuity Plan",
+              "Partnership MoU",
+              "Rapid Community Assessment Form",
+              "Internal Health Protocol"
+            ]
+          },
+          {
+            title: "Practical Guides",
+            desc: "Guides for risk communication, donation management, advocacy, and strategic partnerships.",
+            items: [
+              "Risk Communication Guide",
+              "Donation Management Guide",
+              "Effective Advocacy Tips",
+              "Strategic Partnership Guide"
+            ]
+          },
+          {
+            title: "Essential Contact Directory",
+            desc: "Emergency contacts: Health Offices, Disaster Agencies, Hospitals, and Ministries.",
+            items: [
+              "Provincial Health Offices",
+              "Local Disaster Agency Contacts",
+              "Referral Hospitals",
+              "Ministry of Health & National Bodies"
+            ]
+          },
+          {
+            title: "Policy Information",
+            desc: "Summaries of latest pandemic regulations and social protection for vulnerable groups.",
+            items: [
+              "Pandemic Response Regulations",
+              "Social Support Policies",
+              "Public Health Documents",
+              "National Emergency Procedures"
+            ]
+          }
+        ]
       },
       id: {
         title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
         subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
         langLabel: "ID",
-        development: "Halaman Ini Sedang Dikembangkan"
+        cards: [
+          {
+            title: "Template Dokumen",
+            desc: "Contoh rencana kontinjensi, MoU, formulir penilaian cepat, dan protokol kesehatan internal.",
+            items: [
+              "Rencana Kontinuitas Bisnis",
+              "MoU Kemitraan",
+              "Formulir Penilaian Cepat",
+              "Protokol Kesehatan Internal"
+            ]
+          },
+          {
+            title: "Panduan Praktis",
+            desc: "Panduan komunikasi risiko, manajemen donasi, advokasi efektif, dan membangun kemitraan strategis.",
+            items: [
+              "Panduan Komunikasi Risiko",
+              "Pedoman Pengelolaan Donasi",
+              "Tips Advokasi Efektif",
+              "Panduan Kemitraan Strategis"
+            ]
+          },
+          {
+            title: "Direktori Kontak Penting",
+            desc: "Kontak darurat: Dinas Kesehatan, BPBD, rumah sakit, Kemenkes, dan mitra penting lainnya.",
+            items: [
+              "Dinas Kesehatan Provinsi",
+              "Kontak BPBD Lokal",
+              "Rumah Sakit Rujukan",
+              "Kemenkes & Lembaga Nasional"
+            ]
+          },
+          {
+            title: "Informasi Kebijakan",
+            desc: "Ringkasan regulasi terbaru terkait pandemi dan perlindungan sosial untuk kelompok rentan.",
+            items: [
+              "Peraturan Penanganan Pandemi",
+              "Kebijakan Dukungan Sosial",
+              "Dokumen Kesehatan Masyarakat",
+              "Prosedur Darurat Nasional"
+            ]
+          }
+        ]
       }
     };
 
@@ -113,12 +276,20 @@
       document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
       document.getElementById('lang-label').textContent = t.langLabel;
-      document.getElementById('development-text').textContent = t.development;
+
+      for (let i = 0; i < 4; i++) {
+        document.getElementById(`card-title-${i + 1}`).textContent = t.cards[i].title;
+        document.getElementById(`card-desc-${i + 1}`).textContent = t.cards[i].desc;
+        const list = document.getElementById(`card-list-${i + 1}`);
+        list.querySelectorAll("a").forEach((a, index) => {
+          a.textContent = t.cards[i].items[index];
+        });
+      }
     }
   </script>
 
   <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
-  Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
-</footer>
+    Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+  </footer>
 </body>
 </html>
