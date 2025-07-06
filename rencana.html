@@ -141,27 +141,19 @@
     }
   </style>
 </head>
-<body id="capture-all">
+<body>
   <header>
     <button class="language-toggle" onclick="toggleLanguage()">
       <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
     </button>
-    <h1 id="title"><i class="fas fa-virus-covid"></i> Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)</h1>
-    <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
+    <h1 id="title"><i class="fas fa-virus-covid"></i> PPPR</h1>
+    <p id="subtitle">Toolkit</p>
   </header>
 
   <main>
-
     <div id="instruction-box" style="background-color:#fffbea; border-left:6px solid #facc15; padding:1rem 1.5rem; border-radius:8px; margin-bottom:1.5rem;">
-      <h3 style="margin-bottom: 0.5rem; color:#92400e;" id="instruction-title"><i class="fas fa-info-circle"></i> Petunjuk Penggunaan Template</h3>
-      <ul id="instruction-list" style="padding-left: 1.2rem; font-size: 0.95rem; color:#92400e; line-height: 1.6;">
-        <li data-id="ins1">Isi <strong>Nama Lembaga</strong>, <strong>Pembuat Laporan</strong>, dan <strong>Tanggal Pelaporan</strong> di bagian atas.</li>
-        <li data-id="ins2">Gunakan tabel untuk mencatat setiap <strong>aksi atau tugas</strong> yang direncanakan atau sedang dijalankan.</li>
-        <li data-id="ins3">Pilih <strong>Status</strong> yang sesuai: <em>Belum Dimulai</em>, <em>Dalam Proses</em>, <em>Selesai</em>, atau <em>Terkendala</em>.</li>
-        <li data-id="ins4">Tambahkan <strong>catatan</strong> untuk menjelaskan kendala, progres, atau tindak lanjut yang dibutuhkan.</li>
-        <li data-id="ins5">Gunakan tombol <strong>“Tambah Tugas”</strong> untuk menambahkan baris aksi baru sesuai kebutuhan.</li>
-        <li data-id="ins6">Gunakan tombol <strong>“Unduh Excel”</strong> untuk menyimpan hasil input ke file Excel.</li>
-      </ul>
+      <h3 id="instruction-title" style="margin-bottom: 0.5rem; color:#92400e;"><i class="fas fa-info-circle"></i> Petunjuk</h3>
+      <ul id="instruction-list" style="padding-left: 1.2rem; font-size: 0.95rem; color:#92400e; line-height: 1.6;"></ul>
     </div>
 
     <div class="form-meta">
@@ -219,84 +211,99 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
   <script>
+    const translations = {
+      id: {
+        lang: 'ID',
+        title: 'Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)',
+        subtitle: 'Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas',
+        instructionTitle: 'Petunjuk Penggunaan Template',
+        instructionList: [
+          'Isi <strong>Nama Lembaga</strong>, <strong>Pembuat Laporan</strong>, dan <strong>Tanggal Pelaporan</strong> di bagian atas.',
+          'Gunakan tabel untuk mencatat setiap <strong>aksi atau tugas</strong> yang direncanakan atau sedang dijalankan.',
+          'Pilih <strong>Status</strong> yang sesuai: <em>Belum Dimulai</em>, <em>Dalam Proses</em>, <em>Selesai</em>, atau <em>Terkendala</em>.',
+          'Tambahkan <strong>catatan</strong> untuk menjelaskan kendala, progres, atau tindak lanjut yang dibutuhkan.',
+          'Gunakan tombol <strong>“Tambah Tugas”</strong> untuk menambahkan baris aksi baru sesuai kebutuhan.',
+          'Gunakan tombol <strong>“Unduh Excel”</strong> untuk menyimpan hasil input ke file Excel.'
+        ],
+        thTask: 'Nama Aksi/Tugas',
+        thPIC: 'Penanggung Jawab',
+        thDeadline: 'Tenggat Waktu',
+        thStatus: 'Status',
+        thNote: 'Catatan/Keterangan',
+        btnAdd: 'Tambah Tugas',
+        btnExcel: 'Unduh Excel',
+        labelInstitution: 'Nama Lembaga',
+        labelReporter: 'Nama Pembuat Laporan',
+        labelDate: 'Tanggal Pelaporan',
+        statusOptions: ['Belum Dimulai', 'Dalam Proses', 'Selesai', 'Terkendala']
+      },
+      en: {
+        lang: 'EN',
+        title: 'Pandemic Prevention, Preparedness and Response (PPPR)',
+        subtitle: 'Toolkit for Civil Society Organizations and Communities',
+        instructionTitle: 'How to Use This Template',
+        instructionList: [
+          'Fill in <strong>Organization Name</strong>, <strong>Report Author</strong>, and <strong>Report Date</strong> at the top.',
+          'Use the table to record each <strong>action or task</strong> that is planned or in progress.',
+          'Choose the appropriate <strong>Status</strong>: <em>Not Started</em>, <em>In Progress</em>, <em>Completed</em>, or <em>Blocked</em>.',
+          'Add <strong>notes</strong> to explain challenges, progress, or next steps.',
+          'Click the <strong>“Add Task”</strong> button to add new action rows as needed.',
+          'Click the <strong>“Download Excel”</strong> button to save your input to an Excel file.'
+        ],
+        thTask: 'Action/Task Name',
+        thPIC: 'Responsible Person',
+        thDeadline: 'Deadline',
+        thStatus: 'Status',
+        thNote: 'Notes',
+        btnAdd: 'Add Task',
+        btnExcel: 'Download Excel',
+        labelInstitution: 'Organization Name',
+        labelReporter: 'Report Author',
+        labelDate: 'Report Date',
+        statusOptions: ['Not Started', 'In Progress', 'Completed', 'Blocked']
+      }
+    };
+
+    let currentLang = 'id';
+
     function toggleLanguage() {
-      const lang = document.getElementById('lang-label').textContent.toLowerCase();
-      const isID = lang === 'id';
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      updateLanguage();
+    }
 
-      const text = {
-        id: {
-          lang: 'ID',
-          title: 'Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)',
-          subtitle: 'Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas',
-          section: 'Perencanaan & Pelacakan Aksi',
-          instrTitle: 'Petunjuk Penggunaan Template',
-          instr: [
-            'Isi <strong>Nama Lembaga</strong>, <strong>Pembuat Laporan</strong>, dan <strong>Tanggal Pelaporan</strong> di bagian atas.',
-            'Gunakan tabel untuk mencatat setiap <strong>aksi atau tugas</strong> yang direncanakan atau sedang dijalankan.',
-            'Pilih <strong>Status</strong> yang sesuai: <em>Belum Dimulai</em>, <em>Dalam Proses</em>, <em>Selesai</em>, atau <em>Terkendala</em>.',
-            'Tambahkan <strong>catatan</strong> untuk menjelaskan kendala, progres, atau tindak lanjut yang dibutuhkan.',
-            'Gunakan tombol <strong>“Tambah Tugas”</strong> untuk menambahkan baris aksi baru sesuai kebutuhan.',
-            'Gunakan tombol <strong>“Unduh Excel”</strong> untuk menyimpan hasil input ke file Excel.'
-          ],
-          labels: ['Nama Lembaga', 'Nama Pembuat Laporan', 'Tanggal Pelaporan'],
-          headers: ['Nama Aksi/Tugas', 'Penanggung Jawab', 'Tenggat Waktu', 'Status', 'Catatan/Keterangan'],
-          buttons: ['Tambah Tugas', 'Unduh Excel']
-        },
-        en: {
-          lang: 'EN',
-          title: 'Pandemic Prevention, Preparedness and Response (PPPR)',
-          subtitle: 'Toolkit for Civil Society Organizations and Communities',
-          section: 'Action Planning & Tracking',
-          instrTitle: 'How to Use This Template',
-          instr: [
-            'Fill in <strong>Organization Name</strong>, <strong>Report Author</strong>, and <strong>Report Date</strong> at the top.',
-            'Use the table to record each <strong>action or task</strong> that is planned or in progress.',
-            'Choose the appropriate <strong>Status</strong>: <em>Not Started</em>, <em>In Progress</em>, <em>Completed</em>, or <em>Blocked</em>.',
-            'Add <strong>notes</strong> to explain challenges, progress, or next steps.',
-            'Click the <strong>“Add Task”</strong> button to add new action rows as needed.',
-            'Click the <strong>“Download Excel”</strong> button to save your input to an Excel file.'
-          ],
-          labels: ['Organization Name', 'Report Author', 'Report Date'],
-          headers: ['Action/Task Name', 'Responsible Person', 'Deadline', 'Status', 'Notes'],
-          buttons: ['Add Task', 'Download Excel']
-        }
-      };
-
-      const t = isID ? text.en : text.id;
+    function updateLanguage() {
+      const t = translations[currentLang];
       document.getElementById('lang-label').textContent = t.lang;
       document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('section-title').innerHTML = '<i class="fas fa-tasks"></i> ' + t.section;
-      document.getElementById('instruction-title').innerHTML = '<i class="fas fa-info-circle"></i> ' + t.instrTitle;
+      document.getElementById('instruction-title').innerHTML = '<i class="fas fa-info-circle"></i> ' + t.instructionTitle;
+      document.getElementById('instruction-list').innerHTML = t.instructionList.map(txt => `<li>${txt}</li>`).join('');
 
-      const ul = document.getElementById('instruction-list');
-      ul.innerHTML = t.instr.map(i => `<li>${i}</li>`).join('');
+      document.getElementById('label-institution').childNodes[0].nodeValue = t.labelInstitution + '\n';
+      document.getElementById('label-reporter').childNodes[0].nodeValue = t.labelReporter + '\n';
+      document.getElementById('label-date').childNodes[0].nodeValue = t.labelDate + '\n';
 
-      document.getElementById('label-institution').childNodes[0].nodeValue = t.labels[0] + '\n';
-      document.getElementById('label-reporter').childNodes[0].nodeValue = t.labels[1] + '\n';
-      document.getElementById('label-date').childNodes[0].nodeValue = t.labels[2] + '\n';
+      document.getElementById('th-task').textContent = t.thTask;
+      document.getElementById('th-pic').textContent = t.thPIC;
+      document.getElementById('th-deadline').textContent = t.thDeadline;
+      document.getElementById('th-status').textContent = t.thStatus;
+      document.getElementById('th-note').textContent = t.thNote;
 
-      document.getElementById('th-task').textContent = t.headers[0];
-      document.getElementById('th-pic').textContent = t.headers[1];
-      document.getElementById('th-deadline').textContent = t.headers[2];
-      document.getElementById('th-status').textContent = t.headers[3];
-      document.getElementById('th-note').textContent = t.headers[4];
+      document.getElementById('btn-add').innerHTML = '<i class="fas fa-plus"></i> ' + t.btnAdd;
+      document.getElementById('btn-excel').innerHTML = '<i class="fas fa-file-excel"></i> ' + t.btnExcel;
 
-      document.getElementById('btn-add').innerHTML = '<i class="fas fa-plus"></i> ' + t.buttons[0];
-      document.getElementById('btn-excel').innerHTML = '<i class="fas fa-file-excel"></i> ' + t.buttons[1];
-    }
+      document.querySelectorAll('select').forEach(select => {
+        const selectedIndex = select.selectedIndex;
+        select.innerHTML = t.statusOptions.map(opt => `<option>${opt}</option>`).join('');
+        if (selectedIndex >= 0) select.selectedIndex = selectedIndex;
+      });
 
-    function updateProgress() {
-      const statuses = [...document.querySelectorAll('select')];
-      const total = statuses.length;
-      const done = statuses.filter(s => s.value.toLowerCase().includes('selesai') || s.value.toLowerCase().includes('completed')).length;
-      const percent = total ? Math.round((done / total) * 100) : 0;
-      document.getElementById('progressFill').style.width = percent + '%';
+      updateProgress();
     }
 
     function addRow() {
+      const t = translations[currentLang];
       const row = document.createElement('tr');
       row.innerHTML = `
         <td><input type="text" class="auto-resize" placeholder="Contoh: Buat SOP" /></td>
@@ -304,31 +311,27 @@
         <td><input type="date" class="auto-resize" /></td>
         <td>
           <select class="auto-resize" onchange="updateProgress()">
-            <option>Belum Dimulai</option>
-            <option>Dalam Proses</option>
-            <option>Selesai</option>
-            <option>Terkendala</option>
+            ${t.statusOptions.map(opt => `<option>${opt}</option>`).join('')}
           </select>
         </td>
         <td><input type="text" class="auto-resize" placeholder="Contoh: Menunggu persetujuan manajemen" /></td>
       `;
       document.querySelector('#actionTable tbody').appendChild(row);
       autoResizeInputs();
+      updateProgress();
     }
 
     function exportExcel() {
       const wb = XLSX.utils.book_new();
       const ws_data = [];
 
-      const institution = document.getElementById('institution').value || '';
-      const reporter = document.getElementById('reporter').value || '';
-      const date = document.getElementById('report-date').value || '';
+      const t = translations[currentLang];
 
-      ws_data.push(['Nama Lembaga', institution]);
-      ws_data.push(['Pembuat Laporan', reporter]);
-      ws_data.push(['Tanggal Pelaporan', date]);
+      ws_data.push([t.labelInstitution, document.getElementById('institution').value]);
+      ws_data.push([t.labelReporter, document.getElementById('reporter').value]);
+      ws_data.push([t.labelDate, document.getElementById('report-date').value]);
       ws_data.push([]);
-      ws_data.push(['Nama Aksi/Tugas', 'Penanggung Jawab', 'Tenggat Waktu', 'Status', 'Catatan/Keterangan']);
+      ws_data.push([t.thTask, t.thPIC, t.thDeadline, t.thStatus, t.thNote]);
 
       document.querySelectorAll('#actionTable tbody tr').forEach(row => {
         const cells = row.querySelectorAll('input, select');
@@ -339,6 +342,17 @@
       const ws = XLSX.utils.aoa_to_sheet(ws_data);
       XLSX.utils.book_append_sheet(wb, ws, "Rencana Aksi");
       XLSX.writeFile(wb, "rencana_pelacakan_aksi.xlsx");
+    }
+
+    function updateProgress() {
+      const statuses = [...document.querySelectorAll('select')];
+      const total = statuses.length;
+      const done = statuses.filter(s => {
+        const val = s.value.toLowerCase();
+        return val.includes('selesai') || val.includes('completed');
+      }).length;
+      const percent = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById('progressFill').style.width = percent + '%';
     }
 
     function autoResizeInputs() {
@@ -365,7 +379,10 @@
       });
     }
 
-    window.addEventListener('load', autoResizeInputs);
+    window.addEventListener('load', () => {
+      autoResizeInputs();
+      updateLanguage();
+    });
   </script>
 </body>
 </html>
