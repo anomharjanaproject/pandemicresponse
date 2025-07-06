@@ -134,8 +134,6 @@
       font-size: 0.7rem;
       color: #64748b;
     }
-
-    /* Responsif input */
     input.auto-resize, select.auto-resize {
       min-width: 100px;
       width: auto;
@@ -152,33 +150,29 @@
     <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
   </header>
 
-    <main>
-  <h2><i class="fas fa-tasks"></i> Perencanaan & Pelacakan Aksi</h2>
+  <main>
+    <h2 id="section-title"><i class="fas fa-tasks"></i> Perencanaan & Pelacakan Aksi</h2>
 
-  <!-- Card Petunjuk Penggunaan -->
-  <div style="background-color:#fffbea; border-left:6px solid #facc15; padding:1rem 1.5rem; border-radius:8px; margin-bottom:1.5rem;">
-    <h3 style="margin-bottom: 0.5rem; color:#92400e;"><i class="fas fa-info-circle"></i> Petunjuk Penggunaan Template</h3>
-    <ul style="padding-left: 1.2rem; font-size: 0.95rem; color:#92400e; line-height: 1.6;">
-      <li>Isi <strong>Nama Lembaga</strong>, <strong>Pembuat Laporan</strong>, dan <strong>Tanggal Pelaporan</strong> di bagian atas.</li>
-      <li>Gunakan tabel untuk mencatat setiap <strong>aksi atau tugas</strong> yang direncanakan atau sedang dijalankan.</li>
-      <li>Pilih <strong>Status</strong> yang sesuai: <em>Belum Dimulai</em>, <em>Dalam Proses</em>, <em>Selesai</em>, atau <em>Terkendala</em>.</li>
-      <li>Tambahkan <strong>catatan</strong> untuk menjelaskan kendala, progres, atau tindak lanjut yang dibutuhkan.</li>
-      <li>Gunakan tombol <strong>“Tambah Tugas”</strong> untuk menambahkan baris aksi baru sesuai kebutuhan.</li>
-      <li>Gunakan tombol <strong>“Unduh Excel”</strong> untuk menyimpan hasil input ke file Excel.</li>
-    </ul>
-  </div>
+    <div id="instruction-box" style="background-color:#fffbea; border-left:6px solid #facc15; padding:1rem 1.5rem; border-radius:8px; margin-bottom:1.5rem;">
+      <h3 style="margin-bottom: 0.5rem; color:#92400e;" id="instruction-title"><i class="fas fa-info-circle"></i> Petunjuk Penggunaan Template</h3>
+      <ul id="instruction-list" style="padding-left: 1.2rem; font-size: 0.95rem; color:#92400e; line-height: 1.6;">
+        <li data-id="ins1">Isi <strong>Nama Lembaga</strong>, <strong>Pembuat Laporan</strong>, dan <strong>Tanggal Pelaporan</strong> di bagian atas.</li>
+        <li data-id="ins2">Gunakan tabel untuk mencatat setiap <strong>aksi atau tugas</strong> yang direncanakan atau sedang dijalankan.</li>
+        <li data-id="ins3">Pilih <strong>Status</strong> yang sesuai: <em>Belum Dimulai</em>, <em>Dalam Proses</em>, <em>Selesai</em>, atau <em>Terkendala</em>.</li>
+        <li data-id="ins4">Tambahkan <strong>catatan</strong> untuk menjelaskan kendala, progres, atau tindak lanjut yang dibutuhkan.</li>
+        <li data-id="ins5">Gunakan tombol <strong>“Tambah Tugas”</strong> untuk menambahkan baris aksi baru sesuai kebutuhan.</li>
+        <li data-id="ins6">Gunakan tombol <strong>“Unduh Excel”</strong> untuk menyimpan hasil input ke file Excel.</li>
+      </ul>
+    </div>
 
-  <!-- Form dan Tabel Lanjutan seperti sebelumnya -->
-
-    
     <div class="form-meta">
-      <label>Nama Lembaga
+      <label id="label-institution">Nama Lembaga
         <input type="text" id="institution" placeholder="Contoh: LSM Sehat Mandiri" />
       </label>
-      <label>Nama Pembuat Laporan
+      <label id="label-reporter">Nama Pembuat Laporan
         <input type="text" id="reporter" placeholder="Contoh: Anom Harjana" />
       </label>
-      <label>Tanggal Pelaporan
+      <label id="label-date">Tanggal Pelaporan
         <input type="date" id="report-date" />
       </label>
     </div>
@@ -186,11 +180,11 @@
     <table id="actionTable">
       <thead>
         <tr>
-          <th>Nama Aksi/Tugas</th>
-          <th>Penanggung Jawab</th>
-          <th>Tenggat Waktu</th>
-          <th>Status</th>
-          <th>Catatan/Keterangan</th>
+          <th id="th-task">Nama Aksi/Tugas</th>
+          <th id="th-pic">Penanggung Jawab</th>
+          <th id="th-deadline">Tenggat Waktu</th>
+          <th id="th-status">Status</th>
+          <th id="th-note">Catatan/Keterangan</th>
         </tr>
       </thead>
       <tbody>
@@ -212,8 +206,8 @@
     </table>
 
     <div class="actions">
-      <button onclick="addRow()"><i class="fas fa-plus"></i> Tambah Tugas</button>
-      <button onclick="exportExcel()"><i class="fas fa-file-excel"></i> Unduh Excel</button>
+      <button onclick="addRow()" id="btn-add"><i class="fas fa-plus"></i> Tambah Tugas</button>
+      <button onclick="exportExcel()" id="btn-excel"><i class="fas fa-file-excel"></i> Unduh Excel</button>
     </div>
 
     <div class="progress-bar">
@@ -225,10 +219,84 @@
     Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
   </footer>
 
-  <!-- SheetJS untuk download Excel -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <script>
+    function toggleLanguage() {
+      const lang = document.getElementById('lang-label').textContent.toLowerCase();
+      const isID = lang === 'id';
+
+      const text = {
+        id: {
+          lang: 'ID',
+          title: 'Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)',
+          subtitle: 'Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas',
+          section: 'Perencanaan & Pelacakan Aksi',
+          instrTitle: 'Petunjuk Penggunaan Template',
+          instr: [
+            'Isi <strong>Nama Lembaga</strong>, <strong>Pembuat Laporan</strong>, dan <strong>Tanggal Pelaporan</strong> di bagian atas.',
+            'Gunakan tabel untuk mencatat setiap <strong>aksi atau tugas</strong> yang direncanakan atau sedang dijalankan.',
+            'Pilih <strong>Status</strong> yang sesuai: <em>Belum Dimulai</em>, <em>Dalam Proses</em>, <em>Selesai</em>, atau <em>Terkendala</em>.',
+            'Tambahkan <strong>catatan</strong> untuk menjelaskan kendala, progres, atau tindak lanjut yang dibutuhkan.',
+            'Gunakan tombol <strong>“Tambah Tugas”</strong> untuk menambahkan baris aksi baru sesuai kebutuhan.',
+            'Gunakan tombol <strong>“Unduh Excel”</strong> untuk menyimpan hasil input ke file Excel.'
+          ],
+          labels: ['Nama Lembaga', 'Nama Pembuat Laporan', 'Tanggal Pelaporan'],
+          headers: ['Nama Aksi/Tugas', 'Penanggung Jawab', 'Tenggat Waktu', 'Status', 'Catatan/Keterangan'],
+          buttons: ['Tambah Tugas', 'Unduh Excel']
+        },
+        en: {
+          lang: 'EN',
+          title: 'Pandemic Prevention, Preparedness and Response (PPPR)',
+          subtitle: 'Toolkit for Civil Society Organizations and Communities',
+          section: 'Action Planning & Tracking',
+          instrTitle: 'How to Use This Template',
+          instr: [
+            'Fill in <strong>Organization Name</strong>, <strong>Report Author</strong>, and <strong>Report Date</strong> at the top.',
+            'Use the table to record each <strong>action or task</strong> that is planned or in progress.',
+            'Choose the appropriate <strong>Status</strong>: <em>Not Started</em>, <em>In Progress</em>, <em>Completed</em>, or <em>Blocked</em>.',
+            'Add <strong>notes</strong> to explain challenges, progress, or next steps.',
+            'Click the <strong>“Add Task”</strong> button to add new action rows as needed.',
+            'Click the <strong>“Download Excel”</strong> button to save your input to an Excel file.'
+          ],
+          labels: ['Organization Name', 'Report Author', 'Report Date'],
+          headers: ['Action/Task Name', 'Responsible Person', 'Deadline', 'Status', 'Notes'],
+          buttons: ['Add Task', 'Download Excel']
+        }
+      };
+
+      const t = isID ? text.en : text.id;
+      document.getElementById('lang-label').textContent = t.lang;
+      document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('section-title').innerHTML = '<i class="fas fa-tasks"></i> ' + t.section;
+      document.getElementById('instruction-title').innerHTML = '<i class="fas fa-info-circle"></i> ' + t.instrTitle;
+
+      const ul = document.getElementById('instruction-list');
+      ul.innerHTML = t.instr.map(i => `<li>${i}</li>`).join('');
+
+      document.getElementById('label-institution').childNodes[0].nodeValue = t.labels[0] + '\n';
+      document.getElementById('label-reporter').childNodes[0].nodeValue = t.labels[1] + '\n';
+      document.getElementById('label-date').childNodes[0].nodeValue = t.labels[2] + '\n';
+
+      document.getElementById('th-task').textContent = t.headers[0];
+      document.getElementById('th-pic').textContent = t.headers[1];
+      document.getElementById('th-deadline').textContent = t.headers[2];
+      document.getElementById('th-status').textContent = t.headers[3];
+      document.getElementById('th-note').textContent = t.headers[4];
+
+      document.getElementById('btn-add').innerHTML = '<i class="fas fa-plus"></i> ' + t.buttons[0];
+      document.getElementById('btn-excel').innerHTML = '<i class="fas fa-file-excel"></i> ' + t.buttons[1];
+    }
+
+    function updateProgress() {
+      const statuses = [...document.querySelectorAll('select')];
+      const total = statuses.length;
+      const done = statuses.filter(s => s.value.toLowerCase().includes('selesai') || s.value.toLowerCase().includes('completed')).length;
+      const percent = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById('progressFill').style.width = percent + '%';
+    }
+
     function addRow() {
       const row = document.createElement('tr');
       row.innerHTML = `
@@ -247,14 +315,6 @@
       `;
       document.querySelector('#actionTable tbody').appendChild(row);
       autoResizeInputs();
-    }
-
-    function updateProgress() {
-      const statuses = [...document.querySelectorAll('select')];
-      const total = statuses.length;
-      const done = statuses.filter(s => s.value === 'Selesai').length;
-      const percent = total ? Math.round((done / total) * 100) : 0;
-      document.getElementById('progressFill').style.width = percent + '%';
     }
 
     function exportExcel() {
@@ -280,27 +340,6 @@
       const ws = XLSX.utils.aoa_to_sheet(ws_data);
       XLSX.utils.book_append_sheet(wb, ws, "Rencana Aksi");
       XLSX.writeFile(wb, "rencana_pelacakan_aksi.xlsx");
-    }
-
-    function toggleLanguage() {
-      let currentLang = document.getElementById('lang-label').textContent.toLowerCase();
-      const translations = {
-        en: {
-          title: "Pandemic Prevention, Preparedness and Response (PPPR)",
-          subtitle: "Toolkit for Civil Society Organizations and Communities",
-          langLabel: "EN"
-        },
-        id: {
-          title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
-          subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
-          langLabel: "ID"
-        }
-      };
-      const nextLang = currentLang === 'id' ? 'en' : 'id';
-      const t = translations[nextLang];
-      document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
-      document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('lang-label').textContent = t.langLabel;
     }
 
     function autoResizeInputs() {
