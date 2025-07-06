@@ -101,6 +101,8 @@
     }
     .actions {
       display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
       justify-content: space-between;
       margin-top: 1rem;
     }
@@ -132,6 +134,13 @@
       font-size: 0.7rem;
       color: #64748b;
     }
+
+    /* Responsif input */
+    input.auto-resize, select.auto-resize {
+      min-width: 100px;
+      width: auto;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body id="capture-all">
@@ -161,27 +170,27 @@
     <table id="actionTable">
       <thead>
         <tr>
-          <th title="Tulis nama kegiatan/tugas yang akan dilakukan">Nama Aksi/Tugas</th>
-          <th title="Siapa yang bertanggung jawab menjalankan tugas ini">Penanggung Jawab</th>
-          <th title="Tenggat waktu penyelesaian tugas">Tenggat Waktu</th>
-          <th title="Status terkini tugas">Status</th>
-          <th title="Catatan tambahan, kendala, atau informasi relevan">Catatan/Keterangan</th>
+          <th>Nama Aksi/Tugas</th>
+          <th>Penanggung Jawab</th>
+          <th>Tenggat Waktu</th>
+          <th>Status</th>
+          <th>Catatan/Keterangan</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><input type="text" placeholder="Contoh: Buat SOP" /></td>
-          <td><input type="text" placeholder="Contoh: Tim Program" /></td>
-          <td><input type="date" /></td>
+          <td><input type="text" class="auto-resize" placeholder="Contoh: Buat SOP" /></td>
+          <td><input type="text" class="auto-resize" placeholder="Contoh: Tim Program" /></td>
+          <td><input type="date" class="auto-resize" /></td>
           <td>
-            <select onchange="updateProgress()">
+            <select class="auto-resize" onchange="updateProgress()">
               <option>Belum Dimulai</option>
               <option>Dalam Proses</option>
               <option>Selesai</option>
               <option>Terkendala</option>
             </select>
           </td>
-          <td><input type="text" placeholder="Contoh: Menunggu persetujuan manajemen" /></td>
+          <td><input type="text" class="auto-resize" placeholder="Contoh: Menunggu persetujuan manajemen" /></td>
         </tr>
       </tbody>
     </table>
@@ -200,27 +209,28 @@
     Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
   </footer>
 
-  <!-- SheetJS -->
+  <!-- SheetJS untuk download Excel -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
   <script>
     function addRow() {
       const row = document.createElement('tr');
       row.innerHTML = `
-        <td><input type="text" placeholder="Contoh: Buat SOP" /></td>
-        <td><input type="text" placeholder="Contoh: Tim Program" /></td>
-        <td><input type="date" /></td>
+        <td><input type="text" class="auto-resize" placeholder="Contoh: Buat SOP" /></td>
+        <td><input type="text" class="auto-resize" placeholder="Contoh: Tim Program" /></td>
+        <td><input type="date" class="auto-resize" /></td>
         <td>
-          <select onchange="updateProgress()">
+          <select class="auto-resize" onchange="updateProgress()">
             <option>Belum Dimulai</option>
             <option>Dalam Proses</option>
             <option>Selesai</option>
             <option>Terkendala</option>
           </select>
         </td>
-        <td><input type="text" placeholder="Contoh: Menunggu persetujuan manajemen" /></td>
+        <td><input type="text" class="auto-resize" placeholder="Contoh: Menunggu persetujuan manajemen" /></td>
       `;
       document.querySelector('#actionTable tbody').appendChild(row);
+      autoResizeInputs();
     }
 
     function updateProgress() {
@@ -276,6 +286,32 @@
       document.getElementById('subtitle').textContent = t.subtitle;
       document.getElementById('lang-label').textContent = t.langLabel;
     }
+
+    function autoResizeInputs() {
+      const elements = document.querySelectorAll('input.auto-resize, select.auto-resize');
+      elements.forEach(el => {
+        const span = document.createElement('span');
+        span.style.visibility = 'hidden';
+        span.style.whiteSpace = 'pre';
+        span.style.position = 'absolute';
+        span.style.font = getComputedStyle(el).font;
+        document.body.appendChild(span);
+
+        const resize = () => {
+          const value = el.tagName === 'SELECT'
+            ? el.options[el.selectedIndex]?.text
+            : el.value || el.placeholder || '';
+          span.textContent = value;
+          el.style.width = Math.min(span.offsetWidth + 20, 500) + 'px';
+        };
+
+        el.addEventListener('input', resize);
+        el.addEventListener('change', resize);
+        resize();
+      });
+    }
+
+    window.addEventListener('load', autoResizeInputs);
   </script>
 </body>
 </html>
