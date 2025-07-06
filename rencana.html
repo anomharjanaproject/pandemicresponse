@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pandemic Response 🇮🇩</title>
+  <title>Rencana & Pelacakan Aksi</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -23,6 +23,7 @@
       background-color: #f8fafc;
       color: #1f2937;
       line-height: 1.6;
+      padding-bottom: 4rem;
     }
     header {
       background: var(--primary);
@@ -55,27 +56,85 @@
     .language-toggle:hover {
       background: var(--secondary);
     }
-    .content-placeholder {
-      text-align: center;
-      padding: 4rem 2rem;
-      font-size: 1.25rem;
-      color: #475569;
+    main {
+      padding: 2rem;
     }
-    @media (max-width: 768px) {
-      .language-toggle {
-        top: 0.5rem;
-        right: 0.5rem;
-        padding: 0.4rem 0.6rem;
-        font-size: 0.85rem;
-      }
-      .content-placeholder {
-        font-size: 1.1rem;
-        padding: 3rem 1rem;
-      }
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .form-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: space-between;
+    }
+    .form-meta label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .form-meta input {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+      max-width: 300px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #e0f2f1;
+      color: var(--primary);
+      text-align: left;
+    }
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+    .actions button {
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .progress-bar {
+      background: #e5e7eb;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin: 1rem 0;
+      height: 20px;
+    }
+    .progress-fill {
+      background: var(--accent);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.7rem;
+      color: #64748b;
     }
   </style>
 </head>
-<body>
+<body id="capture-all">
   <header>
     <button class="language-toggle" onclick="toggleLanguage()">
       <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
@@ -85,40 +144,138 @@
   </header>
 
   <main>
-    <div class="content-placeholder" id="development-text">Halaman Ini Sedang Dikembangkan</div>
+    <h2><i class="fas fa-tasks"></i> Perencanaan & Pelacakan Aksi</h2>
+
+    <div class="form-meta">
+      <label>Nama Lembaga
+        <input type="text" id="institution" placeholder="Contoh: LSM Sehat Mandiri" />
+      </label>
+      <label>Nama Pembuat Laporan
+        <input type="text" id="reporter" placeholder="Contoh: Anom Harjana" />
+      </label>
+      <label>Tanggal Pelaporan
+        <input type="date" id="report-date" />
+      </label>
+    </div>
+
+    <table id="actionTable">
+      <thead>
+        <tr>
+          <th title="Tulis nama kegiatan/tugas yang akan dilakukan">Nama Aksi/Tugas</th>
+          <th title="Siapa yang bertanggung jawab menjalankan tugas ini">Penanggung Jawab</th>
+          <th title="Tenggat waktu penyelesaian tugas">Tenggat Waktu</th>
+          <th title="Status terkini tugas">Status</th>
+          <th title="Catatan tambahan, kendala, atau informasi relevan">Catatan/Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" placeholder="Contoh: Buat SOP" /></td>
+          <td><input type="text" placeholder="Contoh: Tim Program" /></td>
+          <td><input type="date" /></td>
+          <td>
+            <select onchange="updateProgress()">
+              <option>Belum Dimulai</option>
+              <option>Dalam Proses</option>
+              <option>Selesai</option>
+              <option>Terkendala</option>
+            </select>
+          </td>
+          <td><input type="text" placeholder="Contoh: Menunggu persetujuan manajemen" /></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="actions">
+      <button onclick="addRow()"><i class="fas fa-plus"></i> Tambah Tugas</button>
+      <button onclick="exportExcel()"><i class="fas fa-file-excel"></i> Unduh Excel</button>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
   </main>
 
-  <script>
-    let currentLang = 'id';
+  <footer>
+    Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+  </footer>
 
-    const translations = {
-      en: {
-        title: "Pandemic Prevention, Preparedness and Response (PPPR)",
-        subtitle: "Toolkit for Civil Society Organizations and Communities",
-        langLabel: "EN",
-        development: "This page is under development"
-      },
-      id: {
-        title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
-        subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
-        langLabel: "ID",
-        development: "Halaman Ini Sedang Dikembangkan"
-      }
-    };
+  <!-- SheetJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <script>
+    function addRow() {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><input type="text" placeholder="Contoh: Buat SOP" /></td>
+        <td><input type="text" placeholder="Contoh: Tim Program" /></td>
+        <td><input type="date" /></td>
+        <td>
+          <select onchange="updateProgress()">
+            <option>Belum Dimulai</option>
+            <option>Dalam Proses</option>
+            <option>Selesai</option>
+            <option>Terkendala</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="Contoh: Menunggu persetujuan manajemen" /></td>
+      `;
+      document.querySelector('#actionTable tbody').appendChild(row);
+    }
+
+    function updateProgress() {
+      const statuses = [...document.querySelectorAll('select')];
+      const total = statuses.length;
+      const done = statuses.filter(s => s.value === 'Selesai').length;
+      const percent = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById('progressFill').style.width = percent + '%';
+    }
+
+    function exportExcel() {
+      const wb = XLSX.utils.book_new();
+      const ws_data = [];
+
+      const institution = document.getElementById('institution').value || '';
+      const reporter = document.getElementById('reporter').value || '';
+      const date = document.getElementById('report-date').value || '';
+
+      ws_data.push(['Nama Lembaga', institution]);
+      ws_data.push(['Pembuat Laporan', reporter]);
+      ws_data.push(['Tanggal Pelaporan', date]);
+      ws_data.push([]);
+      ws_data.push(['Nama Aksi/Tugas', 'Penanggung Jawab', 'Tenggat Waktu', 'Status', 'Catatan/Keterangan']);
+
+      document.querySelectorAll('#actionTable tbody tr').forEach(row => {
+        const cells = row.querySelectorAll('input, select');
+        const rowData = Array.from(cells).map(cell => cell.value || cell.options?.[cell.selectedIndex]?.text || '');
+        ws_data.push(rowData);
+      });
+
+      const ws = XLSX.utils.aoa_to_sheet(ws_data);
+      XLSX.utils.book_append_sheet(wb, ws, "Rencana Aksi");
+      XLSX.writeFile(wb, "rencana_pelacakan_aksi.xlsx");
+    }
 
     function toggleLanguage() {
-      currentLang = currentLang === 'id' ? 'en' : 'id';
-      const t = translations[currentLang];
-
+      let currentLang = document.getElementById('lang-label').textContent.toLowerCase();
+      const translations = {
+        en: {
+          title: "Pandemic Prevention, Preparedness and Response (PPPR)",
+          subtitle: "Toolkit for Civil Society Organizations and Communities",
+          langLabel: "EN"
+        },
+        id: {
+          title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
+          subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
+          langLabel: "ID"
+        }
+      };
+      const nextLang = currentLang === 'id' ? 'en' : 'id';
+      const t = translations[nextLang];
       document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
       document.getElementById('lang-label').textContent = t.langLabel;
-      document.getElementById('development-text').textContent = t.development;
     }
   </script>
-
-  <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
-  Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
-</footer>
 </body>
 </html>
