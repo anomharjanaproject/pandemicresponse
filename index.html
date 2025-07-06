@@ -105,6 +105,20 @@
       border-radius: 0.75rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
+    .button-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .button-link:hover {
+      background: var(--accent);
+    }
     @media (max-width: 768px) {
       .menu-grid {
         padding: 1rem;
@@ -154,9 +168,17 @@
   </div>
 
   <main>
-    <section class="card" id="data">
+    <section class="card">
       <h2><i class="fas fa-database"></i> <span id="data-title">Pemetaan Risiko Penyakit</span></h2>
       <iframe class="responsive-iframe" src="https://petarisikopie.id/"></iframe>
+    </section>
+
+    <section class="card">
+      <h2><i class="fas fa-map-marked-alt"></i> <span id="disaster-title">Pemetaan Risiko Bencana Alam</span></h2>
+      <p id="disaster-description">Halaman ini menampilkan peta risiko bencana alam dari situs resmi BNPB.</p>
+      <a class="button-link" id="disaster-link-text" href="https://inarisk.bnpb.go.id" target="_blank" rel="noopener">
+        Buka Peta Risiko di Tab Baru
+      </a>
     </section>
   </main>
 
@@ -175,6 +197,9 @@
           pelatihan: "Training"
         },
         data: "Disease Risk Mapping",
+        disaster: "Disaster Risk Mapping",
+        disasterDesc: "This page displays disaster risk maps from the official BNPB website.",
+        disasterLink: "Open Disaster Risk Map in New Tab",
         langLabel: "EN"
       },
       id: {
@@ -188,6 +213,9 @@
           pelatihan: "Pelatihan"
         },
         data: "Pemetaan Risiko Penyakit",
+        disaster: "Pemetaan Risiko Bencana Alam",
+        disasterDesc: "Halaman ini menampilkan peta risiko bencana alam dari situs resmi BNPB.",
+        disasterLink: "Buka Peta Risiko di Tab Baru",
         langLabel: "ID"
       }
     };
@@ -204,11 +232,15 @@
       document.getElementById('menu-komunikasi').textContent = t.menu.komunikasi;
       document.getElementById('menu-pelatihan').textContent = t.menu.pelatihan;
       document.getElementById('data-title').textContent = t.data;
+      document.getElementById('disaster-title').textContent = t.disaster;
+      document.getElementById('disaster-description').textContent = t.disasterDesc;
+      document.getElementById('disaster-link-text').textContent = t.disasterLink;
       document.getElementById('lang-label').textContent = t.langLabel;
     }
   </script>
-   <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
-  Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
-</footer>
+
+  <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
+    Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+  </footer>
 </body>
 </html>
