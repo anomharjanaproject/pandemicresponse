@@ -361,6 +361,16 @@
         display: none;
     }
 
+    /* The content-section is now just the landing page, no other content sections here */
+    .content-section {
+        /* This class is now primarily for the landingPage div */
+        display: block; /* Always visible as it's the only content */
+        padding: 0; /* No extra padding for this wrapper */
+        margin: 0; /* No extra margin for this wrapper */
+        background: none; /* No background for this wrapper */
+        box-shadow: none; /* No shadow for this wrapper */
+    }
+
     .reset-progress-button {
         background: var(--danger);
         color: white;
@@ -485,137 +495,140 @@
 
   <main>
     <div class="container">
-      <h2 class="section-title" data-lang-key="landing_page_title">Selamat Datang di Modul E-Learning PPPR!</h2>
-      <p class="intro-text" data-lang-key="landing_intro_p1">Modul ini dirancang untuk Organisasi Masyarakat Sipil (OMS) dan komunitas untuk meningkatkan kapasitas dalam Pencegahan, Kesiapsiagaan, dan Respon (PPPR) terhadap pandemi, dengan mengintegrasikan isu Perubahan Iklim.</p>
-      <p class="intro-text" data-lang-key="landing_intro_p2">Anda akan belajar tentang konsep dasar PPPR, keterkaitannya dengan perubahan iklim, strategi kesiapsiagaan dan respon berbasis komunitas, serta advokasi dan kolaborasi multisektor.</p>
+      <!-- Landing Page Section (now the only content section in this file) -->
+      <div id="landingPage" class="content-section">
+        <h2 class="section-title" data-lang-key="landing_page_title">Selamat Datang di Modul E-Learning PPPR!</h2>
+        <p class="intro-text" data-lang-key="landing_intro_p1">Modul ini dirancang untuk Organisasi Masyarakat Sipil (OMS) dan komunitas untuk meningkatkan kapasitas dalam Pencegahan, Kesiapsiagaan, dan Respon (PPPR) terhadap pandemi, dengan mengintegrasikan isu Perubahan Iklim.</p>
+        <p class="intro-text" data-lang-key="landing_intro_p2">Anda akan belajar tentang konsep dasar PPPR, keterkaitannya dengan perubahan iklim, strategi kesiapsiagaan dan respon berbasis komunitas, serta advokasi dan kolaborasi multisektor.</p>
 
-      <h2 class="section-title" data-lang-key="material_structure_title">Struktur Materi</h2>
+        <h2 class="section-title" data-lang-key="material_structure_title">Struktur Materi</h2>
 
-      <div class="overall-progress-container">
-        <div class="overall-progress-bar" id="overallProgressBar">0%</div>
-      </div>
-
-      <div class="session-overview-grid">
-        <!-- Sesi 1 -->
-        <div class="session-overview" id="session-overview-1" data-session-id="1">
-          <!-- Session number circle is now a CSS pseudo-element -->
-          <h3 data-lang-key="s1_title"><i class="fas fa-book"></i> Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas</h3>
-          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
-          <p class="objective" data-lang-key="s1_objective">Tujuan: Memberikan pemahaman dasar tentang konsep PPPR dan peran kunci OMS dan komunitas.</p>
-          <h4>Topik:</h4>
-          <ul>
-            <li data-lang-key="s1_t1">Apa itu PPPR? (Definisi, komponen, siklus)</li>
-            <li data-lang-key="s1_t2">Belajar dari pandemi COVID-19: pembelajaran dan tantangan</li>
-            <li data-lang-key="s1_t3">Peran OMS dan komunitas dalam PPPR</li>
-            <li data-lang-key="s1_t4">Pendekatan berbasis masyarakat dalam kesehatan</li>
-            <li data-lang-key="s1_t5">Prinsip-prinsip inklusivitas, keadilan, dan HAM dalam PPPR</li>
-          </ul>
-          <h4>Aktivitas:</h4>
-          <ul>
-            <li data-lang-key="s1_a1">Studi kasus pendek (COVID-19, Ebola, dll.)</li>
-            <li data-lang-key="s1_a2">Refleksi peran organisasi peserta selama pandemi</li>
-          </ul>
-          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
-          <div class="session-locked-overlay">
-              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
-          </div>
+        <div class="overall-progress-container">
+          <div class="overall-progress-bar" id="overallProgressBar">0%</div>
         </div>
 
-        <!-- Sesi 2 -->
-        <div class="session-overview" id="session-overview-2" data-session-id="2">
-          <h3 data-lang-key="s2_title"><i class="fas fa-globe-americas"></i> Sesi 2: Keterkaitan PPPR dengan Perubahan Iklim</h3>
-          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
-          <p class="objective" data-lang-key="s2_objective">Tujuan: Memahami bagaimana perubahan iklim meningkatkan risiko wabah penyakit dan dampaknya terhadap sistem kesehatan masyarakat.</p>
-          <h4>Topik:</h4>
-          <ul>
-            <li data-lang-key="s2_t1">Perubahan iklim sebagai pemicu risiko kesehatan (banjir, migrasi vektor, kebakaran hutan, dll.)</li>
-            <li data-lang-key="s2_t2">Kaitan antara degradasi lingkungan dan zoonosis</li>
-            <li data-lang-key="s2_t3">Dampak perubahan iklim terhadap kelompok rentan</li>
-            <li data-lang-key="s2_t4">Pendekatan One Health: manusia, hewan, lingkungan</li>
-          </ul>
-          <h4>Aktivitas:</h4>
-          <ul>
-            <li data-lang-key="s2_a1">Diskusi kelompok: contoh lokal keterkaitan perubahan iklim dan kesehatan</li>
-            <li data-lang-key="s2_a2">Infografik interaktif: rantai dampak perubahan iklim terhadap wabah penyakit</li>
-          </ul>
-          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
-          <div class="session-locked-overlay">
-              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+        <div class="session-overview-grid">
+          <!-- Sesi 1 -->
+          <div class="session-overview" id="session-overview-1" data-session-id="1">
+            <h3 data-lang-key="s1_title"><i class="fas fa-book"></i> Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas</h3>
+            <div class="session-visual-progress"></div>
+            <p class="objective" data-lang-key="s1_objective">Tujuan: Memberikan pemahaman dasar tentang konsep PPPR dan peran kunci OMS dan komunitas.</p>
+            <h4>Topik:</h4>
+            <ul>
+              <li data-lang-key="s1_t1">Apa itu PPPR? (Definisi, komponen, siklus)</li>
+              <li data-lang-key="s1_t2">Belajar dari pandemi COVID-19: pembelajaran dan tantangan</li>
+              <li data-lang-key="s1_t3">Peran OMS dan komunitas dalam PPPR</li>
+              <li data-lang-key="s1_t4">Pendekatan berbasis masyarakat dalam kesehatan</li>
+              <li data-lang-key="s1_t5">Prinsip-prinsip inklusivitas, keadilan, dan HAM dalam PPPR</li>
+            </ul>
+            <h4>Aktivitas:</h4>
+            <ul>
+              <li data-lang-key="s1_a1">Studi kasus pendek (COVID-19, Ebola, dll.)</li>
+              <li data-lang-key="s1_a2">Refleksi peran organisasi peserta selama pandemi</li>
+            </ul>
+            <button class="session-action-btn" data-session-action="start" data-session-target="sesi1.html" data-lang-key="start_session_button">Mulai Sesi</button>
+            <div class="session-locked-overlay">
+                <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+            </div>
           </div>
-        </div>
 
-        <!-- Sesi 3 -->
-        <div class="session-overview" id="session-overview-3" data-session-id="3">
-          <h3 data-lang-key="s3_title"><i class="fas fa-toolbox"></i> Sesi 3: Kesiapsiagaan Komunitas dan Perencanaan Berbasis Risiko</h3>
-          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
-          <p class="objective" data-lang-key="s3_objective">Tujuan: Membekali peserta dengan keterampilan merancang rencana kesiapsiagaan berbasis komunitas dan risiko.</p>
-          <h4>Topik:</h4>
-          <ul>
-            <li data-lang-key="s3_t1">Penilaian risiko berbasis komunitas (Community Risk Assessment)</li>
-            <li data-lang-key="s3_t2">Identifikasi sumber daya lokal dan jaringan sosial</li>
-            <li data-lang-key="s3_t3">Penyusunan rencana kesiapsiagaan komunitas</li>
-            <li data-lang-key="s3_t4">Komunikasi risiko dan literasi kesehatan masyarakat</li>
-          </ul>
-          <h4>Aktivitas:</h4>
-          <ul>
-            <li data-lang-key="s3_a1">Simulasi: Menyusun peta risiko komunitas</li>
-            <li data-lang-key="s3_a2">Tugas kelompok: Draft rencana respon komunitas</li>
-          </ul>
-          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
-          <div class="session-locked-overlay">
-              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          <!-- Sesi 2 -->
+          <div class="session-overview" id="session-overview-2" data-session-id="2">
+            <h3 data-lang-key="s2_title"><i class="fas fa-globe-americas"></i> Sesi 2: Keterkaitan PPPR dengan Perubahan Iklim</h3>
+            <div class="session-visual-progress"></div>
+            <p class="objective" data-lang-key="s2_objective">Tujuan: Memahami bagaimana perubahan iklim meningkatkan risiko wabah penyakit dan dampaknya terhadap sistem kesehatan masyarakat.</p>
+            <h4>Topik:</h4>
+            <ul>
+              <li data-lang-key="s2_t1">Perubahan iklim sebagai pemicu risiko kesehatan (banjir, migrasi vektor, kebakaran hutan, dll.)</li>
+              <li data-lang-key="s2_t2">Kaitan antara degradasi lingkungan dan zoonosis</li>
+              <li data-lang-key="s2_t3">Dampak perubahan iklim terhadap kelompok rentan</li>
+              <li data-lang-key="s2_t4">Pendekatan One Health: manusia, hewan, lingkungan</li>
+            </ul>
+            <h4>Aktivitas:</h4>
+            <ul>
+              <li data-lang-key="s2_a1">Diskusi kelompok: contoh lokal keterkaitan perubahan iklim dan kesehatan</li>
+              <li data-lang-key="s2_a2">Infografik interaktif: rantai dampak perubahan iklim terhadap wabah penyakit</li>
+            </ul>
+            <button class="session-action-btn" data-session-action="start" data-session-target="sesi2.html" data-lang-key="start_session_button">Mulai Sesi</button>
+            <div class="session-locked-overlay">
+                <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+            </div>
           </div>
-        </div>
 
-        <!-- Sesi 4 -->
-        <div class="session-overview" id="session-overview-4" data-session-id="4">
-          <h3 data-lang-key="s4_title"><i class="fas fa-exclamation-triangle"></i> Sesi 4: Respon Komunitas yang Efektif dalam Situasi Darurat</h3>
-          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
-          <p class="objective" data-lang-key="s4_objective">Tujuan: Mempersiapkan peserta untuk berperan aktif dalam respon darurat selama pandemi atau wabah.</p>
-          <h4>Topik:</h4>
-          <ul>
-            <li data-lang-key="s4_t1">Tindakan tanggap darurat komunitas</li>
-            <li data-lang-key="s4_t2">Mekanisme koordinasi antar pihak (pemerintah, OMS, relawan)</li>
-            <li data-lang-key="s4_t3">Perlindungan kelompok rentan dan inklusi gender dalam respon</li>
-            <li data-lang-key="s4_t4">Teknologi dan inovasi dalam respon komunitas (WhatsApp group, dashboard lokal, dsb.)</li>
-          </ul>
-          <h4>Aktivitas:</h4>
-          <ul>
-            <li data-lang-key="s4_a1">Studi kasus respon cepat komunitas</li>
-            <li data-lang-key="s4_a2">Latihan koordinasi tanggap darurat berbasis skenario</li>
-          </ul>
-          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
-          <div class="session-locked-overlay">
-              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          <!-- Sesi 3 -->
+          <div class="session-overview" id="session-overview-3" data-session-id="3">
+            <h3 data-lang-key="s3_title"><i class="fas fa-toolbox"></i> Sesi 3: Kesiapsiagaan Komunitas dan Perencanaan Berbasis Risiko</h3>
+            <div class="session-visual-progress"></div>
+            <p class="objective" data-lang-key="s3_objective">Tujuan: Membekali peserta dengan keterampilan merancang rencana kesiapsiagaan berbasis komunitas dan risiko.</p>
+            <h4>Topik:</h4>
+            <ul>
+              <li data-lang-key="s3_t1">Penilaian risiko berbasis komunitas (Community Risk Assessment)</li>
+              <li data-lang-key="s3_t2">Identifikasi sumber daya lokal dan jaringan sosial</li>
+              <li data-lang-key="s3_t3">Penyusunan rencana kesiapsiagaan komunitas</li>
+              <li data-lang-key="s3_t4">Komunikasi risiko dan literasi kesehatan masyarakat</li>
+            </ul>
+            <h4>Aktivitas:</h4>
+            <ul>
+              <li data-lang-key="s3_a1">Simulasi: Menyusun peta risiko komunitas</li>
+              <li data-lang-key="s3_a2">Tugas kelompok: Draft rencana respon komunitas</li>
+            </ul>
+            <button class="session-action-btn" data-session-action="start" data-session-target="sesi3.html" data-lang-key="start_session_button">Mulai Sesi</button>
+            <div class="session-locked-overlay">
+                <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+            </div>
           </div>
-        </div>
 
-        <!-- Sesi 5 -->
-        <div class="session-overview" id="session-overview-5" data-session-id="5">
-          <h3 data-lang-key="s5_title"><i class="fas fa-leaf"></i> Sesi 5: Strategi Keberlanjutan, Advokasi, dan Kolaborasi Multisektor</h3>
-          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
-          <p class="objective" data-lang-key="s5_objective">Tujuan: Menguatkan kapasitas peserta dalam mendorong keberlanjutan program PPPR dan kolaborasi lintas sektor.</p>
-          <h4>Topik:</h4>
-          <ul>
-            <li data-lang-key="s5_t1">Advokasi berbasis bukti: menyuarakan kebutuhan komunitas</li>
-            <li data-lang-key="s5_t2">Kolaborasi lintas sektor: kesehatan, lingkungan, pendidikan, pertanian</li>
-            <li data-lang-key="s5_t3">Mobilisasi sumber daya (lokal dan eksternal)</li>
-            <li data-lang-key="s5_t4">Monitoring dan evaluasi program PPPR komunitas</li>
-            <li data-lang-key="s5_t5">Integrasi PPPR ke dalam kebijakan lokal dan rencana adaptasi perubahan iklim</li>
-          </ul>
-          <h4>Aktivitas:</h4>
-          <ul>
-            <li data-lang-key="s5_a1">Menyusun strategi advokasi sederhana</li>
-            <li data-lang-key="s5_a2">Refleksi dan rencana tindak lanjut individu/organisasi</li>
-          </ul>
-          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
-          <div class="session-locked-overlay">
-              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          <!-- Sesi 4 -->
+          <div class="session-overview" id="session-overview-4" data-session-id="4">
+            <h3 data-lang-key="s4_title"><i class="fas fa-exclamation-triangle"></i> Sesi 4: Respon Komunitas yang Efektif dalam Situasi Darurat</h3>
+            <div class="session-visual-progress"></div>
+            <p class="objective" data-lang-key="s4_objective">Tujuan: Mempersiapkan peserta untuk berperan aktif dalam respon darurat selama pandemi atau wabah.</p>
+            <h4>Topik:</h4>
+            <ul>
+              <li data-lang-key="s4_t1">Tindakan tanggap darurat komunitas</li>
+              <li data-lang-key="s4_t2">Mekanisme koordinasi antar pihak (pemerintah, OMS, relawan)</li>
+              <li data-lang-key="s4_t3">Perlindungan kelompok rentan dan inklusi gender dalam respon</li>
+              <li data-lang-key="s4_t4">Teknologi dan inovasi dalam respon komunitas (WhatsApp group, dashboard lokal, dsb.)</li>
+            </ul>
+            <h4>Aktivitas:</h4>
+            <ul>
+              <li data-lang-key="s4_a1">Studi kasus respon cepat komunitas</li>
+              <li data-lang-key="s4_a2">Latihan koordinasi tanggap darurat berbasis skenario</li>
+            </ul>
+            <button class="session-action-btn" data-session-action="start" data-session-target="sesi4.html" data-lang-key="start_session_button">Mulai Sesi</button>
+            <div class="session-locked-overlay">
+                <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+            </div>
           </div>
-        </div>
-      </div> <!-- End session-overview-grid -->
 
-      <button class="reset-progress-button" onclick="resetProgress()" data-lang-key="reset_progress_button">Reset Progres Modul</button>
+          <!-- Sesi 5 -->
+          <div class="session-overview" id="session-overview-5" data-session-id="5">
+            <h3 data-lang-key="s5_title"><i class="fas fa-leaf"></i> Sesi 5: Strategi Keberlanjutan, Advokasi, dan Kolaborasi Multisektor</h3>
+            <div class="session-visual-progress"></div>
+            <p class="objective" data-lang-key="s5_objective">Tujuan: Menguatkan kapasitas peserta dalam mendorong keberlanjutan program PPPR dan kolaborasi lintas sektor.</p>
+            <h4>Topik:</h4>
+            <ul>
+              <li data-lang-key="s5_t1">Advokasi berbasis bukti: menyuarakan kebutuhan komunitas</li>
+              <li data-lang-key="s5_t2">Kolaborasi lintas sektor: kesehatan, lingkungan, pendidikan, pertanian</li>
+              <li data-lang-key="s5_t3">Mobilisasi sumber daya (lokal dan eksternal)</li>
+              <li data-lang-key="s5_t4">Monitoring dan evaluasi program PPPR komunitas</li>
+              <li data-lang-key="s5_t5">Integrasi PPPR ke dalam kebijakan lokal dan rencana adaptasi perubahan iklim</li>
+            </ul>
+            <h4>Aktivitas:</h4>
+            <ul>
+              <li data-lang-key="s5_a1">Menyusun strategi advokasi sederhana</li>
+              <li data-lang-key="s5_a2">Refleksi dan rencana tindak lanjut individu/organisasi</li>
+            </ul>
+            <button class="session-action-btn" data-session-action="start" data-session-target="sesi5.html" data-lang-key="start_session_button">Mulai Sesi</button>
+            <div class="session-locked-overlay">
+                <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+            </div>
+          </div>
+        </div> <!-- End session-overview-grid -->
+
+        <button class="reset-progress-button" onclick="resetProgress()" data-lang-key="reset_progress_button">Reset Progres Modul</button>
+      </div> <!-- End landingPage -->
+
     </div>
   </main>
 
@@ -625,9 +638,11 @@
 
   <script>
     let currentLang = 'id';
+    // currentViewId tidak lagi diperlukan karena halaman ini hanya menampilkan landing page
+    // dan navigasi dilakukan melalui window.location.href
 
     // Status penyelesaian sesi akan disimpan di localStorage
-    let sessionCompletionStatus = {}; // Contoh: { 'session-1': { completed: true, unlocked: true }, 'session-2': { completed: false, unlocked: true } }
+    let sessionCompletionStatus = {};
 
     const translations = {
       en: {
@@ -754,6 +769,10 @@
       }
     };
 
+    // contentSections tidak lagi diperlukan karena hanya ada satu bagian konten utama (landingPage)
+    // dan navigasi dilakukan melalui window.location.href
+    // const contentSections = [ document.getElementById('landingPage') ];
+
     // Fungsi untuk memuat status penyelesaian sesi dari localStorage
     function loadSessionStatus() {
         const storedStatus = localStorage.getItem('eLearningSessionStatus');
@@ -828,28 +847,28 @@
 
     // Fungsi untuk menangani aksi tombol sesi (Mulai/Lanjutkan)
     function handleSessionAction(event) {
-        const sessionId = event.target.closest('.session-overview').dataset.sessionId;
-        const currentSessionNum = parseInt(sessionId);
+        const action = event.target.dataset.sessionAction;
+        const targetUrl = event.target.dataset.sessionTarget; // URL target untuk navigasi
+        const sessionId = event.target.closest('.session-overview').dataset.sessionId; // ID sesi dari kartu
 
-        // Tandai sesi saat ini sebagai selesai
-        sessionCompletionStatus[`session-${sessionId}`].completed = true;
-        updateSessionCardUI(sessionId); // Perbarui UI untuk sesi saat ini
-
-        // Aktifkan sesi berikutnya
-        const nextSessionNum = currentSessionNum + 1;
-        if (nextSessionNum <= 5) { // Pastikan ada sesi berikutnya (maksimal Sesi 5)
-            const nextSessionId = `session-${nextSessionNum}`;
-            if (!sessionCompletionStatus[nextSessionId].unlocked) { // Hanya buka kunci jika belum terbuka
-                sessionCompletionStatus[nextSessionId].unlocked = true;
-                updateSessionCardUI(nextSessionId); // Perbarui UI untuk sesi berikutnya
-            }
+        if (action === 'start') {
+            // Ini adalah tempat untuk mengarahkan pengguna ke halaman sesi yang sebenarnya
+            window.location.href = targetUrl;
         }
-        saveSessionStatus(); // Simpan perubahan status ke localStorage
-        updateOverallProgressBar(); // Perbarui bilah progres keseluruhan
+        // Logika untuk 'complete-session', 'prev-session', 'back-to-landing'
+        // tidak lagi relevan di landing page ini karena tombol-tombol tersebut
+        // akan berada di halaman sesi terpisah.
+        // Namun, jika Anda ingin tombol 'Mulai Sesi' di landing page juga
+        // menandai sesi sebagai selesai (misalnya untuk tujuan demo progres),
+        // Anda bisa menambahkan logika di sini.
+        // Untuk saat ini, asumsikan penyelesaian sesi ditangani di halaman sesi itu sendiri.
 
-        // Di sini Anda bisa menambahkan logika untuk mengarahkan pengguna ke halaman sesi yang sebenarnya
-        console.log(`Mulai Sesi ${sessionId} diklik! (Ini adalah placeholder untuk navigasi ke konten sesi)`);
-        // Contoh: window.location.href = `session-${sessionId}.html`;
+        // Jika Anda ingin tombol 'Mulai Sesi' di landing page juga menandai sesi sebagai selesai:
+        // const currentSessionNum = parseInt(sessionId);
+        // sessionCompletionStatus[`session-${currentSessionNum}`].completed = true;
+        // saveSessionStatus();
+        // updateOverallProgressBar();
+        // updateSessionCardUI(`session-${currentSessionNum}`);
     }
 
     // Fungsi untuk menerapkan terjemahan
@@ -900,10 +919,14 @@
             updateSessionCardUI(`session-${i}`);
         }
 
-        // Tambahkan event listener ke semua tombol aksi sesi
-        document.querySelectorAll('.session-action-btn').forEach(button => {
+        // Tambahkan event listener ke semua tombol aksi sesi di landing page
+        document.querySelectorAll('.session-overview .session-action-btn').forEach(button => {
             button.addEventListener('click', handleSessionAction);
         });
+
+        // Event listener untuk tombol navigasi dalam sesi tidak lagi diperlukan di sini
+        // karena tombol-tombol tersebut akan berada di halaman sesi terpisah.
+
         updateOverallProgressBar(); // Inisialisasi bilah progres keseluruhan
     }
 
