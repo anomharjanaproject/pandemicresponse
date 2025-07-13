@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 3: Kesiapsiagaan Komunitas dan Perencanaan Berbasis Risiko</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
+    <style>
+        /* Re-use existing CSS variables and general styles */
+        :root {
+            --primary: #0d9488;
+            --secondary: #f0fdfa;
+            --accent: #14b8a6;
+            --danger: #dc2626;
+            --warning: #facc15;
+            --light: #f8fafc;
+            --success: #22c54e;
+            --info: #3b82f6;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-shadow: rgba(0,0,0,0.05);
+            --card-hover-shadow: rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--card-shadow);
+            flex-grow: 1;
+            opacity: 0; /* Initial state for fade-in animation */
+            transform: translateY(20px); /* Initial state for slide-up animation */
+            animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply animation */
+        }
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.8rem;
+        }
+        h2 {
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed var(--card-border);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        h2 i {
+            color: var(--accent);
+            font-size: 1.5em;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1.5rem;
+        }
+        .navigation-buttons button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .navigation-buttons button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .navigation-buttons button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        footer {
+            text-align:center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 3rem;
+            background-color: #e2e8f0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Interactive Elements Styling */
+        .interactive-section {
+            background-color: var(--secondary);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .interactive-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .interactive-section h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+
+        /* Accordion Styling */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease;
+        }
+        .accordion-header:hover {
+            background-color: var(--accent);
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            background-color: var(--card-bg);
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Adjust as needed, large enough to contain content */
+            padding: 1.5rem;
+        }
+        .accordion-content ul {
+            margin-left: 0; /* Reset default list indent */
+            list-style: none; /* Remove default bullet */
+            padding-left: 0; /* Remove default padding */
+        }
+        .accordion-content ul li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem; /* Space for custom bullet */
+        }
+        .accordion-content ul li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        /* Step-by-Step Guide */
+        .step-by-step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .step-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .step-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .step-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .step-header i {
+            font-size: 1.3em;
+            color: var(--accent);
+        }
+        .step-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+        .step-content.active {
+            max-height: 300px; /* Adjust as needed */
+            padding: 1.5rem;
+        }
+        .step-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-content ul li {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .step-content ul li::before {
+            content: '✓';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Interactive Checklist */
+        .checklist-container {
+            margin-top: 1.5rem;
+            background-color: var(--light);
+            border: 1px dashed var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+        .checklist-item:hover {
+            background-color: #e6fffa;
+        }
+        .checklist-item input[type="checkbox"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            accent-color: var(--primary);
+        }
+        .checklist-item.completed label {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        /* Quiz Styling (re-used from Sesi 1/2) */
+        .quiz-container {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background-color: var(--light);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .options label:hover {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.8rem;
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: var(--danger);
+        }
+        .quiz-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            margin: 1.5rem auto 0;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-submit-btn:hover {
+            background: var(--accent);
+        }
+        .quiz-result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+        }
+        .quiz-reset-btn {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-reset-btn:hover {
+            background-color: #3672d9;
+        }
+
+        /* Reflection Text Area */
+        textarea.reflection-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background-color: var(--light);
+            resize: vertical;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        textarea.reflection-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            outline: none;
+        }
+        .reflection-feedback {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+        .reflection-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .reflection-submit-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Flip Card Styling */
+        .flip-card {
+            background-color: transparent;
+            width: 200px;
+            height: 150px;
+            perspective: 1000px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .flip-card-front {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .flip-card-front i {
+            font-size: 2.5em;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .flip-card-back {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            transform: rotateY(180deg);
+            border: 1px solid var(--card-border);
+        }
+
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .accordion-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .accordion-content {
+                padding: 1rem;
+            }
+            .step-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .step-content {
+                padding: 1rem;
+            }
+            .flip-card {
+                width: 150px;
+                height: 120px;
+                font-size: 0.8rem;
+            }
+            .flip-card-front i {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1><i class="fas fa-tools"></i> Sesi 3: Kesiapsiagaan Komunitas dan Perencanaan Berbasis Risiko</h1>
+
+        <p>Sesi ini akan membekali Anda dengan pemahaman mendalam tentang bagaimana komunitas dapat secara proaktif mempersiapkan diri menghadapi potensi krisis kesehatan dan bencana terkait perubahan iklim.</p>
+
+        <!-- Tujuan Pembelajaran -->
+        <h2>🎯 Tujuan Pembelajaran</h2>
+        <p>Setelah menyelesaikan sesi ini, peserta diharapkan mampu:</p>
+        <ul>
+            <li>Memahami konsep dan langkah penilaian risiko berbasis komunitas</li>
+            <li>Mengidentifikasi sumber daya lokal dan jaringan sosial pendukung</li>
+            <li>Menyusun rencana kesiapsiagaan komunitas yang inklusif dan partisipatif</li>
+            <li>Menerapkan prinsip komunikasi risiko dan meningkatkan literasi kesehatan masyarakat</li>
+        </ul>
+
+        <!-- 1. Penilaian Risiko Berbasis Komunitas (Community Risk Assessment) - Step-by-Step Interactive -->
+        <h2><i class="fas fa-chart-line"></i> 1. Penilaian Risiko Berbasis Komunitas</h2>
+        <p>Penilaian risiko komunitas adalah proses sistematis untuk mengidentifikasi potensi bahaya, memahami kerentanan, dan menilai kapasitas respon. Berikut langkah-langkahnya:</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-list-ol"></i> Langkah-langkah Penilaian Risiko</h3>
+            <div class="step-by-step-container" id="riskAssessmentSteps">
+                <div class="step-item">
+                    <div class="step-header">
+                        <i class="fas fa-database"></i> Langkah 1: Pengumpulan Data Dasar
+                    </div>
+                    <div class="step-content">
+                        <p>Mengumpulkan informasi demografi, geografis, kesehatan, dan data historis bencana di komunitas.</p>
+                        <ul>
+                            <li>Data demografi (jumlah penduduk, usia, jenis kelamin)</li>
+                            <li>Peta wilayah (infrastruktur, sumber daya alam)</li>
+                            <li>Riwayat kejadian wabah/bencana</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-header">
+                        <i class="fas fa-exclamation-triangle"></i> Langkah 2: Identifikasi Ancaman dan Kerentanan
+                    </div>
+                    <div class="step-content">
+                        <p>Mengidentifikasi bahaya spesifik (misalnya, jenis penyakit menular, risiko banjir) dan kelompok rentan di komunitas.</p>
+                        <ul>
+                            <li>Jenis Bahaya: Penyakit menular (flu, COVID-19, DBD), Bencana alam (banjir, kebakaran)</li>
+                            <li>Kelompok Rentan: Anak-anak, lansia, perempuan, orang dengan disabilitas, populasi kunci.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-header">
+                        <i class="fas fa-chart-pie"></i> Langkah 3: Analisis Dampak Potensial
+                    </div>
+                    <div class="step-content">
+                        <p>Menganalisis potensi dampak dari setiap ancaman terhadap kesehatan, mata pencarian, dan infrastruktur komunitas.</p>
+                        <ul>
+                            <li>Dampak kesehatan: peningkatan kasus penyakit, gangguan layanan kesehatan.</li>
+                            <li>Dampak sosial-ekonomi: kehilangan mata pencarian, kerusakan rumah.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-header">
+                        <i class="fas fa-sort-numeric-down"></i> Langkah 4: Pemeringkatan Risiko
+                    </div>
+                    <div class="step-content">
+                        <p>Menentukan prioritas risiko berdasarkan tingkat kemungkinan dan dampak yang ditimbulkan. Risiko = Bahaya x Kerentanan / Kapasitas.</p>
+                        <ul>
+                            <li>Prioritaskan risiko yang paling mungkin terjadi dan berdampak besar.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-header">
+                        <i class="fas fa-file-alt"></i> Langkah 5: Dokumentasi Hasil
+                    </div>
+                    <div class="step-content">
+                        <p>Mendokumentasikan seluruh proses dan hasil penilaian risiko sebagai dasar untuk perencanaan kesiapsiagaan.</p>
+                        <ul>
+                            <li>Laporan penilaian risiko.</li>
+                            <li>Peta risiko komunitas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h3><i class="fas fa-tools"></i> Alat Praktis Penilaian Risiko:</h3>
+            <p>Klik untuk melihat detail alat:</p>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-clipboard-question"></i> Kuesioner Penilaian Risiko
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Daftar pertanyaan terstruktur untuk mengumpulkan informasi tentang bahaya, kerentanan, dan kapasitas dari anggota komunitas.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-comments"></i> Fokus Diskusi Kelompok (FGD)
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Metode kualitatif untuk menggali persepsi mendalam dari kelompok masyarakat tentang risiko dan sumber daya mereka.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-walking"></i> Transect Walk (Peninjauan Lapangan)
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Observasi langsung kondisi fisik dan sosial komunitas dengan berjalan menyusuri wilayah, mencatat potensi risiko dan sumber daya.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Identifikasi Sumber Daya Lokal dan Jaringan Sosial - Accordion with Icons -->
+        <h2><i class="fas fa-hands-helping"></i> 2. Identifikasi Sumber Daya Lokal dan Jaringan Sosial</h2>
+        <p>Memetakan kapasitas komunitas adalah kunci untuk mendukung kesiapsiagaan dan respon yang efektif.</p>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-hospital"></i> Jenis Sumber Daya Lokal
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Infrastruktur kesehatan (puskesmas, posyandu, klinik desa)</li>
+                    <li>SDM terlatih (kader kesehatan, relawan, tokoh masyarakat)</li>
+                    <li>Sumber logistik (pangan darurat, masker, alat kebersihan, air bersih)</li>
+                    <li>Sistem komunikasi lokal (radio komunitas, WA group, pengeras suara masjid/gereja)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-users"></i> Jaringan Sosial
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Kelompok ibu, karang taruna, organisasi keagamaan, kelompok pemuda</li>
+                    <li>Relasi dengan pemerintah desa dan lembaga lain (sekolah, LSM lokal)</li>
+                    <li>Mekanisme gotong royong dan solidaritas komunitas</li>
+                </ul>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h3><i class="fas fa-network-wired"></i> Visualisasi Jaringan Sosial:</h3>
+            <p>Bayangkan lingkaran komunitas Anda. Siapa saja yang ada di dalamnya? Bagaimana mereka terhubung?</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <canvas id="socialNetworkCanvas" width="400" height="300" style="border:1px solid var(--card-border); border-radius: 8px; background-color: white;"></canvas>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 10px;">Klik tombol di bawah untuk melihat contoh visualisasi.</p>
+                <button onclick="drawSocialNetwork()" style="background-color: var(--info); color: white; padding: 0.6rem 1rem; border-radius: 6px; border: none; cursor: pointer; margin-top: 0.5rem;">Tampilkan Jaringan</button>
+            </div>
+        </div>
+
+
+        <!-- 3. Penyusunan Rencana Kesiapsiagaan Komunitas - Interactive Checklist -->
+        <h2><i class="fas fa-clipboard-check"></i> 3. Penyusunan Rencana Kesiapsiagaan Komunitas</h2>
+        <p>Rencana kesiapsiagaan adalah panduan langkah-langkah yang disepakati bersama. Centang item yang harus ada dalam rencana Anda!</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-tasks"></i> Komponen Rencana Kesiapsiagaan (Checklist)</h3>
+            <div class="checklist-container" id="readinessPlanChecklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="check1"><label for="check1">Tujuan dan ruang lingkup rencana</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check2"><label for="check2">Hasil penilaian risiko (dari bagian 1)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check3"><label for="check3">Strategi pencegahan dan mitigasi</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check4"><label for="check4">Mekanisme respon cepat dan koordinasi</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check5"><label for="check5">Tanggung jawab peran dan alur komunikasi</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="check6"><label for="check6">Protokol pemantauan dan evaluasi</label>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem; font-style: italic; color: var(--text-medium);">Pastikan semua komponen tercakup dalam rencana Anda!</p>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-lightbulb"></i> Prinsip Penyusunan Rencana
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Inklusif (memastikan suara kelompok rentan didengar dan diakomodasi)</li>
+                    <li>Berbasis bukti (menggunakan data dan informasi yang valid)</li>
+                    <li>Fleksibel sesuai konteks lokal (dapat disesuaikan dengan kondisi spesifik komunitas)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-file-export"></i> Contoh Penerapan Rencana
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Prosedur evakuasi kelompok rentan saat banjir.</li>
+                    <li>Alur distribusi logistik darurat ke rumah tangga terdampak.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. Komunikasi Risiko dan Literasi Kesehatan Masyarakat - Flip Cards -->
+        <h2><i class="fas fa-bullhorn"></i> 4. Komunikasi Risiko dan Literasi Kesehatan Masyarakat</h2>
+        <p>Penyampaian informasi yang jelas dan tepat waktu sangat krusial. Jelajahi prinsip-prinsip komunikasi risiko:</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-exchange-alt"></i> Prinsip Komunikasi Risiko (Klik untuk Membalik)</h3>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 1.5rem;">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-hourglass-start"></i> Cepat & Akurat
+                        </div>
+                        <div class="flip-card-back">
+                            Informasi harus disampaikan secepat mungkin dan berdasarkan fakta yang valid.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-sync-alt"></i> Konsisten
+                        </div>
+                        <div class="flip-card-back">
+                            Pesan dari berbagai sumber harus selaras untuk menghindari kebingungan.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-language"></i> Bahasa Mudah Dipahami
+                        </div>
+                        <div class="flip-card-back">
+                            Gunakan bahasa sederhana, hindari jargon teknis, dan sesuaikan dengan audiens lokal.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-broadcast-tower"></i> Manfaatkan Media Lokal
+                        </div>
+                        <div class="flip-card-back">
+                            Gunakan saluran yang dipercaya komunitas (radio komunitas, poster, WA group, tokoh adat).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-book-open"></i> Peningkatan Literasi Kesehatan
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Cara mengenali gejala penyakit: Edukasi tentang tanda dan gejala awal wabah.</li>
+                    <li>Informasi pencegahan berbasis bukti: Panduan praktis tentang kebersihan, vaksinasi, dan jaga jarak.</li>
+                    <li>Penanganan misinformasi/hoaks: Strategi untuk mengidentifikasi dan mengoreksi informasi yang salah.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Aktivitas Interaktif: Refleksi & Tugas Kelompok -->
+        <h2>🎯 Aktivitas Pembelajaran</h2>
+        <div class="interactive-section">
+            <h3><i class="fas fa-map"></i> Simulasi: Menyusun Peta Risiko Komunitas</h3>
+            <p>Bayangkan wilayah komunitas Anda. Tandai lokasi bahaya potensial (misal: sungai rawan banjir), kelompok rentan (lansia, penyandang disabilitas), dan sumber daya yang tersedia (pos kesehatan, gudang logistik). Bagaimana peta ini membantu perencanaan?</p>
+            <textarea id="mapReflectionInput" class="reflection-input" placeholder="Tulis refleksi Anda tentang peta risiko komunitas di sini..."></textarea>
+            <div class="reflection-feedback" id="mapReflectionFeedback"></div>
+            <button class="reflection-submit-btn" onclick="submitReflection('map')">Kirim Refleksi Peta</button>
+        </div>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-users-gear"></i> Tugas Kelompok: Draft Rencana Respon Komunitas</h3>
+            <p>Pilih satu skenario ancaman utama (contoh: wabah penyakit pasca banjir). Susun langkah-langkah respon cepat, tetapkan peran tiap pihak dalam komunitas, dan siapkan rencana komunikasi risiko. Apa poin-poin kunci dari draft rencana Anda?</p>
+            <textarea id="planReflectionInput" class="reflection-input" placeholder="Tulis poin-poin kunci draft rencana respon komunitas Anda di sini..."></textarea>
+            <div class="reflection-feedback" id="planReflectionFeedback"></div>
+            <button class="reflection-submit-btn" onclick="submitReflection('plan')">Kirim Draft Rencana</button>
+        </div>
+
+        <!-- Output Akhir Sesi 3 -->
+        <h2>📦 Output Akhir Sesi 3</h2>
+        <p>Selamat! Anda telah menyelesaikan Sesi 3. Setelah sesi ini, Anda diharapkan mampu:</p>
+        <ul>
+            <li>Memahami konsep dan langkah penilaian risiko berbasis komunitas</li>
+            <li>Mengidentifikasi sumber daya lokal dan jaringan sosial pendukung</li>
+            <li>Menyusun rencana kesiapsiagaan komunitas yang inklusif dan partisipatif</li>
+            <li>Menerapkan prinsip komunikasi risiko dan meningkatkan literasi kesehatan masyarakat</li>
+        </ul>
+
+        <div class="navigation-buttons">
+            <button onclick="window.location.href='pelatihan.html'">Kembali ke Roadmap</button>
+            <button onclick="completeSession(3)">Lanjut Sesi 4</button>
+        </div>
+    </div>
+
+    <footer>
+        Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+    </footer>
+
+    <script>
+        // Fungsi untuk memuat status penyelesaian sesi dari localStorage
+        function loadSessionStatus() {
+            return JSON.parse(localStorage.getItem('eLearningSessionStatus')) || {};
+        }
+
+        // Fungsi untuk menyimpan status penyelesaian sesi ke localStorage
+        function saveSessionStatus(status) {
+            localStorage.setItem('eLearningSessionStatus', JSON.stringify(status));
+        }
+
+        // Fungsi untuk menyelesaikan sesi dan melanjutkan ke sesi berikutnya
+        function completeSession(sessionId) {
+            let sessionCompletionStatus = loadSessionStatus();
+
+            // Tandai sesi saat ini sebagai selesai
+            sessionCompletionStatus[`session-${sessionId}`] = { completed: true, unlocked: true };
+
+            // Aktifkan sesi berikutnya
+            const nextSessionNum = sessionId + 1;
+            if (nextSessionNum <= 5) { // Asumsi ada 5 sesi total
+                sessionCompletionStatus[`session-${nextSessionNum}`] = { completed: false, unlocked: true };
+            }
+
+            saveSessionStatus(sessionCompletionStatus);
+
+            // Arahkan ke sesi berikutnya atau kembali ke landing page jika sudah sesi terakhir
+            if (nextSessionNum <= 5) {
+                window.location.href = `sesi${nextSessionNum}.html`;
+            } else {
+                window.location.href = 'index.html'; // Kembali ke landing page jika semua sesi selesai
+            }
+        }
+
+        /* --- Accordion Logic --- */
+        function setupAccordions() {
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    if (content.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.padding = "1.5rem";
+                    } else {
+                        content.style.maxHeight = "0";
+                        content.style.padding = "0 1.5rem";
+                    }
+                });
+            });
+        }
+
+        /* --- Step-by-Step Guide Logic --- */
+        function setupStepByStep() {
+            document.querySelectorAll('.step-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const content = item.querySelector('.step-content');
+                    content.classList.toggle('active');
+                    if (content.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.padding = "1.5rem";
+                    } else {
+                        content.style.maxHeight = "0";
+                        content.style.padding = "0 1.5rem";
+                    }
+                });
+            });
+        }
+
+        /* --- Interactive Checklist Logic --- */
+        function setupChecklist() {
+            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const listItem = e.target.closest('.checklist-item');
+                    if (e.target.checked) {
+                        listItem.classList.add('completed');
+                    } else {
+                        listItem.classList.remove('completed');
+                    }
+                });
+            });
+        }
+
+        /* --- Social Network Canvas Drawing Logic --- */
+        function drawSocialNetwork() {
+            const canvas = document.getElementById('socialNetworkCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height); // Clear canvas
+
+            // Draw background
+            ctx.fillStyle = '#f0fdfa'; // secondary color
+            ctx.fillRect(0, 0, width, height);
+
+            // Nodes (Community elements)
+            const nodes = [
+                { x: width / 2, y: height / 2, label: "Komunitas", color: '#0d9488', radius: 40 }, // Primary
+                { x: width * 0.2, y: height * 0.3, label: "Puskesmas", color: '#14b8a6', radius: 25 }, // Accent
+                { x: width * 0.8, y: height * 0.3, label: "Kader", color: '#14b8a6', radius: 25 },
+                { x: width * 0.3, y: height * 0.7, label: "Kelompok Ibu", color: '#14b8a6', radius: 25 },
+                { x: width * 0.7, y: height * 0.7, label: "Pemerintah Desa", color: '#14b8a6', radius: 25 }
+            ];
+
+            // Draw connections (lines)
+            ctx.strokeStyle = '#4b5563'; // text-medium
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]); // Dashed line
+            ctx.beginPath();
+            ctx.moveTo(nodes[0].x, nodes[0].y);
+            ctx.lineTo(nodes[1].x, nodes[1].y);
+            ctx.moveTo(nodes[0].x, nodes[0].y);
+            ctx.lineTo(nodes[2].x, nodes[2].y);
+            ctx.moveTo(nodes[0].x, nodes[0].y);
+            ctx.lineTo(nodes[3].x, nodes[3].y);
+            ctx.moveTo(nodes[0].x, nodes[0].y);
+            ctx.lineTo(nodes[4].x, nodes[4].y);
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset line dash
+
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.fill();
+                ctx.strokeStyle = '#e2e8f0'; // card-border
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = 'white';
+                ctx.font = `${node.radius * 0.4}px Inter`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(node.label, node.x, node.y);
+            });
+        }
+
+
+        /* --- Quiz Logic (Re-used and adapted for Sesi 3 questions) --- */
+        const quizQuestions = [
+            {
+                question: "Manakah yang BUKAN merupakan komponen utama dari Penilaian Risiko Berbasis Komunitas?",
+                options: [
+                    "Mengidentifikasi potensi bahaya",
+                    "Memahami kerentanan kelompok masyarakat",
+                    "Menilai kapasitas komunitas dalam merespon",
+                    "Melakukan evakuasi massal"
+                ],
+                answer: "Melakukan evakuasi massal"
+            },
+            {
+                question: "Apa rumus dasar untuk mendefinisikan Risiko dalam konteks PPPR?",
+                options: [
+                    "Risiko = Bahaya + Kerentanan - Kapasitas",
+                    "Risiko = Bahaya x Kerentanan / Kapasitas",
+                    "Risiko = Bahaya / Kerentanan + Kapasitas",
+                    "Risiko = (Bahaya + Kapasitas) x Kerentanan"
+                ],
+                answer: "Risiko = Bahaya x Kerentanan / Kapasitas"
+            },
+            {
+                question: "Salah satu prinsip penting dalam Komunikasi Risiko adalah...",
+                options: [
+                    "Menyampaikan informasi hanya kepada pihak berwenang",
+                    "Menyampaikan informasi secepat mungkin dan akurat",
+                    "Menggunakan jargon teknis agar terlihat profesional",
+                    "Menyembunyikan informasi yang berpotensi menimbulkan kepanikan"
+                ],
+                answer: "Menyampaikan informasi secepat mungkin dan akurat"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quizContainer');
+        const quizSubmitBtn = document.getElementById('quizSubmitBtn');
+        const quizResult = document.getElementById('quizResult');
+        const quizResetBtn = document.getElementById('quizResetBtn');
+
+        function loadQuiz() {
+            if (!quizContainer) return;
+            quizContainer.innerHTML = ''; // Clear previous questions
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                q.options.forEach((option, optIndex) => {
+                    const label = document.createElement('label');
+                    label.innerHTML = `
+                        <input type="radio" name="question${index}" value="${option}">
+                        ${option}
+                    `;
+                    optionsDiv.appendChild(label);
+                });
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+            quizSubmitBtn.style.display = 'block';
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            quizQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const questionDiv = quizContainer.children[index];
+
+                // Remove previous feedback classes
+                questionDiv.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct', 'incorrect');
+                });
+
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect');
+                        // Highlight correct answer
+                        questionDiv.querySelector(`input[value="${q.answer}"]`).parentElement.classList.add('correct');
+                    }
+                } else {
+                    allAnswered = false;
+                    // Optionally, highlight unanswered questions
+                    questionDiv.style.border = '1px solid #dc2626'; /* var(--danger) */
+                    questionDiv.style.borderRadius = '8px';
+                    questionDiv.style.padding = '0.5rem';
+                    setTimeout(() => {
+                        questionDiv.style.border = 'none';
+                        questionDiv.style.padding = '0';
+                    }, 1500);
+                }
+            });
+
+            if (!allAnswered) {
+                quizResult.textContent = "Mohon jawab semua pertanyaan sebelum mengirim!";
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+                return;
+            }
+
+            quizSubmitBtn.style.display = 'none';
+            quizResetBtn.style.display = 'block';
+
+            if (score === quizQuestions.length) {
+                quizResult.textContent = `Selamat! Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar.`;
+                quizResult.classList.remove('incorrect');
+                quizResult.classList.add('correct');
+            } else {
+                quizResult.textContent = `Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar. Coba lagi!`;
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+            }
+        }
+
+        function resetQuiz() {
+            loadQuiz();
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+            quizSubmitBtn.style.display = 'block';
+        }
+
+        // Add event listeners for quiz buttons
+        if (quizSubmitBtn) quizSubmitBtn.addEventListener('click', submitQuiz);
+        if (quizResetBtn) quizResetBtn.addEventListener('click', resetQuiz);
+
+        /* --- Reflection Logic --- */
+        function submitReflection(type) {
+            let inputElement;
+            let feedbackElement;
+            if (type === 'map') {
+                inputElement = document.getElementById('mapReflectionInput');
+                feedbackElement = document.getElementById('mapReflectionFeedback');
+            } else if (type === 'plan') {
+                inputElement = document.getElementById('planReflectionInput');
+                feedbackElement = document.getElementById('planReflectionFeedback');
+            } else {
+                return;
+            }
+
+            if (inputElement.value.trim() === '') {
+                feedbackElement.textContent = 'Refleksi tidak boleh kosong!';
+                feedbackElement.style.color = '#dc2626';
+            } else {
+                feedbackElement.textContent = 'Refleksi Anda telah disimpan!';
+                feedbackElement.style.color = '#22c54e';
+                console.log(`Refleksi ${type} Sesi 3:`, inputElement.value);
+                inputElement.value = '';
+            }
+            setTimeout(() => {
+                feedbackElement.textContent = '';
+            }, 3000);
+        }
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupAccordions();
+            setupStepByStep();
+            setupChecklist();
+            loadQuiz();
+            // drawSocialNetwork(); // This can be triggered by a button click
+        });
+    </script>
+</body>
+</html>
