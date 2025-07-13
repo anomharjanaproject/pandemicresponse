@@ -823,9 +823,9 @@
                     googleFormEmbed.style.opacity = '0.7';
 
                     // Pop-up for time's up and redirect
-                    const confirmRedirect = confirm('Waktu pengerjaan tes telah habis. Jawaban Anda mungkin tidak tersimpan jika belum dikirim. Klik OK untuk menuju halaman penilaian.');
+                    const confirmRedirect = confirm('Waktu pengerjaan tes telah habis. Jawaban Anda mungkin tidak tersimpan jika belum dikirim. Klik OK untuk menuju halaman Pelatihan.');
                     if (confirmRedirect) {
-                        window.location.href = './penilaian.html'; // Redirect to penilaian.html
+                        window.location.href = './pelatihan.html'; // Redirect to pelatihan.html
                     } else {
                         // If user cancels, still disable form but don't redirect immediately
                         // They might try to quickly submit if they haven't.
