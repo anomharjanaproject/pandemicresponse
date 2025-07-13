@@ -1,0 +1,67 @@
+<!-- Di dalam file sesi1.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 1: Pengenalan PPPR</title>
+    <!-- Anda bisa menyertakan CSS yang sama atau CSS spesifik sesi di sini -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
+    <style>
+        /* Sertakan CSS dasar dari landing page atau CSS khusus sesi */
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1f2937; line-height: 1.6; padding: 2rem; }
+        .content-wrapper { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        h1 { color: #0d9488; margin-bottom: 1.5rem; }
+        h2 { color: #4b5563; margin-top: 1.5rem; margin-bottom: 1rem; }
+        ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .navigation-buttons { display: flex; justify-content: space-between; margin-top: 2rem; gap: 1rem; }
+        .navigation-buttons button { background: #0d9488; color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease; }
+        .navigation-buttons button:hover { background: #14b8a6; }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1>Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas</h1>
+        <p>Selamat datang di Sesi 1! Di sesi ini, kita akan mempelajari dasar-dasar Pencegahan, Kesiapsiagaan, dan Respon (PPPR) serta peran vital Organisasi Masyarakat Sipil (OMS) dan komunitas dalam upaya ini.</p>
+        <h2>Topik:</h2>
+        <ul>
+          <li>Apa itu PPPR? (Definisi, komponen, siklus)</li>
+          <li>Belajar dari pandemi COVID-19: pembelajaran dan tantangan</li>
+          <li>Peran OMS dan komunitas dalam PPPR</li>
+          <li>Pendekatan berbasis masyarakat dalam kesehatan</li>
+          <li>Prinsip-prinsip inklusivitas, keadilan, dan HAM dalam PPPR</li>
+        </ul>
+        <h2>Aktivitas:</h2>
+        <ul>
+          <li>Studi kasus pendek (COVID-19, Ebola, dll.): Analisis bagaimana pandemi ini memengaruhi komunitas dan respon yang diberikan.</li>
+          <li>Refleksi peran organisasi peserta selama pandemi: Diskusikan peran yang dimainkan organisasi Anda dan pembelajaran yang didapat.</li>
+        </ul>
+
+        <div class="navigation-buttons">
+            <button onclick="window.location.href='pelatihan.html'">Kembali ke Roadmap</button>
+            <button onclick="completeSession(1)">Lanjut Sesi 2</button>
+        </div>
+    </div>
+
+    <script>
+        function completeSession(sessionId) {
+            let sessionCompletionStatus = JSON.parse(localStorage.getItem('eLearningSessionStatus')) || {};
+
+            // Tandai sesi saat ini sebagai selesai
+            sessionCompletionStatus[`session-${sessionId}`].completed = true;
+
+            // Aktifkan sesi berikutnya
+            const nextSessionNum = sessionId + 1;
+            if (nextSessionNum <= 5) {
+                sessionCompletionStatus[`session-${nextSessionNum}`].unlocked = true;
+            }
+
+            localStorage.setItem('eLearningSessionStatus', JSON.stringify(sessionCompletionStatus));
+
+            // Kembali ke halaman landing page
+            window.location.href = 'sesi2.html';
+        }
+    </script>
+</body>
+</html>
