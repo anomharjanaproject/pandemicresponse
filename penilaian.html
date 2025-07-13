@@ -6,6 +6,7 @@
   <title>Modul Penilaian Mandiri – PPPR</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --primary: #0d9488;
@@ -169,6 +170,13 @@
       font-weight: 700;
       font-size: 0.9rem;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    #radarChart {
+        margin-top: 2rem;
+        max-width: 600px;
+        max-height: 600px;
+        margin-left: auto;
+        margin-right: auto;
     }
     .recommendation {
       margin-top: 1.5rem;
@@ -481,6 +489,9 @@
         <div class="bar">
           <div class="fill" id="progressBar"></div>
         </div>
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <canvas id="radarChart"></canvas>
+        </div>
         <div class="recommendation" id="recommendation">
           <h3 data-lang-key="recommendationTitle"></h3>
           <p id="recommendationText"></p>
@@ -496,6 +507,7 @@
 
   <script>
     let currentLang = 'id';
+    let myRadarChart; // Global variable to hold the chart instance
 
     const translations = {
       en: {
@@ -513,7 +525,14 @@
         "Kemitraan Swasta": "Private Partnerships",
         "Kemitraan Komunitas": "Community Partnerships",
 
-        // Question Labels (new structure with _q suffix)
+        // Radar Chart Labels
+        "sdm_category": "Human Resources",
+        "logistik_category": "Logistics & Infra.",
+        "program_category": "Program",
+        "keuangan_category": "Financial",
+        "kemitraan_category": "Partnership",
+
+        // Question Labels (using _q suffix)
         sdm_1_q: "Are all core staff/volunteers fully vaccinated?",
         sdm_2_q: "What percentage of staff are trained in First Aid and pandemic protocols?",
         sdm_3_q: "Is there a shift system to reduce the risk of transmission?",
@@ -639,7 +658,6 @@
         rec_poor_21_40: "Your organization's level of preparedness is still lacking. Focus on improving logistics, infrastructure, and program development. Consider seeking expert assistance.",
         rec_moderate_41_60: "Your organization has moderate preparedness. Some areas are good, but many gaps need to be filled. Strengthen financial aspects and partnerships.",
         rec_good_61_80: "Your organization's preparedness is good. Continue to improve HR training and ensure all documents and simulations are well-documented. Maintain active communication with partners.",
-        rec_good_81_80: "Your organization's preparedness is good. Continue to improve HR training and ensure all documents and simulations are well-documented. Maintain active communication with partners.", // Duplicate key, fixed below
         rec_good_81_100: "Your organization is very well prepared for a pandemic. Maintain this high standard and continue to conduct regular evaluations to ensure ongoing preparedness. Share your best practices."
       },
       id: {
@@ -657,7 +675,14 @@
         "Kemitraan Swasta": "Kemitraan Swasta",
         "Kemitraan Komunitas": "Kemitraan Komunitas",
 
-        // Question Labels (new structure with _q suffix)
+        // Radar Chart Labels
+        "sdm_category": "SDM",
+        "logistik_category": "Logistik & Infra.",
+        "program_category": "Program",
+        "keuangan_category": "Keuangan",
+        "kemitraan_category": "Kemitraan",
+
+        // Question Labels (using _q suffix)
         sdm_1_q: "Apakah semua staf/relawan inti sudah divaksin lengkap?",
         sdm_2_q: "Berapa persen staf yang terlatih dalam P3K dan protokol pandemi?",
         sdm_3_q: "Apakah ada sistem shift untuk mengurangi risiko penularan?",
@@ -704,7 +729,7 @@
         logistik_3_option_2: "Ya",
         logistik_3_option_1: "Sebagian",
         logistik_3_option_0: "Tidak",
-        logistik_3_error: "Pilih salah satu jawaban.",
+istik_3_error: "Pilih salah satu jawaban.",
 
         program_1_option_default: "Pilih jawaban",
         program_1_option_2: "Ya",
@@ -807,9 +832,8 @@
 
         // Translate question labels using data-question-id and data-question-en
         document.querySelectorAll('label[data-question-id]').forEach(el => {
-            const questionKey = el.dataset[lang === 'id' ? 'questionId' : 'questionEn'];
-            // If the key exists in translations, use it. Otherwise, use the data attribute directly (fallback)
-            el.textContent = t[questionKey] || (lang === 'id' ? el.dataset.questionId : el.dataset.questionEn);
+            const questionKey = el.dataset.questionId; // Use the ID as the key
+            el.textContent = t[questionKey];
         });
 
         // Translate elements using data-lang-key attribute (for options, buttons, error messages, and spans)
@@ -827,6 +851,17 @@
             const currentScore = parseInt(totalScoreSpan.textContent);
             const currentPercentage = (totalMaxScore === 0) ? 0 : (currentScore / totalMaxScore) * 100;
             updateRecommendationText(currentPercentage);
+            // If chart exists, update its labels
+            if (myRadarChart) {
+                myRadarChart.data.labels = [
+                    t.sdm_category,
+                    t.logistik_category,
+                    t.program_category,
+                    t.keuangan_category,
+                    t.kemitraan_category
+                ];
+                myRadarChart.update();
+            }
         }
     }
 
@@ -897,38 +932,65 @@
         return isValid;
     }
 
-    function calculateMaxScore() {
-        let maxScore = 0;
-        form.querySelectorAll('select, input[type="number"]').forEach(input => {
-            if (input.tagName === 'SELECT') {
-                maxScore += 2; // Max score for select options is 2
-            } else if (input.type === 'number') {
-                if (input.id === 'sdm_2') {
-                    maxScore += 100; // Max score for sdm_2 (percentage) is 100
-                }
-            }
-        });
-        return maxScore;
-    }
+    // Function to calculate scores per category
+    function calculateCategoryScores() {
+        const scores = {
+            sdm: 0, logistik: 0, program: 0, finance: 0, partnership: 0
+        };
+        const maxScores = {
+            sdm: 0, logistik: 0, program: 0, finance: 0, partnership: 0
+        };
 
-    function calculateScore() {
-        let score = 0;
         const formData = new FormData(form);
 
-        for (let [name, value] of formData.entries()) {
-            if (name === 'sdm_2') {
-                const percentage = parseInt(value);
-                if (!isNaN(percentage) && percentage >= 0 && percentage <= 100) {
-                    score += percentage;
-                }
-            } else {
-                const val = parseInt(value);
-                if (!isNaN(val)) {
-                    score += val;
-                }
-            }
-        }
-        return score;
+        // SDM (3 questions: sdm_1, sdm_2 (percentage), sdm_3)
+        // sdm_1: max 2, sdm_2: max 100, sdm_3: max 2. Total Max SDM = 104
+        if (!isNaN(parseInt(formData.get('sdm_1')))) scores.sdm += parseInt(formData.get('sdm_1'));
+        if (!isNaN(parseInt(formData.get('sdm_2')))) scores.sdm += parseInt(formData.get('sdm_2'));
+        if (!isNaN(parseInt(formData.get('sdm_3')))) scores.sdm += parseInt(formData.get('sdm_3'));
+        maxScores.sdm = 2 + 100 + 2;
+
+        // Logistik (3 questions: logistik_1, logistik_2, logistik_3)
+        // Each max 2. Total Max Logistik = 6
+        if (!isNaN(parseInt(formData.get('logistik_1')))) scores.logistik += parseInt(formData.get('logistik_1'));
+        if (!isNaN(parseInt(formData.get('logistik_2')))) scores.logistik += parseInt(formData.get('logistik_2'));
+        if (!isNaN(parseInt(formData.get('logistik_3')))) scores.logistik += parseInt(formData.get('logistik_3'));
+        maxScores.logistik = 2 + 2 + 2;
+
+        // Program (3 questions: program_1, program_2, program_3)
+        // Each max 2. Total Max Program = 6
+        if (!isNaN(parseInt(formData.get('program_1')))) scores.program += parseInt(formData.get('program_1'));
+        if (!isNaN(parseInt(formData.get('program_2')))) scores.program += parseInt(formData.get('program_2'));
+        if (!isNaN(parseInt(formData.get('program_3')))) scores.program += parseInt(formData.get('program_3'));
+        maxScores.program = 2 + 2 + 2;
+
+        // Keuangan (3 questions: finance_1, finance_2, finance_3)
+        // Each max 2. Total Max Keuangan = 6
+        if (!isNaN(parseInt(formData.get('finance_1')))) scores.finance += parseInt(formData.get('finance_1'));
+        if (!isNaN(parseInt(formData.get('finance_2')))) scores.finance += parseInt(formData.get('finance_2'));
+        if (!isNaN(parseInt(formData.get('finance_3')))) scores.finance += parseInt(formData.get('finance_3'));
+        maxScores.finance = 2 + 2 + 2;
+
+        // Kemitraan (6 questions in total, 2 per sub-section)
+        // Each max 2. Total Max Kemitraan = 12
+        if (!isNaN(parseInt(formData.get('partnership_public_1')))) scores.partnership += parseInt(formData.get('partnership_public_1'));
+        if (!isNaN(parseInt(formData.get('partnership_public_2')))) scores.partnership += parseInt(formData.get('partnership_public_2'));
+        if (!isNaN(parseInt(formData.get('partnership_private_1')))) scores.partnership += parseInt(formData.get('partnership_private_1'));
+        if (!isNaN(parseInt(formData.get('partnership_private_2')))) scores.partnership += parseInt(formData.get('partnership_private_2'));
+        if (!isNaN(parseInt(formData.get('partnership_community_1')))) scores.partnership += parseInt(formData.get('partnership_community_1'));
+        if (!isNaN(parseInt(formData.get('partnership_community_2')))) scores.partnership += parseInt(formData.get('partnership_community_2'));
+        maxScores.partnership = 2 * 6;
+
+        return { scores, maxScores };
+    }
+
+
+    function calculateTotalScore(categoryScores) {
+        return Object.values(categoryScores.scores).reduce((sum, current) => sum + current, 0);
+    }
+
+    function calculateTotalMaxScore(categoryScores) {
+        return Object.values(categoryScores.maxScores).reduce((sum, current) => sum + current, 0);
     }
 
     function updateRecommendationText(percentage) {
@@ -946,19 +1008,120 @@
         recommendationDiv.className = `recommendation ${recommendationClass}`;
     }
 
-    function displayResults(score) {
+    function renderRadarChart(categoryScores, categoryMaxScores) {
+        const ctx = document.getElementById('radarChart').getContext('2d');
+
+        // Destroy existing chart instance if it exists
+        if (myRadarChart) {
+            myRadarChart.destroy();
+        }
+
+        const labels = [
+            translations[currentLang].sdm_category,
+            translations[currentLang].logistik_category,
+            translations[currentLang].program_category,
+            translations[currentLang].keuangan_category,
+            translations[currentLang].kemitraan_category
+        ];
+
+        const dataValues = [
+            (categoryScores.sdm / categoryMaxScores.sdm) * 100,
+            (categoryScores.logistik / categoryMaxScores.logistik) * 100,
+            (categoryScores.program / categoryMaxScores.program) * 100,
+            (categoryScores.finance / categoryMaxScores.finance) * 100,
+            (categoryScores.partnership / categoryMaxScores.partnership) * 100
+        ];
+
+        myRadarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: translations[currentLang].resultsTitle,
+                    data: dataValues,
+                    backgroundColor: 'rgba(13, 148, 136, 0.4)', // Primary color with transparency
+                    borderColor: 'rgba(13, 148, 136, 1)', // Primary color
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(13, 148, 136, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(13, 148, 136, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // Allow custom size
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: '#e2e8f0' // Light gray lines
+                        },
+                        grid: {
+                            color: '#e2e8f0' // Light gray grid
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 12,
+                                weight: 'bold'
+                            },
+                            color: '#374151' // Darker font color for labels
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 20, // Steps of 20%
+                            color: '#4b5563', // Tick labels color
+                            callback: function(value) {
+                                return value + '%'; // Add % to tick labels
+                            }
+                        },
+                        gridLines: {
+                            circular: true // Radial grid lines
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Hide dataset label as it's self-assessment
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.r !== null) {
+                                    label += Math.round(context.parsed.r) + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+    function displayResults() {
         form.style.display = 'none';
         resultsSection.style.display = 'block';
 
-        totalMaxScore = calculateMaxScore();
-        totalScoreSpan.textContent = score;
+        const { scores, maxScores } = calculateCategoryScores();
+        const finalScore = calculateTotalScore({ scores, maxScores });
+        totalMaxScore = calculateTotalMaxScore({ scores, maxScores });
+
+        totalScoreSpan.textContent = finalScore;
         maxScoreSpan.textContent = totalMaxScore;
 
-        const percentage = (totalMaxScore === 0) ? 0 : (score / totalMaxScore) * 100;
+        const percentage = (totalMaxScore === 0) ? 0 : (finalScore / totalMaxScore) * 100;
         progressBar.style.width = `${percentage}%`;
         progressBar.textContent = `${Math.round(percentage)}%`;
 
         updateRecommendationText(percentage);
+        renderRadarChart(scores, maxScores); // Render the radar chart
     }
 
     // Event Listeners
@@ -977,8 +1140,7 @@
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       if (validateStep(currentStep)) {
-        const finalScore = calculateScore();
-        displayResults(finalScore);
+        displayResults();
       }
     });
 
@@ -991,12 +1153,15 @@
         document.querySelectorAll('.error-message').forEach(el => {
             el.style.display = 'none'; // Hide all error messages
         });
+        if (myRadarChart) { // Destroy chart when restarting
+            myRadarChart.destroy();
+        }
         applyTranslations(currentLang); // Re-apply translations after reset
     });
 
     // Run initial setup when the DOM is fully loaded
     document.addEventListener('DOMContentLoaded', () => {
-        totalMaxScore = calculateMaxScore(); // Calculate max score initially
+        totalMaxScore = calculateTotalMaxScore(calculateCategoryScores()); // Calculate max score initially for total
         showStep(currentStep);
         applyTranslations(currentLang); // Apply translations based on initial language
     });
