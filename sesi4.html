@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 4: Respon Komunitas yang Efektif dalam Situasi Darurat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
+    <style>
+        /* Global Box-Sizing for consistent layout */
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0d9488;
+            --secondary: #f0fdfa;
+            --accent: #14b8a6;
+            --danger: #dc2626;
+            --warning: #facc15;
+            --light: #f8fafc;
+            --success: #22c54e;
+            --info: #3b82f6;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-shadow: rgba(0,0,0,0.05);
+            --card-hover-shadow: rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--card-shadow);
+            flex-grow: 1;
+            opacity: 0; /* Initial state for fade-in animation */
+            transform: translateY(20px); /* Initial state for slide-up animation */
+            animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply animation */
+        }
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.8rem;
+        }
+        h2 {
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed var(--card-border);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        h2 i {
+            color: var(--accent);
+            font-size: 1.5em;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            flex-wrap: wrap; /* Allow text to wrap within the available space */
+        }
+        ul li i {
+            color: var(--primary);
+            font-size: 1.1em;
+            margin-top: 0.2em; /* Adjust icon vertical alignment */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+        ul li span { /* Optional: wrap text content in a span if more complex styling needed */
+            flex: 1; /* Allow text to take remaining space */
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1.5rem;
+        }
+        .navigation-buttons button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .navigation-buttons button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .navigation-buttons button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        footer {
+            text-align:center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 3rem;
+            background-color: #e2e8f0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Interactive Elements Styling */
+        .interactive-section {
+            background-color: var(--secondary);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .interactive-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .interactive-section h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+
+        /* Accordion Styling */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease, transform 0.2s ease; /* Added transform transition */
+        }
+        .accordion-header:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px); /* Added hover animation */
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            background-color: var(--card-bg);
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+        .accordion-content.active {
+            /* Changed to a very large value to ensure content is never cut off */
+            max-height: 9999px; 
+            padding: 1.5rem;
+        }
+        .accordion-content ul {
+            margin-left: 0; /* Reset default list indent */
+            list-style: none; /* Remove default bullet */
+            padding-left: 0; /* Remove default padding */
+        }
+        .accordion-content ul li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem; /* Space for custom bullet */
+        }
+        .accordion-content ul li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        /* Flip Card Styling */
+        .flip-card {
+            background-color: transparent;
+            width: 200px; /* Base width */
+            height: 200px; /* Increased fixed height */
+            perspective: 1000px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            flex-shrink: 0; /* Prevent shrinking too much */
+            flex-grow: 1; /* Allow growing to fill space, but controlled by max-width on parent */
+            max-width: calc(33.333% - 1rem); /* For 3 columns with gap on larger screens */
+            box-sizing: border-box; /* Ensure padding/border included in width */
+        }
+        /* Ensure 2 columns on medium screens, 1 on small */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .flip-card {
+                max-width: calc(50% - 0.75rem); /* For 2 columns with gap */
+            }
+        }
+        @media (max-width: 480px) {
+            .flip-card {
+                max-width: 100%; /* For 1 column */
+            }
+        }
+
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%; /* Still 100% of the (now larger) parent */
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 1rem;
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+            overflow: visible; /* Changed from hidden to visible to ensure text is not cut */
+            text-overflow: clip; /* Changed from ellipsis to clip */
+        }
+
+        .flip-card-front {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .flip-card-front i {
+            font-size: 2.5em;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .flip-card-back {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            transform: rotateY(180deg);
+            border: 1px solid var(--card-border);
+        }
+
+        /* Interactive Checklist */
+        .checklist-container {
+            margin-top: 1.5rem;
+            background-color: var(--light);
+            border: 1px dashed var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Added box-shadow transition */
+        }
+        .checklist-item:hover {
+            background-color: #e6fffa;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added hover shadow */
+        }
+        .checklist-item input[type="checkbox"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            accent-color: var(--primary);
+            flex-shrink: 0; /* Prevent checkbox from shrinking */
+        }
+        .checklist-item label {
+            flex: 1; /* Allow label text to take remaining space */
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        .checklist-item.completed label {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        /* Quiz Styling (re-used from Sesi 1/2) */
+        .quiz-container {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background-color: var(--light);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+        }
+        .options label:hover {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.8rem;
+            flex-shrink: 0; /* Prevent radio button from shrinking */
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: var(--danger);
+        }
+        .quiz-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            margin: 1.5rem auto 0;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-submit-btn:hover {
+            background: var(--accent);
+        }
+        .quiz-result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+        }
+        .quiz-reset-btn {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-reset-btn:hover {
+            background-color: #3672d9;
+        }
+
+        /* Reflection Text Area */
+        textarea.reflection-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background-color: var(--light);
+            resize: vertical;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        textarea.reflection-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            outline: none;
+        }
+        .reflection-feedback {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+        .reflection-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .reflection-submit-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .accordion-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .accordion-content {
+                padding: 1rem;
+            }
+            /* Adjust flip card size for smaller screens */
+            .flip-card {
+                width: 100%; /* Take full width on very small screens */
+                height: auto; /* Allow height to adjust based on content */
+                min-height: 150px; /* Ensure a minimum height */
+                font-size: 0.8rem;
+                max-width: 100%; /* Override previous max-width */
+            }
+            .flip-card-front i {
+                font-size: 2em;
+            }
+            .flip-card-back {
+                font-size: 0.8rem; /* Ensure text in back is readable */
+            }
+            .flip-card-front, .flip-card-back {
+                padding: 0.8rem; /* Adjust padding for smaller cards */
+            }
+        }
+        @media (min-width: 481px) and (max-width: 768px) {
+            .flip-card {
+                max-width: calc(50% - 0.75rem); /* Two columns on tablets */
+            }
+        }
+        /* Flex container for flip cards to manage wrapping */
+        .interactive-section > div[style*="display: flex"] {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1><i class="fas fa-hand-fist"></i> Sesi 4: Respon Komunitas yang Efektif dalam Situasi Darurat</h1>
+
+        <p>Sesi ini akan membekali Anda dengan pemahaman mendalam tentang bagaimana komunitas dapat secara proaktif merespon krisis kesehatan dan bencana terkait perubahan iklim.</p>
+
+        <!-- Tujuan Pembelajaran -->
+        <h2>🎯 Tujuan Pembelajaran</h2>
+        <p>Setelah sesi ini, peserta diharapkan mampu:</p>
+        <ul>
+            <li><i class="fas fa-users-viewfinder"></i> <span>Menjelaskan peran komunitas dalam respon cepat terhadap pandemi atau wabah.</span></li>
+            <li><i class="fas fa-arrows-split-up-and-down"></i> <span>Memahami bagaimana mengelola koordinasi antar pemangku kepentingan.</span></li>
+            <li><i class="fas fa-people-arrows-left-right"></i> <span>Mengintegrasikan pendekatan inklusi dan perlindungan kelompok rentan dalam tindakan respon.</span></li>
+            <li><i class="fas fa-mobile-screen-button"></i> <span>Memanfaatkan teknologi sederhana untuk mendukung respon komunitas.</span></li>
+        </ul>
+
+        <!-- 1. Tindakan Tanggap Darurat Komunitas -->
+        <h2><i class="fas fa-bolt"></i> 1. Tindakan Tanggap Darurat Komunitas</h2>
+        <p>Respon darurat komunitas adalah serangkaian langkah cepat yang diambil saat terjadi krisis. Berikut adalah langkah-langkah dan protokol penting:</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-arrow-right"></i> Langkah Awal Respon Cepat</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-magnifying-glass"></i> Deteksi Dini & Verifikasi
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Mengenali tanda-tanda awal wabah atau kejadian darurat dan memverifikasi informasi dengan cepat.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-info-circle"></i> Informasi & Peringatan Dini
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Menyebarkan informasi awal kepada komunitas secara jelas dan tepat waktu untuk meningkatkan kewaspadaan.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-people-group"></i> Mobilisasi Sumber Daya
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Menggerakkan warga, kader kesehatan, dan tokoh lokal untuk mengambil tindakan awal.</p>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-shield-halved"></i> Protokol Kesehatan Masyarakat</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-head-side-mask"></i> Distribusi Masker & APD
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Memastikan ketersediaan dan penggunaan alat pelindung diri yang memadai di komunitas.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-clinic-medical"></i> Penanganan Gejala Awal
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Edukasi tentang penanganan mandiri gejala ringan dan kapan harus mencari bantuan medis.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-hospital-user"></i> Rujukan Medis
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Menetapkan alur rujukan yang jelas untuk kasus yang membutuhkan penanganan lebih lanjut di fasilitas kesehatan.</p>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-boxes"></i> Manajemen Logistik Lokal</h3>
+            <ul>
+                <li><i class="fas fa-kitchen-set"></i> <span>Dapur umum untuk penyediaan makanan darurat.</span></li>
+                <li><i class="fas fa-boxes-stacked"></i> <span>Distribusi bantuan (pangan, air bersih, selimut, alat kebersihan).</span></li>
+                <li><i class="fas fa-campground"></i> <span>Pengelolaan tempat pengungsian sementara.</span></li>
+            </ul>
+        </div>
+
+        <!-- 2. Mekanisme Koordinasi Antar Pihak -->
+        <h2><i class="fas fa-handshake-angle"></i> 2. Mekanisme Koordinasi Antar Pihak</h2>
+        <p>Koordinasi yang efektif adalah kunci keberhasilan respon. Mari jelajahi prinsip dan aktornya:</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-sitemap"></i> Prinsip Koordinasi yang Efektif (Klik untuk Membalik)</h3>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 1.5rem;">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-comments"></i> Komunikasi Terbuka
+                        </div>
+                        <div class="flip-card-back">
+                            Memastikan semua pihak berbagi informasi secara jujur dan transparan.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-person-digging"></i> Pembagian Peran Jelas
+                        </div>
+                        <div class="flip-card-back">
+                            Setiap aktor memahami tanggung jawabnya untuk menghindari tumpang tindih atau kekosongan peran.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-sitemap"></i> Kejelasan Jalur Komando
+                        </div>
+                        <div class="flip-card-back">
+                            Menetapkan siapa yang bertanggung jawab untuk keputusan dan arahan tertentu.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-users-gear"></i> Pemetaan Aktor Kunci</h3>
+            <ul>
+                <li><i class="fas fa-building-user"></i> <span>Dinas Kesehatan (Dinkes)</span></li>
+                <li><i class="fas fa-house-fire"></i> <span>Badan Penanggulangan Bencana Daerah (BPBD)</span></li>
+                <li><i class="fas fa-syringe"></i> <span>Puskesmas</span></li>
+                <li><i class="fas fa-handshake-angle"></i> <span>Organisasi Masyarakat Sipil (OMS)</span></li>
+                <li><i class="fas fa-users-line"></i> <span>Tokoh Adat, RT/RW, dan Pemimpin Komunitas</span></li>
+            </ul>
+
+            <h3><i class="fas fa-layer-group"></i> Sistem Koordinasi Multi-Level</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-people-arrows"></i> Internal Komunitas
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Koordinasi antara warga, kader, dan tokoh lokal dalam lingkup desa/kelurahan.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-city"></i> Dengan Pemerintah Lokal
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Berkoordinasi dengan pemerintah tingkat kecamatan atau kabupaten/kota untuk dukungan dan kebijakan.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-globe"></i> Dengan NGO/Relawan Eksternal
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Menjalin kerja sama dengan organisasi non-pemerintah dan relawan dari luar komunitas.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Perlindungan Kelompok Rentan & Inklusi Gender -->
+        <h2><i class="fas fa-universal-access"></i> 3. Perlindungan Kelompok Rentan & Inklusi Gender</h2>
+        <p>Memastikan tidak ada yang tertinggal dalam respon darurat adalah prioritas. Kenali kelompok rentan dan strategi inklusif:</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-person-circle-exclamation"></i> Siapa Kelompok Rentan?</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-person-cane"></i> Lansia
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Memiliki mobilitas terbatas dan seringkali kondisi kesehatan yang lebih rentan.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-wheelchair"></i> Penyandang Disabilitas
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Membutuhkan akses khusus terhadap informasi, fasilitas, dan bantuan.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-person-pregnant"></i> Ibu Hamil & Menyusui
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Memiliki kebutuhan nutrisi dan medis khusus, serta beban ganda dalam merawat anak.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-child"></i> Anak-anak
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Bergantung pada orang dewasa untuk perlindungan dan pemenuhan kebutuhan dasar.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-user-group"></i> Kelompok Minoritas & Marginal
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Seringkali menghadapi hambatan bahasa, budaya, atau diskriminasi dalam mengakses bantuan.</p>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-hand-holding-heart"></i> Strategi Respon yang Inklusif (Checklist)</h3>
+            <div class="checklist-container" id="inclusiveStrategyChecklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="incl_check1"><label for="incl_check1">Pendataan khusus kelompok rentan</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="incl_check2"><label for="incl_check2">Kanal informasi yang mudah diakses (misal: braille, bahasa isyarat, audio)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="incl_check3"><label for="incl_check3">Dukungan psikososial dan perlindungan dari kekerasan</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="incl_check4"><label for="incl_check4">Memastikan peran perempuan dalam kepemimpinan respon</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="incl_check5"><label for="incl_check5">Praktik <i>door-to-door check</i> untuk memastikan semua terlayani</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Teknologi dan Inovasi dalam Respon Komunitas -->
+        <h2><i class="fas fa-microchip"></i> 4. Teknologi dan Inovasi dalam Respon Komunitas</h2>
+        <p>Teknologi dapat menjadi alat yang ampuh untuk memperkuat respon komunitas, bahkan dengan sumber daya terbatas. Jelajahi beberapa contohnya:</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-mobile-alt"></i> Penggunaan Teknologi Murah & Mudah (Klik untuk Membalik)</h3>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 1.5rem;">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Group
+                        </div>
+                        <div class="flip-card-back">
+                            Untuk pelaporan cepat, koordinasi tim, dan penyebaran informasi darurat.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fab fa-google"></i> Google Form
+                        </div>
+                        <div class="flip-card-back">
+                            Untuk pendataan kebutuhan warga, survei cepat dampak bencana, atau pendaftaran relawan.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-chart-column"></i> Dashboard Lokal (Excel/Open-source)
+                        </div>
+                        <div class="flip-card-back">
+                            Visualisasi data sederhana untuk memantau situasi dan alokasi sumber daya.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-volume-high"></i> Pengeras Suara Desa / Radio Komunitas
+                        </div>
+                        <div class="flip-card-back">
+                            Saluran vital untuk menyampaikan pengumuman penting, peringatan, dan edukasi kesehatan.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-newspaper"></i> Citizen Journalism
+                        </div>
+                        <div class="flip-card-back">
+                            Warga melaporkan langsung situasi di lapangan melalui media sosial atau platform lokal.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3><i class="fas fa-lightbulb"></i> Studi Inspiratif: Komunitas Adat Kalimantan</h3>
+            <p>Beberapa komunitas adat di Kalimantan telah berhasil menggunakan kombinasi HT radio dan grup WhatsApp untuk komunikasi respon darurat, terutama di daerah dengan akses internet terbatas. Ini memungkinkan mereka untuk berbagi informasi tentang kondisi hutan, penyebaran api, atau kebutuhan bantuan secara cepat dan efektif.</p>
+        </div>
+
+        <!-- Aktivitas Interaktif: Studi Kasus & Simulasi -->
+        <h2>🎯 Aktivitas Pembelajaran</h2>
+        <div class="interactive-section">
+            <h3><i class="fas fa-book-open"></i> Studi Kasus: Respon Cepat Komunitas</h3>
+            <p>Baca kasus berikut:</p>
+            <div style="background-color: var(--card-bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 1rem;">
+                <p>Desa Sukamaju mengalami lonjakan kasus ISPA yang mencurigakan dalam waktu singkat. Kepala dusun menerima laporan dari warga bahwa banyak anak-anak mengalami demam dan batuk. Tidak ada tenaga medis yang segera tersedia karena Puskesmas terdekat berjarak 20 km. Kelompok relawan lokal dan kader kesehatan harus merespon cepat sebelum kasus menyebar luas.</p>
+            </div>
+            <p>Tugas Anda:</p>
+            <ul>
+                <li><i class="fas fa-list-check"></i> <span>Identifikasi langkah-langkah yang harus diambil komunitas dalam 24 jam pertama.</span></li>
+                <li><i class="fas fa-user-tag"></i> <span>Apa peran setiap aktor lokal (kepala dusun, relawan, kader)?</span></li>
+                <li><i class="fas fa-shield-heart"></i> <span>Bagaimana mereka bisa memastikan kelompok rentan (misal: balita, lansia) terlayani?</span></li>
+            </ul>
+            <textarea id="caseStudyReflectionInput" class="reflection-input" placeholder="Tulis analisis Anda di sini..."></textarea>
+            <div class="reflection-feedback" id="caseStudyReflectionFeedback"></div>
+            <button class="reflection-submit-btn" onclick="submitReflection('caseStudy')">Kirim Analisis</button>
+        </div>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-people-arrows"></i> Simulasi / Latihan Skenario</h3>
+            <p>Bayangkan Anda adalah bagian dari tim respon komunitas. Pilih satu skenario bencana kesehatan (misal: wabah diare pasca banjir, kabut asap tebal, lonjakan DBD). Susun rencana respon cepat selama 48 jam pertama, meliputi:</p>
+            <ul>
+                <li><i class="fas fa-users-gear"></i> <span>Pembentukan tim respons & pembagian tugas.</span></li>
+                <li><i class="fas fa-comments"></i> <span>Protokol komunikasi internal & eksternal.</span></li>
+                <li><i class="fas fa-boxes-stacked"></i> <span>Mobilisasi sumber daya lokal.</span></li>
+                <li><i class="fas fa-person-circle-question"></i> <span>Identifikasi dan penanganan kelompok rentan.</span></li>
+                <li><i class="fas fa-handshake"></i> <span>Strategi koordinasi dengan pemerintah lokal.</span></li>
+            </ul>
+            <textarea id="scenarioPlanInput" class="reflection-input" placeholder="Tulis draft rencana respon Anda di sini..."></textarea>
+            <div class="reflection-feedback" id="scenarioPlanFeedback"></div>
+            <button class="reflection-submit-btn" onclick="submitReflection('scenarioPlan')">Kirim Rencana Simulasi</button>
+        </div>
+
+        <!-- Penilaian dan Refleksi -->
+        <h2>🧠 Penilaian dan Refleksi</h2>
+        <div class="interactive-section">
+            <h3><i class="fas fa-question-circle"></i> Kuis Singkat</h3>
+            <div id="quizContainer" class="quiz-container">
+                <!-- Questions will be loaded here by JavaScript -->
+            </div>
+            <button id="quizSubmitBtn" class="quiz-submit-btn">Kirim Jawaban</button>
+            <div id="quizResult" class="quiz-result"></div>
+            <button id="quizResetBtn" class="quiz-reset-btn" style="display:none;">Ulangi Kuis</button>
+        </div>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-clipboard-list"></i> Checklist Kesiapsiagaan Respon Komunitas</h3>
+            <p>Gunakan checklist ini untuk menilai kesiapan komunitas Anda dalam merespon darurat:</p>
+            <div class="checklist-container" id="readinessChecklistFinal">
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check1"><label for="final_check1">Apakah ada tim respon darurat yang terlatih di komunitas?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check2"><label for="final_check2">Apakah ada sistem deteksi dini dan peringatan yang berfungsi?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check3"><label for="final_check3">Apakah sumber daya lokal (logistik, SDM) sudah terpetakan?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check4"><label for="final_check4">Apakah ada rencana komunikasi risiko yang jelas?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check5"><label for="final_check5">Apakah kelompok rentan sudah teridentifikasi dan ada strategi khusus untuk mereka?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check6"><label for="final_check6">Apakah komunitas memanfaatkan teknologi sederhana untuk respon?</label>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem; font-style: italic; color: var(--text-medium);">Centang item yang sudah dimiliki komunitas Anda. Apa yang perlu ditingkatkan?</p>
+        </div>
+
+        <!-- Output Akhir Sesi 4 -->
+        <h2>📦 Output Akhir Sesi 4</h2>
+        <p>Selamat! Anda telah menyelesaikan Sesi 4. Setelah sesi ini, Anda diharapkan mampu:</p>
+        <ul>
+            <li><i class="fas fa-users-viewfinder"></i> <span>Menjelaskan peran komunitas dalam respon cepat terhadap pandemi atau wabah.</span></li>
+            <li><i class="fas fa-arrows-split-up-and-down"></i> <span>Memahami bagaimana mengelola koordinasi antar pemangku kepentingan.</span></li>
+            <li><i class="fas fa-people-arrows-left-right"></i> <span>Mengintegrasikan pendekatan inklusi dan perlindungan kelompok rentan dalam tindakan respon.</span></li>
+            <li><i class="fas fa-mobile-screen-button"></i> <span>Memanfaatkan teknologi sederhana untuk mendukung respon komunitas.</span></li>
+        </ul>
+
+        <div class="navigation-buttons">
+            <button onclick="window.location.href='pelatihan.html'">Kembali ke Roadmap</button>
+            <button onclick="completeSession(4)">Lanjut Sesi 5</button>
+        </div>
+    </div>
+
+    <footer>
+        Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+    </footer>
+
+    <script>
+        // Fungsi untuk memuat status penyelesaian sesi dari localStorage
+        function loadSessionStatus() {
+            return JSON.parse(localStorage.getItem('eLearningSessionStatus')) || {};
+        }
+
+        // Fungsi untuk menyimpan status penyelesaian sesi ke localStorage
+        function saveSessionStatus(status) {
+            localStorage.setItem('eLearningSessionStatus', JSON.stringify(status));
+        }
+
+        // Fungsi untuk menyelesaikan sesi dan melanjutkan ke sesi berikutnya
+        function completeSession(sessionId) {
+            let sessionCompletionStatus = loadSessionStatus();
+
+            // Tandai sesi saat ini sebagai selesai
+            sessionCompletionStatus[`session-${sessionId}`] = { completed: true, unlocked: true };
+
+            // Aktifkan sesi berikutnya
+            const nextSessionNum = sessionId + 1;
+            if (nextSessionNum <= 5) { // Asumsi ada 5 sesi total
+                sessionCompletionStatus[`session-${nextSessionNum}`] = { completed: false, unlocked: true };
+            }
+
+            saveSessionStatus(sessionCompletionStatus);
+
+            // Arahkan ke sesi berikutnya atau kembali ke landing page jika sudah sesi terakhir
+            if (nextSessionNum <= 5) {
+                window.location.href = `sesi${nextSessionNum}.html`;
+            } else {
+                window.location.href = 'index.html'; // Kembali ke landing page jika semua sesi selesai
+            }
+        }
+
+        /* --- Accordion Logic (Re-used) --- */
+        function setupAccordions() {
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    if (content.classList.contains('active')) {
+                        // Set max-height to scrollHeight to ensure content is fully visible
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.padding = "1.5rem";
+                    } else {
+                        content.style.maxHeight = "0";
+                        content.style.padding = "0 1.5rem";
+                    }
+                });
+            });
+        }
+
+        /* --- Flip Card Logic (Re-used) --- */
+        function setupFlipCards() {
+            document.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    card.querySelector('.flip-card-inner').style.transform = card.querySelector('.flip-card-inner').style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+                });
+            });
+        }
+
+        /* --- Interactive Checklist Logic (Re-used and adapted for multiple checklists) --- */
+        function setupChecklists() {
+            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const listItem = e.target.closest('.checklist-item');
+                    if (e.target.checked) {
+                        listItem.classList.add('completed');
+                    } else {
+                        listItem.classList.remove('completed');
+                    }
+                });
+            });
+        }
+
+        /* --- Quiz Logic (Adapted for Sesi 4 questions) --- */
+        const quizQuestions = [
+            {
+                question: "Manakah yang merupakan langkah awal respon cepat komunitas saat terjadi lonjakan kasus penyakit?",
+                options: [
+                    "Menunggu arahan dari pemerintah pusat",
+                    "Deteksi dini dan verifikasi informasi",
+                    "Langsung melakukan evakuasi massal",
+                    "Mengabaikan laporan awal dari warga"
+                ],
+                answer: "Deteksi dini dan verifikasi informasi"
+            },
+            {
+                question: "Salah satu prinsip koordinasi yang efektif dalam respon darurat adalah...",
+                options: [
+                    "Menyembunyikan informasi penting",
+                    "Hanya melibatkan satu pihak dalam pengambilan keputusan",
+                    "Pembagian peran yang jelas antar aktor",
+                    "Mengutamakan kecepatan tanpa mempertimbangkan akurasi"
+                ],
+                answer: "Pembagian peran yang jelas antar aktor"
+            },
+            {
+                question: "Mengapa pendataan khusus kelompok rentan penting dalam strategi respon inklusif?",
+                options: [
+                    "Agar mudah diabaikan",
+                    "Untuk memastikan mereka mendapatkan dukungan dan akses yang sesuai kebutuhan",
+                    "Karena mereka tidak bisa membantu diri sendiri",
+                    "Untuk membatasi partisipasi mereka dalam respon"
+                ],
+                answer: "Untuk memastikan mereka mendapatkan dukungan dan akses yang sesuai kebutuhan"
+            },
+            {
+                question: "Contoh penggunaan teknologi sederhana untuk mendukung respon komunitas adalah...",
+                options: [
+                    "Membangun aplikasi kompleks dengan biaya tinggi",
+                    "Menggunakan WhatsApp group untuk pelaporan cepat",
+                    "Hanya mengandalkan komunikasi tatap muka",
+                    "Menunggu tim ahli teknologi datang ke lokasi"
+                ],
+                answer: "Menggunakan WhatsApp group untuk pelaporan cepat"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quizContainer');
+        const quizSubmitBtn = document.getElementById('quizSubmitBtn');
+        const quizResult = document.getElementById('quizResult');
+        const quizResetBtn = document.getElementById('quizResetBtn');
+
+        function loadQuiz() {
+            if (!quizContainer) return;
+            quizContainer.innerHTML = ''; // Clear previous questions
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                q.options.forEach((option, optIndex) => {
+                    const label = document.createElement('label');
+                    label.innerHTML = `
+                        <input type="radio" name="question${index}" value="${option}">
+                        ${option}
+                    `;
+                    optionsDiv.appendChild(label);
+                });
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+            quizSubmitBtn.style.display = 'block';
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            quizQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const questionDiv = quizContainer.children[index];
+
+                // Remove previous feedback classes
+                questionDiv.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct', 'incorrect');
+                });
+
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect');
+                        // Highlight correct answer
+                        questionDiv.querySelector(`input[value="${q.answer}"]`).parentElement.classList.add('correct');
+                    }
+                } else {
+                    allAnswered = false;
+                    // Optionally, highlight unanswered questions
+                    questionDiv.style.border = '1px solid #dc2626'; /* var(--danger) */
+                    questionDiv.style.borderRadius = '8px';
+                    questionDiv.style.padding = '0.5rem';
+                    setTimeout(() => {
+                        questionDiv.style.border = 'none';
+                        questionDiv.style.padding = '0';
+                    }, 1500);
+                }
+            });
+
+            if (!allAnswered) {
+                quizResult.textContent = "Mohon jawab semua pertanyaan sebelum mengirim!";
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+                return;
+            }
+
+            quizSubmitBtn.style.display = 'none';
+            quizResetBtn.style.display = 'block';
+
+            if (score === quizQuestions.length) {
+                quizResult.textContent = `Selamat! Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar.`;
+                quizResult.classList.remove('incorrect');
+                quizResult.classList.add('correct');
+            } else {
+                quizResult.textContent = `Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar. Coba lagi!`;
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+            }
+        }
+
+        function resetQuiz() {
+            loadQuiz();
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+            quizSubmitBtn.style.display = 'block';
+        }
+
+        // Add event listeners for quiz buttons
+        if (quizSubmitBtn) quizSubmitBtn.addEventListener('click', submitQuiz);
+        if (quizResetBtn) quizResetBtn.addEventListener('click', resetQuiz);
+
+        /* --- Reflection Logic --- */
+        function submitReflection(type) {
+            let inputElement;
+            let feedbackElement;
+            if (type === 'caseStudy') {
+                inputElement = document.getElementById('caseStudyReflectionInput');
+                feedbackElement = document.getElementById('caseStudyReflectionFeedback');
+            } else if (type === 'scenarioPlan') {
+                inputElement = document.getElementById('scenarioPlanInput');
+                feedbackElement = document.getElementById('scenarioPlanFeedback');
+            } else {
+                return;
+            }
+
+            if (inputElement.value.trim() === '') {
+                feedbackElement.textContent = 'Refleksi tidak boleh kosong!';
+                feedbackElement.style.color = '#dc2626';
+            } else {
+                feedbackElement.textContent = 'Refleksi Anda telah disimpan!';
+                feedbackElement.style.color = '#22c54e';
+                console.log(`Refleksi ${type} Sesi 4:`, inputElement.value);
+                inputElement.value = '';
+            }
+            setTimeout(() => {
+                feedbackElement.textContent = '';
+            }, 3000);
+        }
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupAccordions();
+            setupFlipCards();
+            setupChecklists(); // Call for all checklists
+            loadQuiz();
+        });
+    </script>
+</body>
+</html>
