@@ -3,74 +3,473 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pandemic Response 🇮🇩</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Landing Page Modul E-Learning PPPR & Perubahan Iklim</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
   <style>
     :root {
       --primary: #0d9488;
       --secondary: #f0fdfa;
       --accent: #14b8a6;
       --danger: #dc2626;
+      --warning: #facc15;
+      --light: #f8fafc;
+      --success: #22c54e; /* Slightly adjusted for better contrast */
+      --info: #3b82f6;
+      --text-dark: #1f2937;
+      --text-medium: #4b5563;
+      --text-light: #6b7280;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: rgba(0,0,0,0.05);
+      --card-hover-shadow: rgba(0,0,0,0.1);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Prevent horizontal scroll from hover effects */
     }
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
     }
-    body {
-      background-color: #f8fafc;
-      color: #1f2937;
-      line-height: 1.6;
-    }
+
     header {
       background: var(--primary);
       color: white;
-      padding: 1rem 2rem;
+      padding: 1.5rem 2rem;
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       position: relative;
     }
     header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.2rem;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    header p {
+        font-size: 1rem;
+        opacity: 0.9;
     }
     .language-toggle {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 1.5rem;
+      right: 1.5rem;
       background: white;
       color: var(--primary);
       border: none;
       border-radius: 8px;
-      padding: 0.5rem 0.75rem;
+      padding: 0.6rem 1rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      gap: 0.5rem;
+      box-shadow: 0 2px 4px var(--card-shadow);
+      transition: all 0.2s ease;
     }
     .language-toggle:hover {
       background: var(--secondary);
+      transform: translateY(-2px);
     }
-    .content-placeholder {
-      text-align: center;
-      padding: 4rem 2rem;
-      font-size: 1.25rem;
-      color: #475569;
+
+    .container {
+      max-width: 1000px;
+      margin: 2.5rem auto;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 6px 12px var(--card-shadow);
+    }
+    .section-title {
+        color: var(--primary);
+        font-size: 1.8rem;
+        margin-bottom: 1.8rem;
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 0.8rem;
+        text-align: center;
+        position: relative;
+    }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 2px;
+    }
+
+    .intro-text {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--text-medium);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Overall Progress Bar */
+    .overall-progress-container {
+        width: 100%;
+        background-color: #e2e8f0;
+        border-radius: 10px;
+        height: 25px;
+        margin: 2rem 0;
+        overflow: hidden;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .overall-progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, var(--accent), var(--primary));
+        border-radius: 10px;
+        transition: width 0.5s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    /* Session Cards Grid (now vertical stack) */
+    .session-overview-grid {
+        display: block; /* Changed from grid to block for vertical stacking */
+        margin-top: 2rem;
+        position: relative; /* For the main journey line */
+        padding-left: 60px; /* Space for the journey line and circles */
+    }
+
+    /* Main vertical journey line */
+    .session-overview-grid::before {
+        content: '';
+        position: absolute;
+        left: 35px; /* Aligned with the center of the circles */
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background-color: #cbd5e1; /* Light grey line */
+        z-index: 0;
+    }
+
+    .session-overview {
+        padding: 1.5rem;
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        background-color: var(--card-bg);
+        box-shadow: 0 4px 10px var(--card-shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        position: relative;
+        margin-bottom: 3rem; /* Space between cards */
+        margin-left: 20px; /* Offset to the right of the line */
+        display: flex;
+        flex-direction: column;
+    }
+    .session-overview:last-child {
+        margin-bottom: 0; /* No margin after the last card */
+    }
+
+    .session-overview:hover:not(.locked) {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 30px var(--card-hover-shadow);
+        border-color: var(--accent);
+    }
+
+    /* Session Number Circle (now a pseudo-element) */
+    .session-overview::before {
+        content: attr(data-session-id); /* Get number from data-session-id */
+        position: absolute;
+        left: -45px; /* Position to the left of the card */
+        top: 1.5rem; /* Align with card title */
+        width: 45px;
+        height: 45px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        z-index: 2;
+        border: 3px solid var(--card-bg); /* White border to separate from line */
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .session-overview h3 {
+        color: var(--primary);
+        font-size: 1.25rem;
+        margin-top: 0;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        /* No padding-right needed anymore as number circle is outside */
+    }
+    .session-overview h3 i {
+        color: var(--accent);
+        font-size: 1.6rem;
+    }
+    .session-overview p.objective {
+        font-style: italic;
+        color: var(--text-medium);
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+    }
+    .session-overview h4 {
+        color: var(--text-medium);
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        border-bottom: 1px dashed var(--card-border);
+        padding-bottom: 0.4rem;
+        font-size: 1rem;
+    }
+    .session-overview ul {
+        list-style-type: none;
+        margin-left: 0;
+        padding-left: 1rem;
+        margin-bottom: 0.8rem;
+    }
+    .session-overview ul li {
+        margin-bottom: 0.3rem;
+        position: relative;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+    }
+    .session-overview ul li::before {
+        content: '•';
+        color: var(--accent);
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        font-size: 1.1em;
+        line-height: 1;
+    }
+    .session-overview ul li {
+        padding-left: 1.1em;
+    }
+
+    .session-visual-progress {
+        height: 8px;
+        background: linear-gradient(to right, #e2e8f0, var(--accent));
+        width: 0%;
+        border-radius: 4px;
+        margin-top: 1.2rem;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        transition: width 0.5s ease-in-out, background 0.5s ease;
+    }
+    .session-action-btn {
+        background: var(--primary);
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: auto;
+        align-self: flex-start;
+        transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    .session-action-btn:hover:enabled {
+        background: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .session-action-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .session-action-btn:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* Styles for locked sessions */
+    .session-overview.locked {
+        opacity: 0.4;
+        pointer-events: none;
+        background-color: #f0f4f8;
+        border-color: #cbd5e1;
+    }
+    .session-overview.locked .session-action-btn {
+        display: none;
+    }
+    .session-overview.locked .session-locked-overlay {
+        display: flex;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.95);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: var(--text-medium);
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 20px;
+        z-index: 15;
+    }
+    .session-overview.locked .session-locked-overlay i {
+        font-size: 2.8rem;
+        margin-bottom: 0.6rem;
+        color: var(--text-light);
+    }
+    .session-overview.locked::before { /* Locked circle color */
+        background-color: #9ca3af;
+        border-color: #f0f4ff;
+    }
+    .session-overview.locked::after { /* Locked line color */
+        background-color: #aeb8c4;
+    }
+
+    /* Styles for completed sessions */
+    .session-overview.completed {
+        border: 2px solid var(--success);
+        background-color: var(--secondary);
+        box-shadow: 0 10px 20px rgba(34, 197, 78, 0.2);
+    }
+    .session-overview.completed .session-visual-progress {
+        width: 100% !important;
+        background: linear-gradient(to right, var(--success), #10b981);
+    }
+    .session-overview.completed::before { /* Completed circle color */
+        background-color: var(--success);
+        border-color: var(--secondary);
+    }
+    .session-overview.completed::after { /* Completed line color */
+        background-color: var(--success);
+    }
+
+    /* Default hidden state for overlay */
+    .session-overview .session-locked-overlay {
+        display: none;
+    }
+
+    .reset-progress-button {
+        background: var(--danger);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 3rem;
+        transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .reset-progress-button:hover {
+        background: #b91c1c;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .reset-progress-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    footer {
+        text-align:center;
+        padding: 1.5rem;
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 4rem;
+        background-color: #e2e8f0;
+        box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
     }
     @media (max-width: 768px) {
-      .language-toggle {
-        top: 0.5rem;
-        right: 0.5rem;
-        padding: 0.4rem 0.6rem;
-        font-size: 0.85rem;
+      header {
+        padding: 1rem 1rem;
       }
-      .content-placeholder {
-        font-size: 1.1rem;
-        padding: 3rem 1rem;
+      header h1 {
+        font-size: 1.6rem;
+      }
+      header p {
+        font-size: 0.8rem;
+      }
+      .language-toggle {
+        top: 0.8rem;
+        right: 0.8rem;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+      }
+      .container {
+        margin: 1.5rem auto;
+        padding: 1rem;
+      }
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .intro-text {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .session-overview-grid {
+          padding-left: 40px; /* Adjust for smaller screens */
+      }
+      .session-overview {
+        padding: 1.2rem;
+        margin-bottom: 1.5rem;
+        margin-left: 10px; /* Adjust offset */
+      }
+      .session-overview::before {
+        left: -30px; /* Adjust position */
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        top: 1.2rem;
+      }
+      .session-overview-grid::before {
+          left: 20px; /* Adjust main line position */
+      }
+      .session-overview h3 {
+        font-size: 1.2rem;
+        gap: 0.6rem;
+      }
+      .session-overview h3 i {
+        font-size: 1.5rem;
+      }
+      .session-overview h4 {
+        font-size: 1rem;
+        margin-top: 1rem;
+      }
+      .session-overview ul li {
+        font-size: 0.95rem;
+      }
+      .session-action-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+      .session-overview.locked .session-locked-overlay {
+        font-size: 1rem;
+      }
+      .session-overview.locked .session-locked-overlay i {
+        font-size: 2rem;
+      }
+      .reset-progress-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        margin-top: 2rem;
       }
     }
   </style>
@@ -80,45 +479,439 @@
     <button class="language-toggle" onclick="toggleLanguage()">
       <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
     </button>
-    <h1 id="title"><i class="fas fa-virus-covid"></i> Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)</h1>
-    <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
+    <h1 id="header-title"><i class="fas fa-book-open"></i> Modul E-Learning</h1>
+    <p id="header-subtitle">Pencegahan, Kesiapsiagaan, Respon Pandemi & Perubahan Iklim</p>
   </header>
 
   <main>
-    <div class="content-placeholder" id="development-text">Halaman Ini Sedang Dikembangkan</div>
+    <div class="container">
+      <h2 class="section-title" data-lang-key="landing_page_title">Selamat Datang di Modul E-Learning PPPR!</h2>
+      <p class="intro-text" data-lang-key="landing_intro_p1">Modul ini dirancang untuk Organisasi Masyarakat Sipil (OMS) dan komunitas untuk meningkatkan kapasitas dalam Pencegahan, Kesiapsiagaan, dan Respon (PPPR) terhadap pandemi, dengan mengintegrasikan isu Perubahan Iklim.</p>
+      <p class="intro-text" data-lang-key="landing_intro_p2">Anda akan belajar tentang konsep dasar PPPR, keterkaitannya dengan perubahan iklim, strategi kesiapsiagaan dan respon berbasis komunitas, serta advokasi dan kolaborasi multisektor.</p>
+
+      <h2 class="section-title" data-lang-key="material_structure_title">Struktur Materi</h2>
+
+      <div class="overall-progress-container">
+        <div class="overall-progress-bar" id="overallProgressBar">0%</div>
+      </div>
+
+      <div class="session-overview-grid">
+        <!-- Sesi 1 -->
+        <div class="session-overview" id="session-overview-1" data-session-id="1">
+          <!-- Session number circle is now a CSS pseudo-element -->
+          <h3 data-lang-key="s1_title"><i class="fas fa-book"></i> Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas</h3>
+          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
+          <p class="objective" data-lang-key="s1_objective">Tujuan: Memberikan pemahaman dasar tentang konsep PPPR dan peran kunci OMS dan komunitas.</p>
+          <h4>Topik:</h4>
+          <ul>
+            <li data-lang-key="s1_t1">Apa itu PPPR? (Definisi, komponen, siklus)</li>
+            <li data-lang-key="s1_t2">Belajar dari pandemi COVID-19: pembelajaran dan tantangan</li>
+            <li data-lang-key="s1_t3">Peran OMS dan komunitas dalam PPPR</li>
+            <li data-lang-key="s1_t4">Pendekatan berbasis masyarakat dalam kesehatan</li>
+            <li data-lang-key="s1_t5">Prinsip-prinsip inklusivitas, keadilan, dan HAM dalam PPPR</li>
+          </ul>
+          <h4>Aktivitas:</h4>
+          <ul>
+            <li data-lang-key="s1_a1">Studi kasus pendek (COVID-19, Ebola, dll.)</li>
+            <li data-lang-key="s1_a2">Refleksi peran organisasi peserta selama pandemi</li>
+          </ul>
+          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
+          <div class="session-locked-overlay">
+              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          </div>
+        </div>
+
+        <!-- Sesi 2 -->
+        <div class="session-overview" id="session-overview-2" data-session-id="2">
+          <h3 data-lang-key="s2_title"><i class="fas fa-globe-americas"></i> Sesi 2: Keterkaitan PPPR dengan Perubahan Iklim</h3>
+          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
+          <p class="objective" data-lang-key="s2_objective">Tujuan: Memahami bagaimana perubahan iklim meningkatkan risiko wabah penyakit dan dampaknya terhadap sistem kesehatan masyarakat.</p>
+          <h4>Topik:</h4>
+          <ul>
+            <li data-lang-key="s2_t1">Perubahan iklim sebagai pemicu risiko kesehatan (banjir, migrasi vektor, kebakaran hutan, dll.)</li>
+            <li data-lang-key="s2_t2">Kaitan antara degradasi lingkungan dan zoonosis</li>
+            <li data-lang-key="s2_t3">Dampak perubahan iklim terhadap kelompok rentan</li>
+            <li data-lang-key="s2_t4">Pendekatan One Health: manusia, hewan, lingkungan</li>
+          </ul>
+          <h4>Aktivitas:</h4>
+          <ul>
+            <li data-lang-key="s2_a1">Diskusi kelompok: contoh lokal keterkaitan perubahan iklim dan kesehatan</li>
+            <li data-lang-key="s2_a2">Infografik interaktif: rantai dampak perubahan iklim terhadap wabah penyakit</li>
+          </ul>
+          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
+          <div class="session-locked-overlay">
+              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          </div>
+        </div>
+
+        <!-- Sesi 3 -->
+        <div class="session-overview" id="session-overview-3" data-session-id="3">
+          <h3 data-lang-key="s3_title"><i class="fas fa-toolbox"></i> Sesi 3: Kesiapsiagaan Komunitas dan Perencanaan Berbasis Risiko</h3>
+          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
+          <p class="objective" data-lang-key="s3_objective">Tujuan: Membekali peserta dengan keterampilan merancang rencana kesiapsiagaan berbasis komunitas dan risiko.</p>
+          <h4>Topik:</h4>
+          <ul>
+            <li data-lang-key="s3_t1">Penilaian risiko berbasis komunitas (Community Risk Assessment)</li>
+            <li data-lang-key="s3_t2">Identifikasi sumber daya lokal dan jaringan sosial</li>
+            <li data-lang-key="s3_t3">Penyusunan rencana kesiapsiagaan komunitas</li>
+            <li data-lang-key="s3_t4">Komunikasi risiko dan literasi kesehatan masyarakat</li>
+          </ul>
+          <h4>Aktivitas:</h4>
+          <ul>
+            <li data-lang-key="s3_a1">Simulasi: Menyusun peta risiko komunitas</li>
+            <li data-lang-key="s3_a2">Tugas kelompok: Draft rencana respon komunitas</li>
+          </ul>
+          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
+          <div class="session-locked-overlay">
+              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          </div>
+        </div>
+
+        <!-- Sesi 4 -->
+        <div class="session-overview" id="session-overview-4" data-session-id="4">
+          <h3 data-lang-key="s4_title"><i class="fas fa-exclamation-triangle"></i> Sesi 4: Respon Komunitas yang Efektif dalam Situasi Darurat</h3>
+          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
+          <p class="objective" data-lang-key="s4_objective">Tujuan: Mempersiapkan peserta untuk berperan aktif dalam respon darurat selama pandemi atau wabah.</p>
+          <h4>Topik:</h4>
+          <ul>
+            <li data-lang-key="s4_t1">Tindakan tanggap darurat komunitas</li>
+            <li data-lang-key="s4_t2">Mekanisme koordinasi antar pihak (pemerintah, OMS, relawan)</li>
+            <li data-lang-key="s4_t3">Perlindungan kelompok rentan dan inklusi gender dalam respon</li>
+            <li data-lang-key="s4_t4">Teknologi dan inovasi dalam respon komunitas (WhatsApp group, dashboard lokal, dsb.)</li>
+          </ul>
+          <h4>Aktivitas:</h4>
+          <ul>
+            <li data-lang-key="s4_a1">Studi kasus respon cepat komunitas</li>
+            <li data-lang-key="s4_a2">Latihan koordinasi tanggap darurat berbasis skenario</li>
+          </ul>
+          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
+          <div class="session-locked-overlay">
+              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          </div>
+        </div>
+
+        <!-- Sesi 5 -->
+        <div class="session-overview" id="session-overview-5" data-session-id="5">
+          <h3 data-lang-key="s5_title"><i class="fas fa-leaf"></i> Sesi 5: Strategi Keberlanjutan, Advokasi, dan Kolaborasi Multisektor</h3>
+          <div class="session-visual-progress"></div> <!-- Visual progress bar -->
+          <p class="objective" data-lang-key="s5_objective">Tujuan: Menguatkan kapasitas peserta dalam mendorong keberlanjutan program PPPR dan kolaborasi lintas sektor.</p>
+          <h4>Topik:</h4>
+          <ul>
+            <li data-lang-key="s5_t1">Advokasi berbasis bukti: menyuarakan kebutuhan komunitas</li>
+            <li data-lang-key="s5_t2">Kolaborasi lintas sektor: kesehatan, lingkungan, pendidikan, pertanian</li>
+            <li data-lang-key="s5_t3">Mobilisasi sumber daya (lokal dan eksternal)</li>
+            <li data-lang-key="s5_t4">Monitoring dan evaluasi program PPPR komunitas</li>
+            <li data-lang-key="s5_t5">Integrasi PPPR ke dalam kebijakan lokal dan rencana adaptasi perubahan iklim</li>
+          </ul>
+          <h4>Aktivitas:</h4>
+          <ul>
+            <li data-lang-key="s5_a1">Menyusun strategi advokasi sederhana</li>
+            <li data-lang-key="s5_a2">Refleksi dan rencana tindak lanjut individu/organisasi</li>
+          </ul>
+          <button class="session-action-btn" data-session-action="start" data-lang-key="start_session_button">Mulai Sesi</button>
+          <div class="session-locked-overlay">
+              <i class="fas fa-lock"></i> <span data-lang-key="session_locked_text">Sesi Terkunci</span>
+          </div>
+        </div>
+      </div> <!-- End session-overview-grid -->
+
+      <button class="reset-progress-button" onclick="resetProgress()" data-lang-key="reset_progress_button">Reset Progres Modul</button>
+    </div>
   </main>
+
+  <footer>
+    Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+  </footer>
 
   <script>
     let currentLang = 'id';
 
+    // Status penyelesaian sesi akan disimpan di localStorage
+    let sessionCompletionStatus = {}; // Contoh: { 'session-1': { completed: true, unlocked: true }, 'session-2': { completed: false, unlocked: true } }
+
     const translations = {
       en: {
-        title: "Pandemic Prevention, Preparedness and Response (PPPR)",
-        subtitle: "Toolkit for Civil Society Organizations and Communities",
+        headerTitle: "E-Learning Module",
+        headerSubtitle: "Pandemic Prevention, Preparedness, Response & Climate Change",
         langLabel: "EN",
-        development: "This page is under development"
+        landing_page_title: "Welcome to the PPPR E-Learning Module!",
+        landing_intro_p1: "This module is designed for Civil Society Organizations (CSOs) and communities to enhance their capacity in Pandemic Prevention, Preparedness, and Response (PPPR), integrating Climate Change issues.",
+        landing_intro_p2: "You will learn about basic PPPR concepts, their connection to climate change, community-based preparedness and response strategies, as well as advocacy and multi-sector collaboration.",
+        material_structure_title: "Material Structure",
+
+        s1_title: "Session 1: Introduction to PPPR and the Role of CSOs/Communities",
+        s1_objective: "Objective: Provide basic understanding of PPPR concepts and the key roles of CSOs and communities.",
+        s1_t1: "What is PPPR? (Definition, components, cycle)",
+        s1_t2: "Learning from the COVID-19 pandemic: lessons and challenges",
+        s1_t3: "The role of CSOs and communities in PPPR",
+        s1_t4: "Community-based approaches in health",
+        s1_t5: "Principles of inclusivity, equity, and human rights in PPPR",
+        s1_a1: "Short case study (COVID-19, Ebola, etc.)",
+        s1_a2: "Reflection on the role of participating organizations during the pandemic",
+
+        s2_title: "Session 2: PPPR and Climate Change Linkages",
+        s2_objective: "Objective: Understand how climate change increases the risk of disease outbreaks and its impact on public health systems.",
+        s2_t1: "Climate change as a trigger for health risks (floods, vector migration, forest fires, etc.)",
+        s2_t2: "Connection between environmental degradation and zoonoses",
+        s2_t3: "Impact of climate change on vulnerable groups",
+        s2_t4: "One Health approach: humans, animals, environment",
+        s2_a1: "Group discussion: local examples of climate change and health linkages",
+        s2_a2: "Interactive infographic: chain of climate change impacts on disease outbreaks",
+
+        s3_title: "Session 3: Community Preparedness and Risk-Based Planning",
+        s3_objective: "Objective: Equip participants with skills to design community and risk-based preparedness plans.",
+        s3_t1: "Community Risk Assessment",
+        s3_t2: "Identification of local resources and social networks",
+        s3_t3: "Development of community preparedness plans",
+        s3_t4: "Risk communication and public health literacy",
+        s3_a1: "Simulation: Developing a community risk map",
+        s3_a2: "Group task: Draft community response plan",
+
+        s4_title: "Session 4: Effective Community Response in Emergencies",
+        s4_objective: "Objective: Prepare participants to actively participate in emergency response during pandemics or outbreaks.",
+        s4_t1: "Community emergency response actions",
+        s4_t2: "Coordination mechanisms among stakeholders (government, CSOs, volunteers)",
+        s4_t3: "Protection of vulnerable groups and gender inclusion in response",
+        s4_t4: "Technology and innovation in community response (WhatsApp groups, local dashboards, etc.)",
+        s4_a1: "Case study of rapid community response",
+        s4_a2: "Scenario-based emergency coordination exercise",
+
+        s5_title: "Session 5: Sustainability, Advocacy, and Multi-sector Collaboration Strategies",
+        s5_objective: "Objective: Strengthen participants' capacity to promote the sustainability of PPPR programs and cross-sector collaboration.",
+        s5_t1: "Evidence-based advocacy: voicing community needs",
+        s5_t2: "Cross-sector collaboration: health, environment, education, agriculture",
+        s5_t3: "Resource mobilization (local and external)",
+        s5_t4: "Monitoring and evaluation of community PPPR programs",
+        s5_t5: "Integration of PPPR into local policies and climate change adaptation plans",
+        s5_a1: "Developing a simple advocacy strategy",
+        s5_a2: "Reflection and individual/organizational action plan",
+
+        start_session_button: "Start Session",
+        session_completed_button: "Session Completed",
+        session_locked_text: "Session Locked",
+        reset_progress_button: "Reset Module Progress"
       },
       id: {
-        title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
-        subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
+        headerTitle: "Modul E-Learning",
+        headerSubtitle: "Pencegahan, Kesiapsiagaan, Respon Pandemi & Perubahan Iklim",
         langLabel: "ID",
-        development: "Halaman Ini Sedang Dikembangkan"
+        landing_page_title: "Selamat Datang di Modul E-Learning PPPR!",
+        landing_intro_p1: "Modul ini dirancang untuk Organisasi Masyarakat Sipil (OMS) dan komunitas untuk meningkatkan kapasitas dalam Pencegahan, Kesiapsiagaan, dan Respon (PPPR) terhadap pandemi, dengan mengintegrasikan isu Perubahan Iklim.",
+        landing_intro_p2: "Anda akan belajar tentang konsep dasar PPPR, keterkaitannya dengan perubahan iklim, strategi kesiapsiagaan dan respon berbasis komunitas, serta advokasi dan kolaborasi multisektor.",
+        material_structure_title: "Struktur Materi",
+
+        s1_title: "Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas",
+        s1_objective: "Tujuan: Memberikan pemahaman dasar tentang konsep PPPR dan peran kunci OMS dan komunitas.",
+        s1_t1: "Apa itu PPPR? (Definisi, komponen, siklus)",
+        s1_t2: "Belajar dari pandemi COVID-19: pembelajaran dan tantangan",
+        s1_t3: "Peran OMS dan komunitas dalam PPPR",
+        s1_t4: "Pendekatan berbasis masyarakat dalam kesehatan",
+        s1_t5: "Prinsip-prinsip inklusivitas, keadilan, dan HAM dalam PPPR",
+        s1_a1: "Studi kasus pendek (COVID-19, Ebola, dll.)",
+        s1_a2: "Refleksi peran organisasi peserta selama pandemi",
+
+        s2_title: "Sesi 2: Keterkaitan PPPR dengan Perubahan Iklim",
+        s2_objective: "Tujuan: Memahami bagaimana perubahan iklim meningkatkan risiko wabah penyakit dan dampaknya terhadap sistem kesehatan masyarakat.",
+        s2_t1: "Perubahan iklim sebagai pemicu risiko kesehatan (banjir, migrasi vektor, kebakaran hutan, dll.)",
+        s2_t2: "Kaitan antara degradasi lingkungan dan zoonosis",
+        s2_t3: "Dampak perubahan iklim terhadap kelompok rentan",
+        s2_t4: "Pendekatan One Health: manusia, hewan, lingkungan",
+        s2_a1: "Diskusi kelompok: contoh lokal keterkaitan perubahan iklim dan kesehatan",
+        s2_a2: "Infografik interaktif: rantai dampak perubahan iklim terhadap wabah penyakit",
+
+        s3_title: "Sesi 3: Kesiapsiagaan Komunitas dan Perencanaan Berbasis Risiko",
+        s3_objective: "Tujuan: Membekali peserta dengan keterampilan merancang rencana kesiapsiagaan berbasis komunitas dan risiko.",
+        s3_t1: "Penilaian risiko berbasis komunitas (Community Risk Assessment)",
+        s3_t2: "Identifikasi sumber daya lokal dan jaringan sosial",
+        s3_t3: "Penyusunan rencana kesiapsiagaan komunitas",
+        s3_t4: "Komunikasi risiko dan literasi kesehatan masyarakat",
+        s3_a1: "Simulasi: Menyusun peta risiko komunitas",
+        s3_a2: "Tugas kelompok: Draft rencana respon komunitas",
+
+        s4_title: "Sesi 4: Respon Komunitas yang Efektif dalam Situasi Darurat",
+        s4_objective: "Tujuan: Mempersiapkan peserta untuk berperan aktif dalam respon darurat selama pandemi atau wabah.",
+        s4_t1: "Tindakan tanggap darurat komunitas",
+        s4_t2: "Mekanisme koordinasi antar pihak (pemerintah, OMS, relawan)",
+        s4_t3: "Perlindungan kelompok rentan dan inklusi gender dalam respon",
+        s4_t4: "Teknologi dan inovasi dalam respon komunitas (WhatsApp group, dashboard lokal, dsb.)",
+        s4_a1: "Studi kasus respon cepat komunitas",
+        s4_a2: "Latihan koordinasi tanggap darurat berbasis skenario",
+
+        s5_title: "Sesi 5: Strategi Keberlanjutan, Advokasi, dan Kolaborasi Multisektor",
+        s5_objective: "Tujuan: Menguatkan kapasitas peserta dalam mendorong keberlanjutan program PPPR dan kolaborasi lintas sektor.",
+        s5_t1: "Advokasi berbasis bukti: menyuarakan kebutuhan komunitas",
+        s5_t2: "Kolaborasi lintas sektor: kesehatan, lingkungan, pendidikan, pertanian",
+        s5_t3: "Mobilisasi sumber daya (lokal dan eksternal)",
+        s5_t4: "Monitoring dan evaluasi program PPPR komunitas",
+        s5_t5: "Integrasi PPPR ke dalam kebijakan lokal dan rencana adaptasi perubahan iklim",
+        s5_a1: "Menyusun strategi advokasi sederhana",
+        s5_a2: "Refleksi dan rencana tindak lanjut individu/organisasi",
+
+        start_session_button: "Mulai Sesi",
+        session_completed_button: "Sesi Selesai",
+        session_locked_text: "Sesi Terkunci",
+        reset_progress_button: "Reset Progres Modul"
       }
     };
 
+    // Fungsi untuk memuat status penyelesaian sesi dari localStorage
+    function loadSessionStatus() {
+        const storedStatus = localStorage.getItem('eLearningSessionStatus');
+        if (storedStatus) {
+            sessionCompletionStatus = JSON.parse(storedStatus);
+        } else {
+            // Inisialisasi semua sesi sebagai belum selesai dan terkunci, kecuali Sesi 1
+            for (let i = 1; i <= 5; i++) {
+                sessionCompletionStatus[`session-${i}`] = { completed: false, unlocked: false };
+            }
+            sessionCompletionStatus['session-1'].unlocked = true; // Sesi 1 selalu tidak terkunci di awal
+            saveSessionStatus();
+        }
+    }
+
+    // Fungsi untuk menyimpan status penyelesaian sesi ke localStorage
+    function saveSessionStatus() {
+        localStorage.setItem('eLearningSessionStatus', JSON.stringify(sessionCompletionStatus));
+    }
+
+    // Fungsi untuk memperbarui tampilan kartu sesi berdasarkan statusnya
+    function updateSessionCardUI(sessionId) {
+        const sessionCard = document.getElementById(`session-overview-${sessionId}`);
+        if (!sessionCard) return; // Pastikan elemen kartu ada
+
+        const status = sessionCompletionStatus[`session-${sessionId}`];
+        const sessionActionBtn = sessionCard.querySelector('.session-action-btn');
+        const lockedOverlay = sessionCard.querySelector('.session-locked-overlay');
+        const progressBar = sessionCard.querySelector('.session-visual-progress');
+
+        // Reset kelas dan tampilan default
+        sessionCard.classList.remove('locked', 'completed');
+        sessionActionBtn.style.display = 'block'; // Tampilkan tombol secara default
+        lockedOverlay.style.display = 'none'; // Sembunyikan overlay secara default
+        sessionActionBtn.disabled = false; // Aktifkan tombol secara default
+
+        if (status.completed) {
+            sessionCard.classList.add('completed');
+            sessionActionBtn.textContent = translations[currentLang].session_completed_button;
+            sessionActionBtn.disabled = true; // Nonaktifkan tombol jika sesi selesai
+            progressBar.style.width = '100%'; // Progres penuh untuk sesi yang selesai
+            progressBar.style.background = 'linear-gradient(to right, var(--success), #10b981)'; // Warna hijau untuk selesai
+        } else if (!status.unlocked) {
+            sessionCard.classList.add('locked');
+            sessionActionBtn.style.display = 'none'; // Sembunyikan tombol saat terkunci
+            lockedOverlay.style.display = 'flex'; // Tampilkan overlay saat terkunci
+            progressBar.style.width = '0%'; // Tidak ada progres untuk sesi terkunci
+            progressBar.style.background = 'linear-gradient(to right, #e2e8f0, var(--accent))'; // Warna default
+        } else { // Sesi tidak terkunci tapi belum selesai
+            sessionActionBtn.textContent = translations[currentLang].start_session_button;
+            progressBar.style.width = '0%'; // Tidak ada progres sampai dimulai/selesai
+            progressBar.style.background = 'linear-gradient(to right, #e2e8f0, var(--accent))'; // Warna default
+        }
+    }
+
+    // Fungsi untuk memperbarui bilah progres keseluruhan
+    function updateOverallProgressBar() {
+        let completedSessionsCount = 0;
+        for (let i = 1; i <= 5; i++) {
+            if (sessionCompletionStatus[`session-${i}`] && sessionCompletionStatus[`session-${i}`].completed) {
+                completedSessionsCount++;
+            }
+        }
+        const totalSessions = 5;
+        const progressPercentage = (completedSessionsCount / totalSessions) * 100;
+        const overallProgressBar = document.getElementById('overallProgressBar');
+        if (overallProgressBar) {
+            overallProgressBar.style.width = `${progressPercentage}%`;
+            overallProgressBar.textContent = `${Math.round(progressPercentage)}%`;
+        }
+    }
+
+    // Fungsi untuk menangani aksi tombol sesi (Mulai/Lanjutkan)
+    function handleSessionAction(event) {
+        const sessionId = event.target.closest('.session-overview').dataset.sessionId;
+        const currentSessionNum = parseInt(sessionId);
+
+        // Tandai sesi saat ini sebagai selesai
+        sessionCompletionStatus[`session-${sessionId}`].completed = true;
+        updateSessionCardUI(sessionId); // Perbarui UI untuk sesi saat ini
+
+        // Aktifkan sesi berikutnya
+        const nextSessionNum = currentSessionNum + 1;
+        if (nextSessionNum <= 5) { // Pastikan ada sesi berikutnya (maksimal Sesi 5)
+            const nextSessionId = `session-${nextSessionNum}`;
+            if (!sessionCompletionStatus[nextSessionId].unlocked) { // Hanya buka kunci jika belum terbuka
+                sessionCompletionStatus[nextSessionId].unlocked = true;
+                updateSessionCardUI(nextSessionId); // Perbarui UI untuk sesi berikutnya
+            }
+        }
+        saveSessionStatus(); // Simpan perubahan status ke localStorage
+        updateOverallProgressBar(); // Perbarui bilah progres keseluruhan
+
+        // Di sini Anda bisa menambahkan logika untuk mengarahkan pengguna ke halaman sesi yang sebenarnya
+        console.log(`Mulai Sesi ${sessionId} diklik! (Ini adalah placeholder untuk navigasi ke konten sesi)`);
+        // Contoh: window.location.href = `session-${sessionId}.html`;
+    }
+
+    // Fungsi untuk menerapkan terjemahan
+    function applyTranslations(lang) {
+        const t = translations[lang];
+
+        // Header
+        document.getElementById('header-title').innerHTML = '<i class="fas fa-book-open"></i> ' + t.headerTitle;
+        document.getElementById('header-subtitle').textContent = t.headerSubtitle;
+        document.getElementById('lang-label').textContent = t.langLabel;
+
+        // General elements with data-lang-key
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+            const key = el.dataset.langKey;
+            if (t[key]) {
+                el.textContent = t[key];
+            }
+        });
+
+        // Perbarui teks tombol aksi sesi dan overlay terkunci
+        for (let i = 1; i <= 5; i++) {
+            const sessionId = `session-${i}`;
+            updateSessionCardUI(sessionId); // Ini akan memperbarui teks tombol dan overlay berdasarkan status
+        }
+        updateOverallProgressBar(); // Pastikan progres keseluruhan juga diperbarui saat bahasa berubah
+    }
+
+    // Fungsi untuk mengganti bahasa
     function toggleLanguage() {
       currentLang = currentLang === 'id' ? 'en' : 'id';
-      const t = translations[currentLang];
-
-      document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
-      document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('lang-label').textContent = t.langLabel;
-      document.getElementById('development-text').textContent = t.development;
+      applyTranslations(currentLang);
     }
-  </script>
 
-  <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
-  Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
-</footer>
+    // Fungsi untuk mereset semua progres modul
+    function resetProgress() {
+        if (confirm(currentLang === 'id' ? "Apakah Anda yakin ingin mereset semua progres modul? Tindakan ini tidak dapat dibatalkan." : "Are you sure you want to reset all module progress? This action cannot be undone.")) {
+            localStorage.removeItem('eLearningSessionStatus'); // Hapus status dari localStorage
+            initializePage(); // Muat ulang status (akan menginisialisasi ulang)
+            applyTranslations(currentLang); // Terapkan terjemahan setelah reset
+        }
+    }
+
+    // Fungsi inisialisasi utama
+    function initializePage() {
+        loadSessionStatus(); // Muat status dari localStorage
+        // Perbarui UI untuk setiap kartu sesi
+        for (let i = 1; i <= 5; i++) {
+            updateSessionCardUI(`session-${i}`);
+        }
+
+        // Tambahkan event listener ke semua tombol aksi sesi
+        document.querySelectorAll('.session-action-btn').forEach(button => {
+            button.addEventListener('click', handleSessionAction);
+        });
+        updateOverallProgressBar(); // Inisialisasi bilah progres keseluruhan
+    }
+
+    // Inisialisasi halaman saat DOM dimuat sepenuhnya
+    document.addEventListener('DOMContentLoaded', () => {
+      initializePage(); // Muat status dan perbarui UI awal
+      applyTranslations(currentLang); // Terapkan terjemahan awal
+    });
+  </script>
 </body>
 </html>
