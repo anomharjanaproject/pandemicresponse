@@ -718,6 +718,11 @@
     </style>
 </head>
 <body>
+    <!-- Timer Container - Moved outside content-wrapper -->
+    <div id="timer-container">
+        Waktu Tersisa: <span id="countdown">20:00</span>
+    </div>
+
     <div class="content-wrapper">
         <h1><i class="fas fa-clipboard-check"></i> Evaluasi Akhir Peserta</h1>
 
@@ -733,11 +738,6 @@
                 <li><i class="fas fa-wifi"></i> <span>Pastikan koneksi internet Anda stabil selama pengerjaan tes.</span></li>
             </ul>
             <button id="startTestBtn">Mulai Tes</button>
-        </div>
-
-        <!-- Timer Container -->
-        <div id="timer-container">
-            Waktu Tersisa: <span id="countdown">20:00</span>
         </div>
 
         <!-- Google Form Embed -->
