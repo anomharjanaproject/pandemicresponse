@@ -171,13 +171,22 @@
       font-size: 0.9rem;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     }
-    #radarChart {
+    /* Kontainer baru untuk chart agar ukurannya fixed */
+    #chartContainer {
         margin-top: 2rem;
-        max-width: 600px;
-        max-height: 600px;
+        width: 100%; /* Ambil lebar penuh kontainer */
+        max-width: 500px; /* Batasi lebar maksimal */
+        height: 400px; /* Tinggi tetap */
         margin-left: auto;
         margin-right: auto;
+        position: relative; /* Penting untuk responsivitas canvas anak */
     }
+    #radarChart {
+        /* Canvas akan mengisi kontainer induk */
+        width: 100% !important; 
+        height: 100% !important;
+    }
+
     .recommendation {
       margin-top: 1.5rem;
       padding: 1.2rem;
@@ -259,6 +268,9 @@
       .navigation button {
         padding: 0.7rem 1rem;
         font-size: 0.9rem;
+      }
+      #chartContainer {
+        height: 300px; /* Sesuaikan tinggi untuk layar kecil */
       }
     }
   </style>
@@ -489,7 +501,7 @@
         <div class="bar">
           <div class="fill" id="progressBar"></div>
         </div>
-        <div style="text-align: center; margin-top: 1.5rem;">
+        <div id="chartContainer">
             <canvas id="radarChart"></canvas>
         </div>
         <div class="recommendation" id="recommendation">
@@ -507,7 +519,7 @@
 
   <script>
     let currentLang = 'id';
-    let myRadarChart; // Global variable to hold the chart instance
+    let myRadarChart = null; // Gunakan null sebagai nilai awal yang eksplisit untuk instans chart
 
     const translations = {
       en: {
@@ -729,7 +741,7 @@
         logistik_3_option_2: "Ya",
         logistik_3_option_1: "Sebagian",
         logistik_3_option_0: "Tidak",
-istik_3_error: "Pilih salah satu jawaban.",
+        logistik_3_error: "Pilih salah satu jawaban.",
 
         program_1_option_default: "Pilih jawaban",
         program_1_option_2: "Ya",
@@ -830,9 +842,9 @@ istik_3_error: "Pilih salah satu jawaban.",
             el.textContent = el.dataset[lang === 'id' ? 'subSectionTitle' : 'subSectionTitleEn'];
         });
 
-        // Translate question labels using data-question-id and data-question-en
+        // Translate question labels (using _q suffix)
         document.querySelectorAll('label[data-question-id]').forEach(el => {
-            const questionKey = el.dataset.questionId; // Use the ID as the key
+            const questionKey = el.dataset.questionId;
             el.textContent = t[questionKey];
         });
 
@@ -901,8 +913,14 @@ istik_3_error: "Pilih salah satu jawaban.",
       prevBtn.disabled = stepIndex === 0;
       nextBtn.style.display = (stepIndex === steps.length - 1) ? 'none' : 'inline-block';
       submitBtn.style.display = (stepIndex === steps.length - 1) ? 'inline-block' : 'none';
-      resultsSection.style.display = 'none'; // Hide results when navigating steps
-      form.style.display = 'block'; // Show form
+      resultsSection.style.display = 'none'; // Sembunyikan hasil saat navigasi langkah
+      form.style.display = 'block'; // Tampilkan formulir
+
+      // Pastikan chart dihancurkan jika kita kembali ke form dari hasil
+      if (myRadarChart instanceof Chart) {
+          myRadarChart.destroy();
+          myRadarChart = null; 
+      }
     }
 
     function validateStep(stepIndex) {
@@ -913,7 +931,7 @@ istik_3_error: "Pilih salah satu jawaban.",
         inputs.forEach(input => {
             const errorElement = document.getElementById(`error-${input.id}`);
             if (errorElement) {
-                errorElement.style.display = 'none'; // Hide previous errors
+                errorElement.style.display = 'none'; // Sembunyikan error sebelumnya
             }
 
             if (input.tagName === 'SELECT') {
@@ -932,7 +950,7 @@ istik_3_error: "Pilih salah satu jawaban.",
         return isValid;
     }
 
-    // Function to calculate scores per category
+    // Fungsi untuk menghitung skor per kategori
     function calculateCategoryScores() {
         const scores = {
             sdm: 0, logistik: 0, program: 0, finance: 0, partnership: 0
@@ -943,36 +961,36 @@ istik_3_error: "Pilih salah satu jawaban.",
 
         const formData = new FormData(form);
 
-        // SDM (3 questions: sdm_1, sdm_2 (percentage), sdm_3)
+        // SDM (3 pertanyaan: sdm_1, sdm_2 (percentage), sdm_3)
         // sdm_1: max 2, sdm_2: max 100, sdm_3: max 2. Total Max SDM = 104
         if (!isNaN(parseInt(formData.get('sdm_1')))) scores.sdm += parseInt(formData.get('sdm_1'));
         if (!isNaN(parseInt(formData.get('sdm_2')))) scores.sdm += parseInt(formData.get('sdm_2'));
         if (!isNaN(parseInt(formData.get('sdm_3')))) scores.sdm += parseInt(formData.get('sdm_3'));
         maxScores.sdm = 2 + 100 + 2;
 
-        // Logistik (3 questions: logistik_1, logistik_2, logistik_3)
-        // Each max 2. Total Max Logistik = 6
+        // Logistik (3 pertanyaan: logistik_1, logistik_2, logistik_3)
+        // Masing-masing max 2. Total Max Logistik = 6
         if (!isNaN(parseInt(formData.get('logistik_1')))) scores.logistik += parseInt(formData.get('logistik_1'));
         if (!isNaN(parseInt(formData.get('logistik_2')))) scores.logistik += parseInt(formData.get('logistik_2'));
         if (!isNaN(parseInt(formData.get('logistik_3')))) scores.logistik += parseInt(formData.get('logistik_3'));
         maxScores.logistik = 2 + 2 + 2;
 
-        // Program (3 questions: program_1, program_2, program_3)
-        // Each max 2. Total Max Program = 6
+        // Program (3 pertanyaan: program_1, program_2, program_3)
+        // Masing-masing max 2. Total Max Program = 6
         if (!isNaN(parseInt(formData.get('program_1')))) scores.program += parseInt(formData.get('program_1'));
         if (!isNaN(parseInt(formData.get('program_2')))) scores.program += parseInt(formData.get('program_2'));
         if (!isNaN(parseInt(formData.get('program_3')))) scores.program += parseInt(formData.get('program_3'));
         maxScores.program = 2 + 2 + 2;
 
-        // Keuangan (3 questions: finance_1, finance_2, finance_3)
-        // Each max 2. Total Max Keuangan = 6
+        // Keuangan (3 pertanyaan: finance_1, finance_2, finance_3)
+        // Masing-masing max 2. Total Max Keuangan = 6
         if (!isNaN(parseInt(formData.get('finance_1')))) scores.finance += parseInt(formData.get('finance_1'));
         if (!isNaN(parseInt(formData.get('finance_2')))) scores.finance += parseInt(formData.get('finance_2'));
         if (!isNaN(parseInt(formData.get('finance_3')))) scores.finance += parseInt(formData.get('finance_3'));
         maxScores.finance = 2 + 2 + 2;
 
-        // Kemitraan (6 questions in total, 2 per sub-section)
-        // Each max 2. Total Max Kemitraan = 12
+        // Kemitraan (6 pertanyaan, 2 per sub-bagian)
+        // Masing-masing max 2. Total Max Kemitraan = 12
         if (!isNaN(parseInt(formData.get('partnership_public_1')))) scores.partnership += parseInt(formData.get('partnership_public_1'));
         if (!isNaN(parseInt(formData.get('partnership_public_2')))) scores.partnership += parseInt(formData.get('partnership_public_2'));
         if (!isNaN(parseInt(formData.get('partnership_private_1')))) scores.partnership += parseInt(formData.get('partnership_private_1'));
@@ -1011,9 +1029,10 @@ istik_3_error: "Pilih salah satu jawaban.",
     function renderRadarChart(categoryScores, categoryMaxScores) {
         const ctx = document.getElementById('radarChart').getContext('2d');
 
-        // Destroy existing chart instance if it exists
-        if (myRadarChart) {
+        // *** PERBAIKAN UTAMA: Hancurkan instans chart yang ada secara eksplisit ***
+        if (myRadarChart instanceof Chart) { // Memastikan itu benar-benar instans Chart.js
             myRadarChart.destroy();
+            myRadarChart = null; // Setel ke null setelah dihancurkan
         }
 
         const labels = [
@@ -1024,6 +1043,7 @@ istik_3_error: "Pilih salah satu jawaban.",
             translations[currentLang].kemitraan_category
         ];
 
+        // Hitung persentase untuk setiap kategori
         const dataValues = [
             (categoryScores.sdm / categoryMaxScores.sdm) * 100,
             (categoryScores.logistik / categoryMaxScores.logistik) * 100,
@@ -1039,8 +1059,8 @@ istik_3_error: "Pilih salah satu jawaban.",
                 datasets: [{
                     label: translations[currentLang].resultsTitle,
                     data: dataValues,
-                    backgroundColor: 'rgba(13, 148, 136, 0.4)', // Primary color with transparency
-                    borderColor: 'rgba(13, 148, 136, 1)', // Primary color
+                    backgroundColor: 'rgba(13, 148, 136, 0.4)', // Warna primer dengan transparansi
+                    borderColor: 'rgba(13, 148, 136, 1)', // Warna primer
                     borderWidth: 2,
                     pointBackgroundColor: 'rgba(13, 148, 136, 1)',
                     pointBorderColor: '#fff',
@@ -1050,40 +1070,40 @@ istik_3_error: "Pilih salah satu jawaban.",
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Allow custom size
+                maintainAspectRatio: false, // IZINKAN KONTROL DIMENSI DARI CSS
                 scales: {
                     r: {
                         angleLines: {
-                            color: '#e2e8f0' // Light gray lines
+                            color: '#e2e8f0' // Garis abu-abu muda
                         },
                         grid: {
-                            color: '#e2e8f0' // Light gray grid
+                            color: '#e2e8f0' // Kisi abu-abu muda
                         },
                         pointLabels: {
                             font: {
                                 size: 12,
                                 weight: 'bold'
                             },
-                            color: '#374151' // Darker font color for labels
+                            color: '#374151' // Warna font lebih gelap untuk label
                         },
                         suggestedMin: 0,
                         suggestedMax: 100,
                         ticks: {
                             beginAtZero: true,
-                            stepSize: 20, // Steps of 20%
-                            color: '#4b5563', // Tick labels color
+                            stepSize: 20, // Langkah 20%
+                            color: '#4b5563', // Warna label tick
                             callback: function(value) {
-                                return value + '%'; // Add % to tick labels
+                                return value + '%'; // Tambahkan % ke label tick
                             }
                         },
                         gridLines: {
-                            circular: true // Radial grid lines
+                            circular: true // Garis kisi radial
                         }
                     }
                 },
                 plugins: {
                     legend: {
-                        display: false // Hide dataset label as it's self-assessment
+                        display: false // Sembunyikan label dataset karena ini adalah penilaian mandiri
                     },
                     tooltip: {
                         callbacks: {
@@ -1145,25 +1165,27 @@ istik_3_error: "Pilih salah satu jawaban.",
     });
 
     restartBtn.addEventListener('click', () => {
-        form.reset(); // Reset all form fields
+        form.reset(); // Reset semua bidang formulir
         currentStep = 0;
         showStep(currentStep);
         progressBar.style.width = '0%';
         progressBar.textContent = '0%';
         document.querySelectorAll('.error-message').forEach(el => {
-            el.style.display = 'none'; // Hide all error messages
+            el.style.display = 'none'; // Sembunyikan semua pesan error
         });
-        if (myRadarChart) { // Destroy chart when restarting
+        // Pastikan chart dihancurkan saat memulai ulang
+        if (myRadarChart instanceof Chart) { 
             myRadarChart.destroy();
+            myRadarChart = null; // Setel ke null untuk menunjukkan tidak ada instans chart
         }
-        applyTranslations(currentLang); // Re-apply translations after reset
+        applyTranslations(currentLang); // Terapkan terjemahan setelah reset
     });
 
-    // Run initial setup when the DOM is fully loaded
+    // Jalankan pengaturan awal saat DOM dimuat sepenuhnya
     document.addEventListener('DOMContentLoaded', () => {
-        totalMaxScore = calculateTotalMaxScore(calculateCategoryScores()); // Calculate max score initially for total
+        totalMaxScore = calculateTotalMaxScore(calculateCategoryScores()); // Hitung skor maksimal awal
         showStep(currentStep);
-        applyTranslations(currentLang); // Apply translations based on initial language
+        applyTranslations(currentLang); // Terapkan terjemahan berdasarkan bahasa awal
     });
   </script>
 </body>
