@@ -223,6 +223,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            overflow-y: auto; /* Added for scrollbar if content is too long */
         }
         .accordion-content.active {
             /* Changed to a very large value to ensure content is never cut off */
@@ -248,12 +249,17 @@
             font-size: 1.2em;
             line-height: 1;
         }
+        .accordion-content p {
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+        }
 
         /* Flip Card Styling */
         .flip-card {
             background-color: transparent;
             width: 200px; /* Base width */
-            height: 200px; /* Increased fixed height */
+            height: auto; /* Allow height to adjust based on content */
+            min-height: 200px; /* Ensure a minimum height */
             perspective: 1000px;
             font-size: 0.9rem;
             font-weight: 600;
@@ -279,7 +285,7 @@
         .flip-card-inner {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 100%; /* Still 100% of the (now auto-height) parent */
             text-align: center;
             transition: transform 0.6s;
             transform-style: preserve-3d;
@@ -294,7 +300,7 @@
         .flip-card-front, .flip-card-back {
             position: absolute;
             width: 100%;
-            height: 100%; /* Still 100% of the (now larger) parent */
+            height: 100%; /* Still 100% of the (now auto-height) parent */
             -webkit-backface-visibility: hidden; /* Safari */
             backface-visibility: hidden;
             display: flex;
@@ -305,7 +311,7 @@
             padding: 1rem;
             word-wrap: break-word; /* Ensure text wraps */
             white-space: normal; /* Ensure text wraps */
-            overflow: visible; /* Changed from hidden to visible to ensure text is not cut */
+            overflow-y: auto; /* Added for scrollbar if content is too long */
             text-overflow: clip; /* Changed from ellipsis to clip */
         }
 
@@ -990,7 +996,8 @@
 
                     if (content.classList.contains('active')) {
                         // Set max-height to scrollHeight to ensure content is fully visible
-                        content.style.maxHeight = content.scrollHeight + "px";
+                        // Adding a small buffer to scrollHeight can sometimes prevent cutting
+                        content.style.maxHeight = (content.scrollHeight + 50) + "px"; // Added 50px buffer
                         content.style.padding = "1.5rem";
                     } else {
                         content.style.maxHeight = "0";
@@ -1176,7 +1183,7 @@
                 feedbackElement = document.getElementById('caseStudyReflectionFeedback');
             } else if (type === 'scenarioPlan') {
                 inputElement = document.getElementById('scenarioPlanInput');
-                feedbackElement = document.getElementById('scenarioPlanFeedback');
+                feedbackElement = document.getElementById('scenarioPlanPlanFeedback'); // Corrected ID
             } else {
                 return;
             }
