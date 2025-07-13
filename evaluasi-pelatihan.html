@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluasi Akhir Peserta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
+    <style>
+        /* Global Box-Sizing for consistent layout */
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0d9488;
+            --secondary: #f0fdfa;
+            --accent: #14b8a6;
+            --danger: #dc2626;
+            --warning: #facc15;
+            --light: #f8fafc;
+            --success: #22c54e;
+            --info: #3b82f6;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-shadow: rgba(0,0,0,0.05);
+            --card-hover-shadow: rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--card-shadow);
+            flex-grow: 1;
+            opacity: 0; /* Initial state for fade-in animation */
+            transform: translateY(20px); /* Initial state for slide-up animation */
+            animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply animation */
+        }
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.8rem;
+        }
+        h2 {
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed var(--card-border);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        h2 i {
+            color: var(--accent);
+            font-size: 1.5em;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            flex-wrap: wrap; /* Allow text to wrap within the available space */
+        }
+        ul li i {
+            color: var(--primary);
+            font-size: 1.1em;
+            margin-top: 0.2em; /* Adjust icon vertical alignment */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+        ul li span { /* Optional: wrap text content in a span if more complex styling needed */
+            flex: 1; /* Allow text to take remaining space */
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        strong {
+            font-weight: 700; /* Ensure strong tag is truly bold */
+        }
+
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1.5rem;
+        }
+        .navigation-buttons button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .navigation-buttons button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .navigation-buttons button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        footer {
+            text-align:center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 3rem;
+            background-color: #e2e8f0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Interactive Elements Styling */
+        .interactive-section {
+            background-color: var(--secondary);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .interactive-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .interactive-section h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+        .example-text {
+            background-color: #e0f2f7; /* Lighter blue for examples */
+            border-left: 4px solid var(--info);
+            padding: 0.8rem 1rem;
+            margin-top: 1.5rem;
+            border-radius: 4px;
+            font-style: italic;
+            color: var(--text-dark);
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Accordion Styling */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease, transform 0.2s ease; /* Added transform transition */
+        }
+        .accordion-header:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px); /* Added hover animation */
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            background-color: var(--card-bg);
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            overflow-y: auto; /* Added for scrollbar if content is too long */
+        }
+        .accordion-content.active {
+            /* Changed to a very large value to ensure content is never cut off */
+            max-height: 9999px; 
+            padding: 1.5rem;
+        }
+        .accordion-content ul {
+            margin-left: 0; /* Reset default list indent */
+            list-style: none; /* Remove default bullet */
+            padding-left: 0; /* Remove default padding */
+        }
+        .accordion-content ul li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        .accordion-content p {
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+        }
+
+        /* Flip Card Styling */
+        .flip-card {
+            background-color: transparent;
+            width: 200px; /* Base width */
+            height: auto; /* Allow height to adjust based on content */
+            min-height: 200px; /* Ensure a minimum height */
+            perspective: 1000px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            flex-shrink: 0; /* Prevent shrinking too much */
+            flex-grow: 1; /* Allow growing to fill space, but controlled by max-width on parent */
+            max-width: calc(33.333% - 1rem); /* For 3 columns with gap on larger screens */
+            box-sizing: border-box; /* Ensure padding/border included in width */
+        }
+        /* Ensure 2 columns on medium screens, 1 on small */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .flip-card {
+                max-width: calc(50% - 0.75rem); /* For 2 columns with gap */
+            }
+        }
+        @media (max-width: 480px) {
+            .flip-card {
+                max-width: 100%; /* For 1 column */
+            }
+        }
+
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%; /* Still 100% of the (now auto-height) parent */
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%; /* Still 100% of the (now auto-height) parent */
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 1rem;
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+            overflow-y: auto; /* Added for scrollbar if content is too long */
+            text-overflow: clip; /* Changed from ellipsis to clip */
+        }
+
+        .flip-card-front {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .flip-card-front i {
+            font-size: 2.5em;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .flip-card-back {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            transform: rotateY(180deg);
+            border: 1px solid var(--card-border);
+        }
+
+        /* Interactive Checklist */
+        .checklist-container {
+            margin-top: 1.5rem;
+            background-color: var(--light);
+            border: 1px dashed var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Added box-shadow transition */
+        }
+        .checklist-item:hover {
+            background-color: #e6fffa;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added hover shadow */
+        }
+        .checklist-item input[type="checkbox"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            accent-color: var(--primary);
+            flex-shrink: 0; /* Prevent checkbox from shrinking */
+        }
+        .checklist-item label {
+            flex: 1; /* Allow label text to take remaining space */
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        .checklist-item.completed label {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        /* Quiz Styling */
+        .quiz-container {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background-color: var(--light);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+        }
+        .options label:hover {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.8rem;
+            flex-shrink: 0; /* Prevent radio button from shrinking */
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: var(--danger);
+        }
+        .quiz-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            margin: 1.5rem auto 0;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-submit-btn:hover {
+            background: var(--accent);
+        }
+        .quiz-result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+        }
+        .quiz-reset-btn {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-reset-btn:hover {
+            background-color: #3672d9;
+        }
+
+        /* Reflection Text Area */
+        textarea.reflection-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background-color: var(--light);
+            resize: vertical;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        textarea.reflection-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            outline: none;
+        }
+        .reflection-feedback {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+        .reflection-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .reflection-submit-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Drag and Drop Game Styling */
+        .drag-drop-game-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            background-color: var(--secondary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .drag-items-container, .drop-targets-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .drag-item {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            cursor: grab;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-width: 150px;
+            flex-grow: 1;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .drag-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .drag-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .drop-target {
+            background-color: var(--light);
+            border: 2px dashed var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            flex-grow: 1;
+            flex-basis: calc(50% - 0.5rem); /* Two columns */
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .drop-target.hovered {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .drop-target.correct {
+            background-color: #d4edda;
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .drop-target.incorrect {
+            background-color: #f8d7da;
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .drop-target.filled {
+            background-color: #f0fdfa; /* Lighter background when filled */
+            border-style: solid;
+        }
+        .drop-target span.placed-item {
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 0.5rem;
+            display: block;
+        }
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .game-buttons button {
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        .game-buttons #checkGameBtn {
+            background-color: var(--primary);
+            color: white;
+        }
+        .game-buttons #checkGameBtn:hover {
+            background-color: var(--accent);
+        }
+        .game-buttons #resetGameBtn {
+            background-color: var(--info);
+            color: white;
+        }
+        .game-buttons #resetGameBtn:hover {
+            background-color: #3672d9;
+        }
+        .game-feedback {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+        .game-feedback.correct {
+            color: var(--success);
+        }
+        .game-feedback.incorrect {
+            color: var(--danger);
+        }
+
+        /* Timer specific styles */
+        #timer-container {
+            position: fixed; /* Make it floating */
+            top: 20px;
+            right: 20px;
+            background-color: var(--danger); /* Set initial color to red */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Blinking animations */
+        @keyframes blink-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes blink-fast {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        .blink-slow {
+            animation: blink-slow 1s infinite;
+        }
+
+        .blink-fast {
+            animation: blink-fast 0.5s infinite;
+        }
+
+        #google-form-embed {
+            width: 100%;
+            height: 600px; /* Adjust as needed */
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            display: none; /* Hidden by default */
+            margin-top: 2rem;
+        }
+        #startTestBtn {
+            display: block;
+            margin: 2rem auto;
+            background-color: var(--success);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        #startTestBtn:hover {
+            background-color: #1e8e3e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        #testInstructions {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--light);
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+        }
+        #testInstructions h3 {
+            color: var(--text-dark);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1><i class="fas fa-clipboard-check"></i> Evaluasi Akhir Peserta</h1>
+
+        <p>Selamat datang di bagian evaluasi akhir program e-learning PPPR. Bagian ini dirancang untuk menguji pemahaman Anda tentang materi yang telah disampaikan di seluruh sesi.</p>
+
+        <div id="testInstructions" class="interactive-section">
+            <h3><i class="fas fa-info-circle"></i> Petunjuk Pengerjaan Tes</h3>
+            <ul>
+                <li><i class="fas fa-clock"></i> <span>Durasi pengerjaan tes adalah <strong>20 menit</strong>.</span></li>
+                <li><i class="fas fa-play-circle"></i> <span>Tekan tombol "Mulai Tes" di bawah untuk memulai hitung mundur dan menampilkan soal.</span></li>
+                <li><i class="fas fa-pencil-alt"></i> <span>Jawab semua pertanyaan dengan teliti.</span></li>
+                <li><i class="fas fa-exclamation-triangle"></i> <span>Setelah waktu habis, tes akan otomatis berakhir. Pastikan Anda sudah menekan tombol "Kirim" pada Google Form sebelum waktu habis.</span></li>
+                <li><i class="fas fa-wifi"></i> <span>Pastikan koneksi internet Anda stabil selama pengerjaan tes.</span></li>
+            </ul>
+            <button id="startTestBtn">Mulai Tes</button>
+        </div>
+
+        <!-- Timer Container -->
+        <div id="timer-container">
+            Waktu Tersisa: <span id="countdown">20:00</span>
+        </div>
+
+        <!-- Google Form Embed -->
+        <iframe id="google-form-embed" src="YOUR_GOOGLE_FORM_EMBED_URL_HERE" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
+        <!--
+            PENTING: Ganti "YOUR_GOOGLE_FORM_EMBED_URL_HERE" dengan URL embed Google Form Anda.
+            Untuk mendapatkan URL embed:
+            1. Buat Google Form Anda.
+            2. Klik "Kirim" (Send) di kanan atas.
+            3. Pilih tab "<>" (Embed HTML).
+            4. Salin kode `src` dari iframe yang diberikan.
+        -->
+
+        <!-- Removed the navigation-buttons div entirely -->
+    </div>
+
+    <footer>
+        Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+    </footer>
+
+    <script>
+        const TEST_DURATION_SECONDS = 20 * 60; // 20 minutes in seconds
+        let timeRemaining = TEST_DURATION_SECONDS;
+        let countdownInterval;
+
+        const startTestBtn = document.getElementById('startTestBtn');
+        const testInstructions = document.getElementById('testInstructions');
+        const timerContainer = document.getElementById('timer-container');
+        const countdownDisplay = document.getElementById('countdown');
+        const googleFormEmbed = document.getElementById('google-form-embed');
+        
+        // Anti-cheating variables
+        let focusLossCount = 0;
+        const MAX_FOCUS_LOSSES = 3; // Max times user can switch tabs before a warning/action
+        let testStarted = false; // Flag to ensure anti-cheating only active during test
+
+        // Function to format time in MM:SS
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+
+        // Function to start the test timer
+        function startTest() {
+            // Hide instructions and start button
+            testInstructions.style.display = 'none';
+            startTestBtn.style.display = 'none';
+
+            // Show timer and Google Form
+            timerContainer.style.display = 'block';
+            googleFormEmbed.style.display = 'block';
+
+            testStarted = true; // Set flag when test starts
+
+            // Start countdown
+            countdownInterval = setInterval(() => {
+                timeRemaining--;
+                countdownDisplay.textContent = formatTime(timeRemaining);
+
+                // Remove all blinking classes first
+                timerContainer.classList.remove('blink-slow', 'blink-fast');
+
+                if (timeRemaining <= 300 && timeRemaining > 60) { // 5 minutes to 1 minute
+                    timerContainer.classList.add('blink-slow');
+                    if (timeRemaining === 300) { // Exactly 5 minutes remaining
+                        alert('Waktu tersisa 5 menit! Harap segera selesaikan tes Anda.');
+                    }
+                } else if (timeRemaining <= 60 && timeRemaining > 0) { // 1 minute to 0 seconds
+                    timerContainer.classList.add('blink-fast');
+                    if (timeRemaining === 60) { // Exactly 1 minute remaining
+                        alert('Waktu tersisa 1 menit! Segera kirim jawaban Anda.');
+                    }
+                } else if (timeRemaining <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownDisplay.textContent = "Waktu Habis!";
+                    // Ensure it stays red and not blinking
+                    timerContainer.classList.remove('blink-slow', 'blink-fast');
+                    timerContainer.style.backgroundColor = 'var(--danger)'; 
+                    
+                    googleFormEmbed.style.pointerEvents = 'none'; // Disable interaction with the form
+                    googleFormEmbed.style.opacity = '0.7';
+
+                    // Pop-up for time's up and redirect
+                    const confirmRedirect = confirm('Waktu pengerjaan tes telah habis. Jawaban Anda mungkin tidak tersimpan jika belum dikirim. Klik OK untuk menuju halaman penilaian.');
+                    if (confirmRedirect) {
+                        window.location.href = './penilaian.html'; // Redirect to penilaian.html
+                    } else {
+                        // If user cancels, still disable form but don't redirect immediately
+                        // They might try to quickly submit if they haven't.
+                        // However, the prompt implies immediate redirect on OK.
+                        // For a robust system, you might force redirect after a few seconds even on cancel.
+                    }
+                }
+            }, 1000);
+        }
+
+        // Add event listener to start button
+        if (startTestBtn) {
+            startTestBtn.addEventListener('click', startTest);
+        }
+
+        // Initial display of timer (before starting)
+        countdownDisplay.textContent = formatTime(TEST_DURATION_SECONDS);
+
+        // Anti-cheating logic
+        window.addEventListener('blur', () => {
+            if (testStarted && timeRemaining > 0) { // Only track if test is active and not finished
+                focusLossCount++;
+                if (focusLossCount <= MAX_FOCUS_LOSSES) {
+                    alert(`Peringatan: Anda mencoba berpindah dari halaman tes. Jika Anda terus melakukannya, tes Anda dapat dihentikan secara otomatis. (Peringatan ke-${focusLossCount} dari ${MAX_FOCUS_LOSSES})`);
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownDisplay.textContent = "Tes Dihentikan!";
+                    timerContainer.classList.remove('blink-slow', 'blink-fast');
+                    timerContainer.style.backgroundColor = 'var(--danger)';
+                    googleFormEmbed.style.pointerEvents = 'none';
+                    googleFormEmbed.style.opacity = '0.7';
+                    alert('Tes Anda dihentikan karena terlalu sering berpindah halaman/aplikasi. Anda akan diarahkan ke halaman penilaian.');
+                    window.location.href = './penilaian.html'; // Auto-redirect after exceeding limit
+                }
+            }
+        });
+
+        // Prevent right-click (basic anti-cheating)
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            alert('Fungsi klik kanan dinonaktifkan selama tes.');
+        });
+
+        // Prevent F12/Ctrl+Shift+I (basic anti-cheating, not foolproof)
+        document.addEventListener('keydown', (e) => {
+            // Check for F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+                alert('Inspeksi elemen dan alat pengembang dinonaktifkan selama tes.');
+            }
+            // Check for Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if ((e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+                alert('Inspeksi elemen dan alat pengembang dinonaktifkan selama tes.');
+            }
+        });
+
+        // Dummy functions for session completion (not used in this evaluation page)
+        function loadSessionStatus() { return {}; }
+        function saveSessionStatus(status) {}
+        function completeSession(sessionId) {
+            // This function is not directly used for completing Sesi 5 in this context
+            // as it's the final evaluation. The "Selesai Program" button handles navigation.
+            // window.location.href = './index.html'; // This line is now removed as per user request
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // No need for accordions, flip cards, checklists, quizzes for this evaluation page
+            // setupAccordions();
+            // setupFlipCards();
+            // setupChecklists();
+            // loadQuiz();
+        });
+    </script>
+</body>
+</html>
