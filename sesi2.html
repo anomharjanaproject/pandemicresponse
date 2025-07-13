@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 2: Keterkaitan PPPR dengan Perubahan Iklim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #0d9488;
+            --secondary: #f0fdfa;
+            --accent: #14b8a6;
+            --danger: #dc2626;
+            --warning: #facc15;
+            --light: #f8fafc;
+            --success: #22c54e;
+            --info: #3b82f6;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-shadow: rgba(0,0,0,0.05);
+            --card-hover-shadow: rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--card-shadow);
+            flex-grow: 1;
+            opacity: 0; /* Initial state for fade-in animation */
+            transform: translateY(20px); /* Initial state for slide-up animation */
+            animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply animation */
+        }
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.8rem;
+        }
+        h2 {
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed var(--card-border);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        h2 i {
+            color: var(--accent);
+            font-size: 1.5em;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1.5rem;
+        }
+        .navigation-buttons button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .navigation-buttons button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .navigation-buttons button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        footer {
+            text-align:center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 3rem;
+            background-color: #e2e8f0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Interactive Elements Styling */
+        .interactive-section {
+            background-color: var(--secondary);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .interactive-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .interactive-section h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+
+        /* Accordion Styling */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease;
+        }
+        .accordion-header:hover {
+            background-color: var(--accent);
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            background-color: var(--card-bg);
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Adjust as needed, large enough to contain content */
+            padding: 1.5rem;
+        }
+        .accordion-content ul {
+            margin-left: 0; /* Reset default list indent */
+            list-style: none; /* Remove default bullet */
+            padding-left: 0; /* Remove default padding */
+        }
+        .accordion-content ul li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem; /* Space for custom bullet */
+        }
+        .accordion-content ul li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        /* Drag and Drop Game (New for Sesi 2) */
+        .drag-drop-container-sesi2 {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        .drag-items-sesi2 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: 8px;
+            border: 1px dashed var(--text-light);
+            width: 100%;
+        }
+        .draggable-sesi2 {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            cursor: grab;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .draggable-sesi2 i {
+            font-size: 1.1em;
+        }
+        .draggable-sesi2:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .drop-zones-sesi2 {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+        .drop-zone-sesi2 {
+            background-color: var(--card-bg);
+            border: 2px dashed var(--accent);
+            border-radius: 8px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            position: relative;
+        }
+        .drop-zone-sesi2.hovered {
+            background-color: #e6fffa;
+            border-color: var(--primary);
+        }
+        .drop-zone-sesi2.correct {
+            background-color: #d4edda; /* Light green */
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .drop-zone-sesi2.incorrect {
+            background-color: #f8d7da; /* Light red */
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .drop-zone-sesi2 .dropped-item-sesi2 {
+            margin-top: 0.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .drag-drop-feedback-sesi2 {
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .drag-drop-feedback-sesi2.correct {
+            color: var(--success);
+        }
+        .drag-drop-feedback-sesi2.incorrect {
+            color: var(--danger);
+        }
+        .drag-drop-reset-btn-sesi2 {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .drag-drop-reset-btn-sesi2:hover {
+            background-color: #3672d9;
+        }
+
+        /* Quiz Styling (re-used from Sesi 1) */
+        .quiz-container {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background-color: var(--light);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .options label:hover {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.8rem;
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: var(--danger);
+        }
+        .quiz-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            margin: 1.5rem auto 0;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-submit-btn:hover {
+            background: var(--accent);
+        }
+        .quiz-result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+        }
+        .quiz-reset-btn {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-reset-btn:hover {
+            background-color: #3672d9;
+        }
+
+        /* Reflection Text Area */
+        textarea.reflection-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background-color: var(--light);
+            resize: vertical;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        textarea.reflection-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            outline: none;
+        }
+        .reflection-feedback {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+        .reflection-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .reflection-submit-btn:hover {
+            background: var(--accent);
+        }
+
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .accordion-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .accordion-content {
+                padding: 1rem;
+            }
+            .flow-card { /* This class is no longer used, but keeping for reference */
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1><i class="fas fa-globe-americas"></i> Sesi 2: Keterkaitan PPPR dengan Perubahan Iklim</h1>
+
+        <p>Sesi ini akan membahas bagaimana perubahan iklim secara langsung maupun tidak langsung memengaruhi kesehatan masyarakat dan meningkatkan risiko wabah penyakit.</p>
+
+        <!-- Tujuan Pembelajaran -->
+        <h2>🎯 Tujuan Pembelajaran</h2>
+        <p>Setelah menyelesaikan sesi ini, peserta diharapkan mampu:</p>
+        <ul>
+            <li>Menjelaskan bagaimana perubahan iklim memicu risiko kesehatan masyarakat.</li>
+            <li>Mengidentifikasi hubungan antara degradasi lingkungan dan munculnya penyakit baru (zoonosis).</li>
+            <li>Memahami dampak perubahan iklim terhadap kelompok rentan.</li>
+            <li>Menguraikan konsep One Health sebagai pendekatan integratif.</li>
+        </ul>
+
+        <!-- 1. Perubahan Iklim sebagai Pemicu Risiko Kesehatan (Drag and Drop Game) -->
+        <h2><i class="fas fa-temperature-high"></i> 1. Perubahan Iklim sebagai Pemicu Risiko Kesehatan</h2>
+        <p>Perubahan iklim membawa serangkaian tantangan baru bagi kesehatan masyarakat. Cocokkan pemicu dengan dampaknya:</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-puzzle-piece"></i> Drag and Drop: Pemicu dan Dampak Kesehatan</h3>
+            <p>Seret pemicu perubahan iklim ke dampak kesehatan yang sesuai.</p>
+            <div class="drag-drop-container-sesi2">
+                <div class="drag-items-sesi2" id="dragItemsSesi2">
+                    <div class="draggable-sesi2" draggable="true" data-match="banjir"><i class="fas fa-cloud-showers-heavy"></i> Banjir & Curah Hujan Ekstrem</div>
+                    <div class="draggable-sesi2" draggable="true" data-match="vektor"><i class="fas fa-mosquito"></i> Migrasi Vektor Penyakit</div>
+                    <div class="draggable-sesi2" draggable="true" data-match="kebakaran"><i class="fas fa-fire-alt"></i> Kebakaran Hutan & Polusi Asap</div>
+                    <div class="draggable-sesi2" draggable="true" data-match="gelombang"><i class="fas fa-sun"></i> Gelombang Panas</div>
+                </div>
+                <div class="drop-zones-sesi2" id="dropZonesSesi2">
+                    <div class="drop-zone-sesi2" data-accept="banjir">
+                        <p>Meningkatkan risiko diare, leptospirosis, malaria. Mengganggu pasokan air bersih dan sanitasi.</p>
+                    </div>
+                    <div class="drop-zone-sesi2" data-accept="vektor">
+                        <p>Nyamuk Aedes aegypti menyebar ke wilayah baru. Perubahan suhu memengaruhi masa inkubasi virus.</p>
+                    </div>
+                    <div class="drop-zone-sesi2" data-accept="kebakaran">
+                        <p>Peningkatan ISPA, asma, penyakit jantung. Gangguan pelayanan kesehatan karena akses terbatas.</p>
+                    </div>
+                    <div class="drop-zone-sesi2" data-accept="gelombang">
+                        <p>Heatstroke, dehidrasi, peningkatan mortalitas kelompok rentan.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="drag-drop-feedback-sesi2" id="dragDropFeedbackSesi2"></div>
+            <button class="drag-drop-reset-btn-sesi2" onclick="resetDragDropSesi2()">Reset Game</button>
+        </div>
+
+        <!-- 2. Kaitan antara Degradasi Lingkungan dan Zoonosis - Accordion -->
+        <h2><i class="fas fa-tree-deciduous"></i> 2. Kaitan antara Degradasi Lingkungan dan Zoonosis</h2>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-forest"></i> Deforestasi dan Fragmentasi Habitat
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Membawa manusia lebih dekat dengan satwa liar pembawa virus (contoh: Ebola, Nipah), meningkatkan peluang penularan penyakit.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-handshake-slash"></i> Perdagangan Satwa Liar
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Memfasilitasi penyebaran patogen lintas spesies dari hewan ke manusia, seringkali di pasar basah atau tempat penampungan hewan.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-tractor"></i> Intensifikasi Pertanian
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Menciptakan jalur penularan baru dari hewan ternak ke manusia karena kepadatan hewan dan praktik kebersihan yang kurang.</p>
+            </div>
+        </div>
+
+        <h3><i class="fas fa-virus"></i> Studi Kasus Singkat: COVID-19</h3>
+        <div class="interactive-section">
+            <p>COVID-19 diperkirakan bermula dari interaksi manusia dengan satwa liar. Ini menunjukkan betapa eratnya hubungan antara kesehatan lingkungan, hewan, dan manusia. Degradasi ekosistem dapat memaksa satwa liar mencari habitat baru, meningkatkan kontak dengan manusia, dan memicu munculnya penyakit zoonosis.</p>
+        </div>
+
+        <!-- 3. Dampak Perubahan Iklim terhadap Kelompok Rentan - Accordion -->
+        <h2><i class="fas fa-people-carry-box"></i> 3. Dampak Perubahan Iklim terhadap Kelompok Rentan</h2>
+        <p>Perubahan iklim tidak berdampak sama pada semua orang. Kelompok-kelompok tertentu memiliki kerentanan yang lebih tinggi:</p>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-child-reaching"></i> Anak-anak dan Lansia
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Sangat rentan terhadap penyakit pernapasan akibat polusi udara, dehidrasi saat gelombang panas, dan dampak gizi buruk.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-person-dress"></i> Perempuan
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Seringkali menanggung beban kerja ganda saat bencana (mengurus rumah, anak, lansia). Akses layanan kesehatan dan informasi sering terhambat.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-hand-holding-medical"></i> Orang dengan HIV, Penyintas TB, dan Populasi Kunci
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Kelompok ini seringkali menghadapi stigma, diskriminasi, dan hambatan akses terhadap layanan kesehatan esensial, yang diperparah oleh dampak perubahan iklim dan pandemi.</p>
+            </div>
+        </div>
+        <div class="interactive-section">
+            <h3><i class="fas fa-lightbulb"></i> Tips Praktis: Identifikasi Kelompok Rentan</h3>
+            <p>Luangkan waktu untuk mengidentifikasi kelompok rentan spesifik di wilayah kerja organisasi Anda. Pertimbangkan faktor-faktor seperti usia, jenis kelamin, disabilitas, status ekonomi, dan akses terhadap sumber daya.</p>
+        </div>
+
+        <!-- 4. Pendekatan One Health: Manusia, Hewan, Lingkungan - Accordion -->
+        <h2><i class="fas fa-heart-circle-check"></i> 4. Pendekatan One Health: Manusia, Hewan, Lingkungan</h2>
+        <h3><i class="fas fa-dna"></i> Definisi One Health</h3>
+        <p>One Health adalah pendekatan kolaboratif, multisektoral, dan transdisipliner yang bekerja di tingkat lokal, regional, nasional, dan global untuk mencapai hasil kesehatan yang optimal bagi manusia, hewan, dan lingkungan.</p>
+
+        <h3><i class="fas fa-ruler-combined"></i> Prinsip Utama One Health:</h3>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-magnifying-glass-chart"></i> Deteksi Dini Penyakit
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Memantau dan mendeteksi penyakit pada hewan sebelum menjangkiti manusia, seperti flu burung atau rabies.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-leaf"></i> Pelestarian Ekosistem
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Menjaga kesehatan lingkungan untuk mencegah gangguan rantai penularan penyakit dan menjaga keseimbangan alam.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-handshake"></i> Kolaborasi Multisektor
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Melibatkan berbagai pihak seperti dinas kesehatan, peternakan, kehutanan, dan masyarakat untuk respons terpadu.</p>
+            </div>
+        </div>
+
+        <h3><i class="fas fa-clipboard-check"></i> Contoh Implementasi:</h3>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-chart-line"></i> Pemantauan Penyakit Zoonotik
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Dilakukan di pasar hewan atau area interaksi tinggi manusia-hewan untuk mendeteksi patogen baru.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-syringe"></i> Vaksinasi Hewan Penular Rabies
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Program vaksinasi massal pada anjing dan hewan lain untuk mengendalikan penyebaran rabies ke manusia.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <i class="fas fa-broom"></i> Program Edukasi Kebersihan Lingkungan
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <p>Meningkatkan kesadaran masyarakat tentang pentingnya sanitasi dan pengelolaan limbah untuk mencegah penyakit.</p>
+            </div>
+        </div>
+
+        <!-- Aktivitas Interaktif: Kuis -->
+        <h2>🧠 Aktivitas Interaktif: Kuis</h2>
+        <div class="interactive-section">
+            <h3><i class="fas fa-question-circle"></i> Uji Pemahaman Anda!</h3>
+            <div id="quizContainer" class="quiz-container">
+                <!-- Questions will be loaded here by JavaScript -->
+            </div>
+            <button id="quizSubmitBtn" class="quiz-submit-btn">Kirim Jawaban</button>
+            <div id="quizResult" class="quiz-result"></div>
+            <button id="quizResetBtn" class="quiz-reset-btn" style="display:none;">Ulangi Kuis</button>
+        </div>
+
+        <!-- Aktivitas Interaktif: Diskusi Kelompok (Simulasi) -->
+        <h2>🎯 Aktivitas: Refleksi & Diskusi</h2>
+        <div class="interactive-section">
+            <h3><i class="fas fa-clipboard-list"></i> Refleksi: Perubahan Iklim di Wilayah Anda</h3>
+            <p>Pilih satu contoh perubahan iklim di wilayah Anda (misal: banjir bandang, kebakaran lahan, kekeringan berkepanjangan). Identifikasi dampaknya terhadap kesehatan masyarakat dan diskusikan peran komunitas dalam mitigasi dampak tersebut.</p>
+            <textarea id="reflectionInput" class="reflection-input" placeholder="Tulis refleksi Anda di sini..."></textarea>
+            <div class="reflection-feedback" id="reflectionFeedback"></div>
+            <button class="reflection-submit-btn" onclick="submitReflection()">Kirim Refleksi</button>
+        </div>
+
+        <!-- Output Akhir Sesi 2 -->
+        <h2>📦 Output Akhir Sesi 2</h2>
+        <p>Selamat! Anda telah menyelesaikan Sesi 2. Setelah sesi ini, Anda diharapkan mampu:</p>
+        <ul>
+            <li>Menjelaskan bagaimana perubahan iklim memicu risiko kesehatan masyarakat.</li>
+            <li>Mengidentifikasi hubungan antara degradasi lingkungan dan munculnya penyakit baru (zoonosis).</li>
+            <li>Memahami dampak perubahan iklim terhadap kelompok rentan.</li>
+            <li>Menguraikan konsep One Health sebagai pendekatan integratif.</li>
+        </ul>
+
+        <div class="navigation-buttons">
+            <button onclick="window.location.href='pelatihan.html'">Kembali ke Roadmap</button>
+            <button onclick="completeSession(2)">Lanjut Sesi 3</button>
+        </div>
+    </div>
+
+    <footer>
+        Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+    </footer>
+
+    <script>
+        // Fungsi untuk memuat status penyelesaian sesi dari localStorage
+        function loadSessionStatus() {
+            return JSON.parse(localStorage.getItem('eLearningSessionStatus')) || {};
+        }
+
+        // Fungsi untuk menyimpan status penyelesaian sesi ke localStorage
+        function saveSessionStatus(status) {
+            localStorage.setItem('eLearningSessionStatus', JSON.stringify(status));
+        }
+
+        // Fungsi untuk menyelesaikan sesi dan melanjutkan ke sesi berikutnya
+        function completeSession(sessionId) {
+            let sessionCompletionStatus = loadSessionStatus();
+
+            // Tandai sesi saat ini sebagai selesai
+            sessionCompletionStatus[`session-${sessionId}`] = { completed: true, unlocked: true };
+
+            // Aktifkan sesi berikutnya
+            const nextSessionNum = sessionId + 1;
+            if (nextSessionNum <= 5) { // Asumsi ada 5 sesi total
+                sessionCompletionStatus[`session-${nextSessionNum}`] = { completed: false, unlocked: true };
+            }
+
+            saveSessionStatus(sessionCompletionStatus);
+
+            // Arahkan ke sesi berikutnya atau kembali ke landing page jika sudah sesi terakhir
+            if (nextSessionNum <= 5) {
+                window.location.href = `sesi${nextSessionNum}.html`;
+            } else {
+                window.location.href = 'index.html'; // Kembali ke landing page jika semua sesi selesai
+            }
+        }
+
+        /* --- Accordion Logic (Re-used and adapted) --- */
+        function setupAccordions() {
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    if (content.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.style.padding = "1.5rem"; // Ensure padding is applied when open
+                    } else {
+                        content.style.maxHeight = "0";
+                        content.style.padding = "0 1.5rem"; // Reset padding when closed
+                    }
+                });
+            });
+        }
+
+        /* --- Drag and Drop Game Logic for Sesi 2 --- */
+        let draggedItemSesi2 = null;
+        const dragItemsContainerSesi2 = document.getElementById('dragItemsSesi2');
+        const dropZonesContainerSesi2 = document.getElementById('dropZonesSesi2');
+        const dragDropFeedbackSesi2 = document.getElementById('dragDropFeedbackSesi2');
+
+        // Store initial HTML content to reset the game
+        const initialDragItemsHTMLSesi2 = dragItemsContainerSesi2 ? dragItemsContainerSesi2.innerHTML : '';
+        const initialDropZonesHTMLSesi2 = dropZonesContainerSesi2 ? dropZonesContainerSesi2.innerHTML : '';
+
+        function setupDragDropListenersSesi2() {
+            if (!dragItemsContainerSesi2 || !dropZonesContainerSesi2) return;
+
+            document.querySelectorAll('.draggable-sesi2').forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedItemSesi2 = e.target;
+                    e.dataTransfer.setData('text/plain', e.target.dataset.match);
+                    setTimeout(() => {
+                        e.target.style.opacity = '0.5';
+                    }, 0);
+                });
+
+                item.addEventListener('dragend', (e) => {
+                    e.target.style.opacity = '1';
+                    draggedItemSesi2 = null;
+                });
+            });
+
+            document.querySelectorAll('.drop-zone-sesi2').forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault(); // Allow drop
+                    zone.classList.add('hovered');
+                });
+
+                zone.addEventListener('dragleave', (e) => {
+                    zone.classList.remove('hovered');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('hovered');
+
+                    const droppedMatch = e.dataTransfer.getData('text/plain');
+                    const acceptedMatch = zone.dataset.accept;
+
+                    if (droppedMatch === acceptedMatch && !zone.querySelector('.dropped-item-sesi2')) {
+                        const droppedItemClone = draggedItemSesi2.cloneNode(true);
+                        droppedItemClone.classList.remove('draggable-sesi2');
+                        droppedItemClone.style.opacity = '1'; // Ensure full opacity
+                        droppedItemClone.style.cursor = 'default';
+
+                        // Create a wrapper for the dropped item to keep original text
+                        const droppedItemWrapper = document.createElement('div');
+                        droppedItemWrapper.classList.add('dropped-item-sesi2');
+                        droppedItemWrapper.textContent = draggedItemSesi2.textContent; // Display original text
+
+                        zone.appendChild(droppedItemWrapper); // Append the text content
+                        draggedItemSesi2.remove(); // Remove original draggable item
+
+                        zone.classList.add('correct');
+                        dragDropFeedbackSesi2.textContent = 'Benar!';
+                        dragDropFeedbackSesi2.classList.remove('incorrect');
+                        dragDropFeedbackSesi2.classList.add('correct');
+
+                        // Check if all items are correctly placed
+                        checkAllDragDropCompletedSesi2();
+
+                    } else if (droppedMatch !== acceptedMatch) {
+                        dragDropFeedbackSesi2.textContent = 'Salah, coba lagi!';
+                        dragDropFeedbackSesi2.classList.remove('correct');
+                        dragDropFeedbackSesi2.classList.add('incorrect');
+                        zone.classList.add('incorrect'); // Temporarily highlight incorrect drop
+                        setTimeout(() => {
+                            zone.classList.remove('incorrect');
+                        }, 1000);
+                    }
+                });
+            });
+        }
+
+        function checkAllDragDropCompletedSesi2() {
+            const allDraggables = document.querySelectorAll('.draggable-sesi2').length;
+            const allCorrectDrops = document.querySelectorAll('.drop-zone-sesi2.correct').length;
+
+            if (allDraggables === 0 && allCorrectDrops === 4) { // Assuming 4 draggable items for Sesi 2
+                dragDropFeedbackSesi2.textContent = 'Hebat! Semua sudah cocok!';
+                dragDropFeedbackSesi2.classList.remove('incorrect');
+                dragDropFeedbackSesi2.classList.add('correct');
+            }
+        }
+
+        function resetDragDropSesi2() {
+            if (dragItemsContainerSesi2 && dropZonesContainerSesi2) {
+                dragItemsContainerSesi2.innerHTML = initialDragItemsHTMLSesi2;
+                dropZonesContainerSesi2.innerHTML = initialDropZonesHTMLSesi2;
+                document.querySelectorAll('.drop-zone-sesi2').forEach(zone => {
+                    zone.classList.remove('correct', 'incorrect', 'hovered');
+                    // Remove any previously dropped items
+                    const droppedItem = zone.querySelector('.dropped-item-sesi2');
+                    if (droppedItem) {
+                        droppedItem.remove();
+                    }
+                });
+                dragDropFeedbackSesi2.textContent = '';
+                dragDropFeedbackSesi2.classList.remove('correct', 'incorrect');
+                setupDragDropListenersSesi2(); // Re-attach listeners to new elements
+            }
+        }
+
+        /* --- Quiz Logic (Re-used and adapted for Sesi 2 questions) --- */
+        const quizQuestions = [
+            {
+                question: "Manakah yang merupakan contoh risiko kesehatan yang dipicu oleh banjir dan curah hujan ekstrem?",
+                options: [
+                    "Peningkatan kasus asma",
+                    "Heatstroke",
+                    "Risiko diare dan leptospirosis",
+                    "Gangguan penglihatan"
+                ],
+                answer: "Risiko diare dan leptospirosis"
+            },
+            {
+                question: "Apa yang dimaksud dengan 'Zoonosis'?",
+                options: [
+                    "Penyakit yang hanya menyerang manusia",
+                    "Penyakit yang hanya menyerang hewan",
+                    "Penyakit yang dapat menular dari hewan ke manusia",
+                    "Penyakit yang disebabkan oleh polusi udara"
+                ],
+                answer: "Penyakit yang dapat menular dari hewan ke manusia"
+            },
+            {
+                question: "Mengapa pendekatan 'One Health' penting dalam konteks perubahan iklim dan PPPR?",
+                options: [
+                    "Karena hanya fokus pada kesehatan manusia",
+                    "Karena melibatkan kolaborasi lintas sektor untuk kesehatan optimal manusia, hewan, dan lingkungan",
+                    "Karena hanya berfokus pada pelestarian lingkungan",
+                    "Karena hanya berfokus pada vaksinasi hewan"
+                ],
+                answer: "Karena melibatkan kolaborasi lintas sektor untuk kesehatan optimal manusia, hewan, dan lingkungan"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quizContainer');
+        const quizSubmitBtn = document.getElementById('quizSubmitBtn');
+        const quizResult = document.getElementById('quizResult');
+        const quizResetBtn = document.getElementById('quizResetBtn');
+
+        function loadQuiz() {
+            if (!quizContainer) return;
+            quizContainer.innerHTML = ''; // Clear previous questions
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                q.options.forEach((option, optIndex) => {
+                    const label = document.createElement('label');
+                    label.innerHTML = `
+                        <input type="radio" name="question${index}" value="${option}">
+                        ${option}
+                    `;
+                    optionsDiv.appendChild(label);
+                });
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+            quizSubmitBtn.style.display = 'block';
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            quizQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const questionDiv = quizContainer.children[index];
+
+                // Remove previous feedback classes
+                questionDiv.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct', 'incorrect');
+                });
+
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect');
+                        // Highlight correct answer
+                        questionDiv.querySelector(`input[value="${q.answer}"]`).parentElement.classList.add('correct');
+                    }
+                } else {
+                    allAnswered = false;
+                    // Optionally, highlight unanswered questions
+                    questionDiv.style.border = '1px solid #dc2626'; /* var(--danger) */
+                    questionDiv.style.borderRadius = '8px';
+                    questionDiv.style.padding = '0.5rem';
+                    setTimeout(() => {
+                        questionDiv.style.border = 'none';
+                        questionDiv.style.padding = '0';
+                    }, 1500);
+                }
+            });
+
+            if (!allAnswered) {
+                quizResult.textContent = "Mohon jawab semua pertanyaan sebelum mengirim!";
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+                return;
+            }
+
+            quizSubmitBtn.style.display = 'none';
+            quizResetBtn.style.display = 'block';
+
+            if (score === quizQuestions.length) {
+                quizResult.textContent = `Selamat! Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar.`;
+                quizResult.classList.remove('incorrect');
+                quizResult.classList.add('correct');
+            } else {
+                quizResult.textContent = `Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar. Coba lagi!`;
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+            }
+        }
+
+        function resetQuiz() {
+            loadQuiz();
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+            quizSubmitBtn.style.display = 'block';
+        }
+
+        // Add event listeners for quiz buttons
+        if (quizSubmitBtn) quizSubmitBtn.addEventListener('click', submitQuiz);
+        if (quizResetBtn) quizResetBtn.addEventListener('click', resetQuiz);
+
+        /* --- Reflection Logic --- */
+        const reflectionInput = document.getElementById('reflectionInput');
+        const reflectionFeedback = document.getElementById('reflectionFeedback');
+
+        function submitReflection() {
+            if (reflectionInput.value.trim() === '') {
+                reflectionFeedback.textContent = 'Refleksi tidak boleh kosong!';
+                reflectionFeedback.style.color = '#dc2626'; // Menggunakan nilai heksadesimal langsung
+            } else {
+                reflectionFeedback.textContent = 'Refleksi Anda telah disimpan!';
+                reflectionFeedback.style.color = '#22c54e'; // Menggunakan nilai heksadesimal langsung
+                // In a real application, you would save this to a database or send it to a server.
+                console.log('Refleksi Sesi 2:', reflectionInput.value);
+                reflectionInput.value = ''; // Clear input after submission
+            }
+            setTimeout(() => {
+                reflectionFeedback.textContent = '';
+            }, 3000);
+        }
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupAccordions();
+            setupDragDropListenersSesi2(); // Call the new drag and drop setup
+            loadQuiz();
+        });
+    </script>
+</body>
+</html>
