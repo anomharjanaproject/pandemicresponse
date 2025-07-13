@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesi 5: Strategi Keberlanjutan, Advokasi, dan Kolaborasi Multisektor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
+    <style>
+        /* Global Box-Sizing for consistent layout */
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0d9488;
+            --secondary: #f0fdfa;
+            --accent: #14b8a6;
+            --danger: #dc2626;
+            --warning: #facc15;
+            --light: #f8fafc;
+            --success: #22c54e;
+            --info: #3b82f6;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-shadow: rgba(0,0,0,0.05);
+            --card-hover-shadow: rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--card-shadow);
+            flex-grow: 1;
+            opacity: 0; /* Initial state for fade-in animation */
+            transform: translateY(20px); /* Initial state for slide-up animation */
+            animation: fadeInSlideUp 0.8s ease-out forwards; /* Apply animation */
+        }
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.8rem;
+        }
+        h2 {
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed var(--card-border);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        h2 i {
+            color: var(--accent);
+            font-size: 1.5em;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            flex-wrap: wrap; /* Allow text to wrap within the available space */
+        }
+        ul li i {
+            color: var(--primary);
+            font-size: 1.1em;
+            margin-top: 0.2em; /* Adjust icon vertical alignment */
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+        ul li span { /* Optional: wrap text content in a span if more complex styling needed */
+            flex: 1; /* Allow text to take remaining space */
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        strong {
+            font-weight: 700; /* Ensure strong tag is truly bold */
+        }
+
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1.5rem;
+        }
+        .navigation-buttons button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .navigation-buttons button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .navigation-buttons button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        footer {
+            text-align:center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 3rem;
+            background-color: #e2e8f0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Interactive Elements Styling */
+        .interactive-section {
+            background-color: var(--secondary);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .interactive-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .interactive-section h3 i {
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+        .example-text {
+            background-color: #e0f2f7; /* Lighter blue for examples */
+            border-left: 4px solid var(--info);
+            padding: 0.8rem 1rem;
+            margin-top: 1.5rem;
+            border-radius: 4px;
+            font-style: italic;
+            color: var(--text-dark);
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Accordion Styling */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease, transform 0.2s ease; /* Added transform transition */
+        }
+        .accordion-header:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px); /* Added hover animation */
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            background-color: var(--card-bg);
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            overflow-y: auto; /* Added for scrollbar if content is too long */
+        }
+        .accordion-content.active {
+            /* Changed to a very large value to ensure content is never cut off */
+            max-height: 9999px; 
+            padding: 1.5rem;
+        }
+        .accordion-content ul {
+            margin-left: 0; /* Reset default list indent */
+            list-style: none; /* Remove default bullet */
+            padding-left: 0; /* Remove default padding */
+        }
+        .accordion-content ul li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem; /* Space for custom bullet */
+        }
+        .accordion-content ul li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        .accordion-content p {
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+        }
+
+        /* Flip Card Styling */
+        .flip-card {
+            background-color: transparent;
+            width: 200px; /* Base width */
+            height: auto; /* Allow height to adjust based on content */
+            min-height: 200px; /* Ensure a minimum height */
+            perspective: 1000px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            flex-shrink: 0; /* Prevent shrinking too much */
+            flex-grow: 1; /* Allow growing to fill space, but controlled by max-width on parent */
+            max-width: calc(33.333% - 1rem); /* For 3 columns with gap on larger screens */
+            box-sizing: border-box; /* Ensure padding/border included in width */
+        }
+        /* Ensure 2 columns on medium screens, 1 on small */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .flip-card {
+                max-width: calc(50% - 0.75rem); /* For 2 columns with gap */
+            }
+        }
+        @media (max-width: 480px) {
+            .flip-card {
+                max-width: 100%; /* For 1 column */
+            }
+        }
+
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%; /* Still 100% of the (now auto-height) parent */
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%; /* Still 100% of the (now auto-height) parent */
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 1rem;
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+            overflow-y: auto; /* Added for scrollbar if content is too long */
+            text-overflow: clip; /* Changed from ellipsis to clip */
+        }
+
+        .flip-card-front {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .flip-card-front i {
+            font-size: 2.5em;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .flip-card-back {
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            transform: rotateY(180deg);
+            border: 1px solid var(--card-border);
+        }
+
+        /* Interactive Checklist */
+        .checklist-container {
+            margin-top: 1.5rem;
+            background-color: var(--light);
+            border: 1px dashed var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Added box-shadow transition */
+        }
+        .checklist-item:hover {
+            background-color: #e6fffa;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added hover shadow */
+        }
+        .checklist-item input[type="checkbox"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            accent-color: var(--primary);
+            flex-shrink: 0; /* Prevent checkbox from shrinking */
+        }
+        .checklist-item label {
+            flex: 1; /* Allow label text to take remaining space */
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        .checklist-item.completed label {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        /* Quiz Styling */
+        .quiz-container {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background-color: var(--light);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            word-wrap: break-word; /* Ensure text wraps */
+            white-space: normal; /* Ensure text wraps */
+        }
+        .options label:hover {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.8rem;
+            flex-shrink: 0; /* Prevent radio button from shrinking */
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: var(--danger);
+        }
+        .quiz-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            margin: 1.5rem auto 0;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-submit-btn:hover {
+            background: var(--accent);
+        }
+        .quiz-result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+        }
+        .quiz-reset-btn {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-reset-btn:hover {
+            background-color: #3672d9;
+        }
+
+        /* Reflection Text Area */
+        textarea.reflection-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background-color: var(--light);
+            resize: vertical;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            word-wrap: break-word; /* Ensure long words break */
+            white-space: normal; /* Ensure text wraps */
+        }
+        textarea.reflection-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            outline: none;
+        }
+        .reflection-feedback {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+        .reflection-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .reflection-submit-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Drag and Drop Game Styling */
+        .drag-drop-game-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            background-color: var(--secondary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .drag-items-container, .drop-targets-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .drag-item {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            cursor: grab;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-width: 150px;
+            flex-grow: 1;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .drag-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .drag-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .drop-target {
+            background-color: var(--light);
+            border: 2px dashed var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            flex-grow: 1;
+            flex-basis: calc(50% - 0.5rem); /* Two columns */
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .drop-target.hovered {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .drop-target.correct {
+            background-color: #d4edda;
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .drop-target.incorrect {
+            background-color: #f8d7da;
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .drop-target.filled {
+            background-color: #f0fdfa; /* Lighter background when filled */
+            border-style: solid;
+        }
+        .drop-target span.placed-item {
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 0.5rem;
+            display: block;
+        }
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .game-buttons button {
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        .game-buttons #checkGameBtn {
+            background-color: var(--primary);
+            color: white;
+        }
+        .game-buttons #checkGameBtn:hover {
+            background-color: var(--accent);
+        }
+        .game-buttons #resetGameBtn {
+            background-color: var(--info);
+            color: white;
+        }
+        .game-buttons #resetGameBtn:hover {
+            background-color: #3672d9;
+        }
+        .game-feedback {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+        .game-feedback.correct {
+            color: var(--success);
+        }
+        .game-feedback.incorrect {
+            color: var(--danger);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .accordion-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .accordion-content {
+                padding: 1rem;
+            }
+            /* Adjust flip card size for smaller screens */
+            .flip-card {
+                width: 100%; /* Take full width on very small screens */
+                height: auto; /* Allow height to adjust based on content */
+                min-height: 150px; /* Ensure a minimum height */
+                font-size: 0.8rem;
+                max-width: 100%; /* Override previous max-width */
+            }
+            .flip-card-front i {
+                font-size: 2em;
+            }
+            .flip-card-back {
+                font-size: 0.8rem; /* Ensure text in back is readable */
+            }
+            .flip-card-front, .flip-card-back {
+                padding: 0.8rem; /* Adjust padding for smaller cards */
+            }
+            .drop-target {
+                flex-basis: 100%; /* Single column on small screens */
+            }
+        }
+        @media (min-width: 481px) and (max-width: 768px) {
+            .flip-card {
+                max-width: calc(50% - 0.75rem); /* Two columns on tablets */
+            }
+        }
+        /* Flex container for flip cards to manage wrapping */
+        .interactive-section > div[style*="display: flex"] {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1><i class="fas fa-seedling"></i> Sesi 5: Strategi Keberlanjutan, Advokasi, dan Kolaborasi Multisektor</h1>
+
+        <p>Sesi ini akan membekali Anda dengan pemahaman mendalam tentang bagaimana komunitas dapat secara proaktif merespon krisis kesehatan dan bencana terkait perubahan iklim.</p>
+
+        <!-- Tujuan Sesi -->
+        <h2>🎯 Tujuan Sesi</h2>
+        <p>Setelah sesi ini, peserta diharapkan mampu:</p>
+        <ul>
+            <li><i class="fas fa-lightbulb"></i> <span>Merancang strategi keberlanjutan program PPPR berbasis komunitas.</span></li>
+            <li><i class="fas fa-bullhorn"></i> <span>Melakukan advokasi berbasis bukti untuk mendorong kebijakan yang berpihak pada kesehatan dan keselamatan komunitas.</span></li>
+            <li><i class="fas fa-handshake"></i> <span>Membangun kolaborasi lintas sektor untuk mendukung program PPPR yang terintegrasi dengan isu perubahan iklim.</span></li>
+        </ul>
+
+        <!-- 1. Advokasi Berbasis Bukti: Menyuarakan Kebutuhan Komunitas -->
+        <h2><i class="fas fa-chart-bar"></i> 1. Advokasi Berbasis Bukti: Menyuarakan Kebutuhan Komunitas</h2>
+        <p>Advokasi berbasis bukti adalah pendekatan strategis untuk mempengaruhi kebijakan atau keputusan dengan menggunakan data dan informasi yang kuat. Ini memastikan bahwa upaya advokasi didasarkan pada fakta, bukan sekadar asumsi.</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-search-dollar"></i> Mengumpulkan Data Lokal</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-file-alt"></i> Studi Kasus & Testimoni
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Dokumentasikan pengalaman nyata dari individu atau kelompok yang terdampak. Cerita personal dapat sangat kuat dalam advokasi.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-poll"></i> Survei & Observasi Komunitas
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Lakukan survei sederhana atau observasi langsung untuk mengumpulkan data kuantitatif dan kualitatif tentang masalah yang dihadapi komunitas.</p>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-pen-nib"></i> Menyusun Narasi Advokasi</h3>
+            <p>Narasi yang kuat harus menjelaskan:</p>
+            <ul>
+                <li><i class="fas fa-triangle-exclamation"></i> <span><strong>Masalah</strong>: Apa isu yang ingin diatasi?</span></li>
+                <li><i class="fas fa-receipt"></i> <span><strong>Bukti</strong>: Data atau fakta apa yang mendukung klaim Anda?</span></li>
+                <li><i class="fas fa-lightbulb"></i> <span><strong>Solusi</strong>: Apa rekomendasi konkret Anda?</span></li>
+                <li><i class="fas fa-users"></i> <span><strong>Pemangku Kepentingan</strong>: Siapa yang perlu Anda dekati dan mengapa?</span></li>
+            </ul>
+
+            <h3><i class="fas fa-bullhorn"></i> Strategi Menyuarakan Isu (Klik untuk Membalik)</h3>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 1.5rem;">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-newspaper"></i> Media Lokal
+                        </div>
+                        <div class="flip-card-back">
+                            Menulis artikel, siaran pers, atau berpartisipasi dalam program radio/TV lokal.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-comments"></i> Forum Multi-Pihak
+                        </div>
+                        <div class="flip-card-back">
+                            Berpartisipasi dalam pertemuan desa, rapat RT/RW, atau forum publik lainnya.
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-user-tie"></i> Audiensi Pembuat Kebijakan
+                        </div>
+                        <div class="flip-card-back">
+                            Mengatur pertemuan langsung dengan kepala desa, camat, atau anggota dewan lokal.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-gavel"></i> Prinsip Etika dalam Advokasi</h3>
+            <ul>
+                <li><i class="fas fa-hand-holding-medical"></i> <span><strong>Do No Harm</strong>: Pastikan advokasi tidak menimbulkan kerugian bagi komunitas.</span></li>
+                <li><i class="fas fa-user-lock"></i> <span><strong>Privasi</strong>: Lindungi data dan identitas individu yang berbagi cerita.</span></li>
+                <li><i class="fas fa-people-group"></i> <span><strong>Representasi</strong>: Pastikan suara komunitas terwakili secara autentik.</span></li>
+            </ul>
+            <p class="example-text"><i class="fas fa-lightbulb"></i> <strong>Contoh</strong>: Advokasi air bersih dan sanitasi berbasis data penyakit diare pasca-banjir. Data menunjukkan peningkatan kasus diare signifikan setelah banjir, memicu kebutuhan mendesak untuk perbaikan infrastruktur air dan sanitasi.</p>
+        </div>
+
+        <!-- 2. Kolaborasi Lintas Sektor: Kesehatan, Lingkungan, Pendidikan, Pertanian -->
+        <h2><i class="fas fa-hands-holding-child"></i> 2. Kolaborasi Lintas Sektor: Kesehatan, Lingkungan, Pendidikan, Pertanian</h2>
+        <p>Kolaborasi lintas sektor adalah kunci untuk menciptakan program PPPR yang holistik dan berkelanjutan, mengatasi berbagai aspek krisis.</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-network-wired"></i> Mengapa Kolaborasi Penting?</h3>
+            <ul>
+                <li><i class="fas fa-puzzle-piece"></i> <span>Mengatasi masalah kompleks yang melampaui satu sektor.</span></li>
+                <li><i class="fas fa-share-nodes"></i> <span>Memobilisasi sumber daya dan keahlian yang beragam.</span></li>
+                <li><i class="fas fa-scale-balanced"></i> <span>Menciptakan solusi yang lebih komprehensif dan berkelanjutan.</span></li>
+            </ul>
+
+            <h3><i class="fas fa-map-marked-alt"></i> Pemetaan Pemangku Kepentingan Lintas Sektor</h3>
+            <p>Identifikasi siapa saja yang memiliki kepentingan atau pengaruh dalam isu PPPR di komunitas Anda:</p>
+            <ul>
+                <li><i class="fas fa-hospital"></i> <span>Sektor Kesehatan (Puskesmas, Dinas Kesehatan)</span></li>
+                <li><i class="fas fa-tree"></i> <span>Sektor Lingkungan (Dinas Lingkungan Hidup, kelompok pecinta alam)</span></li>
+                <li><i class="fas fa-school"></i> <span>Sektor Pendidikan (Sekolah, Dinas Pendidikan, komite sekolah)</span></li>
+                <li><i class="fas fa-seedling"></i> <span>Sektor Pertanian (Dinas Pertanian, kelompok tani)</span></li>
+                <li><i class="fas fa-building"></i> <span>Sektor Swasta (perusahaan lokal, UMKM)</span></li>
+                <li><i class="fas fa-handshake-alt-slash"></i> <span>Organisasi Masyarakat Sipil (OMS) lainnya</span></li>
+            </ul>
+
+            <h3><i class="fas fa-layer-group"></i> Sinergi Peran Sektor</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-heart-pulse"></i> Kesehatan
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Sistem peringatan dini penyakit, layanan kesehatan primer, edukasi kesehatan.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-leaf"></i> Lingkungan
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Pelestarian habitat, mitigasi perubahan iklim, pengelolaan sampah, sanitasi.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-book-reader"></i> Pendidikan
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Literasi kesehatan dan perubahan iklim di sekolah, promosi perilaku hidup bersih dan sehat.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-tractor"></i> Pertanian
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Keamanan pangan, biosekuriti peternakan, praktik pertanian berkelanjutan.</p>
+                </div>
+            </div>
+            <p class="example-text"><i class="fas fa-lightbulb"></i> <strong>Contoh</strong>: Integrasi pelatihan cuci tangan di sekolah dan pemantauan DBD oleh kader lingkungan. Kolaborasi antara sekolah, puskesmas, dan kader lingkungan untuk mengurangi kasus DBD.</p>
+        </div>
+
+        <!-- 3. Mobilisasi Sumber Daya (Lokal dan Eksternal) -->
+        <h2><i class="fas fa-hand-holding-usd"></i> 3. Mobilisasi Sumber Daya (Lokal dan Eksternal)</h2>
+        <p>Memastikan keberlanjutan program PPPR membutuhkan sumber daya yang memadai, baik dari dalam komunitas maupun dari luar.</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-cubes"></i> Jenis Sumber Daya</h3>
+            <ul>
+                <li><i class="fas fa-users-gear"></i> <span><strong>Manusia</strong>: Relawan, kader, tokoh masyarakat, profesional.</span></li>
+                <li><i class="fas fa-money-bill-wave"></i> <span><strong>Finansial</strong>: Dana kas komunitas, donasi, hibah.</span></li>
+                <li><i class="fas fa-boxes-stacked"></i> <span><strong>Material</strong>: Peralatan, bahan habis pakai, infrastruktur.</span></li>
+                <li><i class="fas fa-laptop-code"></i> <span><strong>Teknologi</strong>: Aplikasi sederhana, alat komunikasi.</span></li>
+            </ul>
+
+            <h3><i class="fas fa-people-carry-box"></i> Pendekatan Partisipatif</h3>
+            <ul>
+                <li><i class="fas fa-hands-holding"></i> <span><strong>Gotong Royong</strong>: Kerja bakti, sumbangan tenaga/waktu.</span></li>
+                <li><i class="fas fa-piggy-bank"></i> <span><strong>Swadaya</strong>: Iuran warga, usaha ekonomi komunitas.</span></li>
+                <li><i class="fas fa-building"></i> <span><strong>CSR Lokal</strong>: Kemitraan dengan perusahaan atau bisnis lokal.</span></li>
+            </ul>
+
+            <h3><i class="fas fa-globe-americas"></i> Akses Pendanaan Eksternal</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-hand-holding-heart"></i> Hibah Kecil & Crowdfunding
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Mencari hibah dari organisasi nirlaba atau menggalang dana dari publik melalui platform *crowdfunding*.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-briefcase"></i> Kerja Sama dengan Donor
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Menjalin kemitraan dengan lembaga donor nasional atau internasional untuk dukungan program jangka panjang.</p>
+                </div>
+            </div>
+
+            <p class="example-text"><i class="fas fa-lightbulb"></i> <strong>Contoh</strong>: Mobilisasi bahan edukasi dari LSM mitra, tenaga relawan pemuda untuk kampanye kesehatan. LSM menyediakan materi, pemuda membantu distribusi dan sosialisasi.</p>
+        </div>
+
+        <!-- 4. Monitoring dan Evaluasi Program PPPR Komunitas -->
+        <h2><i class="fas fa-chart-line"></i> 4. Monitoring dan Evaluasi Program PPPR Komunitas</h2>
+        <p>Monitoring dan Evaluasi (M&E) adalah proses penting untuk mengukur kemajuan, efektivitas, dan dampak program, serta memastikan akuntabilitas.</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-clipboard-check"></i> Pentingnya M&E</h3>
+            <ul>
+                <li><i class="fas fa-magnifying-glass-chart"></i> <span>Mengukur kemajuan dan pencapaian tujuan.</span></li>
+                <li><i class="fas fa-arrow-rotate-right"></i> <span>Mengidentifikasi area yang perlu perbaikan.</span></li>
+                <li><i class="fas fa-handshake-angle"></i> <span>Meningkatkan akuntabilitas kepada komunitas dan donor.</span></li>
+                <li><i class="fas fa-seedling"></i> <span>Mendukung keberlanjutan program jangka panjang.</span></li>
+            </ul>
+
+            <h3><i class="fas fa-tags"></i> Menentukan Indikator Sederhana</h3>
+            <p>Indikator harus spesifik, terukur, dapat dicapai, relevan, dan terikat waktu (SMART).</p>
+            <ul>
+                <li><i class="fas fa-calculator"></i> <span><strong>Kuantitatif</strong>: Jumlah kader aktif, jumlah rumah yang dikunjungi, cakupan vaksinasi.</span></li>
+                <li><i class="fas fa-comment-dots"></i> <span><strong>Kualitatif</strong>: Perubahan perilaku masyarakat, tingkat kepuasan komunitas, peningkatan pengetahuan.</span></li>
+            </ul>
+
+            <h3><i class="fas fa-people-pulling"></i> Pelibatan Masyarakat dalam Monitoring</h3>
+            <ul>
+                <li><i class="fas fa-eye"></i> <span><strong>Partisipatif</strong>: Libatkan anggota komunitas dalam pengumpulan dan analisis data.</span></li>
+                <li><i class="fas fa-hand-holding-usd"></i> <span><strong>Transparan</strong>: Bagikan hasil M&E secara terbuka kepada komunitas.</span></li>
+            </ul>
+            <p class="example-text"><i class="fas fa-lightbulb"></i> <strong>Contoh Indikator</strong>: Jumlah kader aktif, cakupan edukasi, respons waktu tanggap, kepuasan komunitas terhadap program.</p>
+        </div>
+
+        <!-- 5. Integrasi PPPR ke Dalam Kebijakan Lokal dan Rencana Adaptasi Perubahan Iklim -->
+        <h2><i class="fas fa-gavel"></i> 5. Integrasi PPPR ke Dalam Kebijakan Lokal dan Rencana Adaptasi Perubahan Iklim</h2>
+        <p>Mengintegrasikan PPPR ke dalam kebijakan lokal memastikan program memiliki dasar hukum dan dukungan jangka panjang dari pemerintah.</p>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-scroll"></i> Rencana Aksi Daerah (RAD) Adaptasi Perubahan Iklim</h3>
+            <p>RAD Adaptasi Perubahan Iklim adalah dokumen perencanaan di tingkat daerah yang menguraikan strategi dan program untuk mengurangi kerentanan terhadap dampak perubahan iklim.</p>
+
+            <h3><i class="fas fa-route"></i> Cara Mengusulkan Program PPPR</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-person-walking-arrow-right"></i> Musrenbang Desa/Kecamatan
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Aktif berpartisipasi dalam Musyawarah Perencanaan Pembangunan (Musrenbang) di tingkat desa atau kecamatan untuk mengusulkan program PPPR.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <i class="fas fa-link"></i> Menghubungkan Rencana Komunitas
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="accordion-content">
+                    <p>Pastikan rencana PPPR komunitas Anda selaras dengan dokumen perencanaan daerah seperti RPJMDes (Rencana Pembangunan Jangka Menengah Desa).</p>
+                </div>
+            </div>
+
+            <h3><i class="fas fa-chess-queen"></i> Strategi Memperkuat Posisi OMS/Komunitas</h3>
+            <ul>
+                <li><i class="fas fa-user-group"></i> <span>Membangun koalisi dengan OMS lain.</span></li>
+                <li><i class="fas fa-handshake-simple"></i> <span>Menjalin hubungan baik dengan pemerintah lokal.</span></li>
+                <li><i class="fas fa-chart-pie"></i> <span>Menyajikan data dan bukti yang kuat.</span></li>
+                <li><i class="fas fa-microphone-alt"></i> <span>Aktif dalam forum-forum pembangunan.</span></li>
+            </ul>
+            <p class="example-text"><i class="fas fa-lightbulb"></i> <strong>Contoh</strong>: Usulan kegiatan pelatihan PPPR dalam Rencana Pembangunan Jangka Menengah Desa (RPJMDes) sebagai bagian dari upaya peningkatan kapasitas masyarakat dalam menghadapi bencana dan krisis kesehatan.</p>
+        </div>
+
+        <!-- Aktivitas Pembelajaran -->
+        <h2>🎯 Aktivitas Pembelajaran</h2>
+
+        <!-- Drag and Drop Game -->
+        <div class="interactive-section">
+            <h3><i class="fas fa-puzzle-piece"></i> Game: Merancang Strategi Keberlanjutan</h3>
+            <p>Seret dan jatuhkan elemen strategi keberlanjutan ke deskripsi yang sesuai.</p>
+            <div class="drag-drop-game-container">
+                <div class="drag-items-container" id="dragItemsContainer">
+                    <!-- Drag items will be populated by JS -->
+                </div>
+                <div class="drop-targets-container" id="dropTargetsContainer">
+                    <!-- Drop targets will be populated by JS -->
+                </div>
+                <div class="game-feedback" id="gameFeedback"></div>
+                <div class="game-buttons">
+                    <button id="checkGameBtn">Periksa Jawaban</button>
+                    <button id="resetGameBtn">Ulangi Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latihan 1: Menyusun Strategi Advokasi Sederhana -->
+        <div class="interactive-section">
+            <h3><i class="fas fa-pencil-alt"></i> Latihan 1: Menyusun Strategi Advokasi Sederhana</h3>
+            <p>Pilih satu isu utama di komunitas Anda terkait PPPR. Buat strategi advokasi 1 halaman dengan elemen:</p>
+            <ul>
+                <li><i class="fas fa-circle-info"></i> <span><strong>Isu dan dampaknya</strong></span></li>
+                <li><i class="fas fa-file-invoice"></i> <span><strong>Bukti pendukung</strong></span></li>
+                <li><i class="fas fa-bullseye"></i> <span><strong>Tujuan advokasi</strong></span></li>
+                <li><i class="fas fa-user-tag"></i> <span><strong>Sasaran pemangku kepentingan</strong></span></li>
+                <li><i class="fas fa-comments"></i> <span><strong>Metode atau saluran advokasi</strong> (forum, media lokal, audiensi)</span></li>
+                <li><i class="fas fa-chart-simple"></i> <span><strong>Indikator keberhasilan</strong></span></li>
+            </ul>
+            <textarea id="advocacyStrategyInput" class="reflection-input" placeholder="Tulis strategi advokasi Anda di sini..."></textarea>
+            <div class="reflection-feedback" id="advocacyStrategyFeedback"></div>
+            <button class="reflection-submit-btn" onclick="submitReflection('advocacyStrategy')">Kirim Strategi</button>
+        </div>
+
+        <!-- Latihan 2: Refleksi dan Rencana Tindak Lanjut -->
+        <div class="interactive-section">
+            <h3><i class="fas fa-sync-alt"></i> Latihan 2: Refleksi dan Rencana Tindak Lanjut</h3>
+            <p>Tuliskan langkah konkret yang akan Anda dan organisasi Anda ambil dalam 3 bulan ke depan untuk:</p>
+            <ul>
+                <li><i class="fas fa-handshake-angle"></i> <span><strong>Memperkuat kolaborasi lintas sektor</strong></span></li>
+                <li><i class="fas fa-people-group"></i> <span><strong>Meningkatkan partisipasi komunitas dalam program PPPR</strong></span></li>
+                <li><i class="fas fa-gavel"></i> <span><strong>Mendorong kebijakan lokal yang mendukung integrasi PPPR dan perubahan iklim</strong></span></li>
+            </ul>
+            <textarea id="followUpPlanInput" class="reflection-input" placeholder="Tulis rencana tindak lanjut Anda di sini..."></textarea>
+            <div class="reflection-feedback" id="followUpPlanFeedback"></div>
+            <button class="reflection-submit-btn" onclick="submitReflection('followUpPlan')">Kirim Rencana</button>
+        </div>
+
+        <!-- Penilaian dan Refleksi -->
+        <h2>🧠 Penilaian dan Refleksi</h2>
+        <div class="interactive-section">
+            <h3><i class="fas fa-question-circle"></i> Kuis Singkat</h3>
+            <div id="quizContainer" class="quiz-container">
+                <!-- Questions will be loaded here by JavaScript -->
+            </div>
+            <button id="quizSubmitBtn" class="quiz-submit-btn">Kirim Jawaban</button>
+            <div id="quizResult" class="quiz-result"></div>
+            <button id="quizResetBtn" class="quiz-reset-btn" style="display:none;">Ulangi Kuis</button>
+        </div>
+
+        <div class="interactive-section">
+            <h3><i class="fas fa-clipboard-list"></i> Checklist Kesiapsiagaan Respon Komunitas</h3>
+            <p>Gunakan checklist ini untuk menilai kesiapan komunitas Anda dalam merespon darurat:</p>
+            <div class="checklist-container" id="readinessChecklistFinal">
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check1"><label for="final_check1">Apakah komunitas Anda memiliki strategi keberlanjutan program PPPR?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check2"><label for="final_check2">Apakah Anda mampu mengumpulkan bukti untuk advokasi?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check3"><label for="final_check3">Apakah ada upaya kolaborasi lintas sektor yang aktif?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check4"><label for="final_check4">Apakah ada sistem M&E sederhana untuk program PPPR?</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="final_check5"><label for="final_check5">Apakah program PPPR terintegrasi dengan kebijakan atau rencana lokal?</label>
+                </div>
+            </div>
+            <p style="margin-top: 1.5rem; font-style: italic; color: var(--text-medium);">Centang item yang sudah dimiliki komunitas Anda. Apa yang perlu ditingkatkan?</p>
+        </div>
+
+        <!-- Output Akhir Sesi 5 -->
+        <h2>📦 Output Akhir Sesi 5</h2>
+        <p>Selamat! Anda telah menyelesaikan Sesi 5. Setelah sesi ini, Anda diharapkan mampu:</p>
+        <ul>
+            <li><i class="fas fa-lightbulb"></i> <span>Merancang strategi keberlanjutan program PPPR berbasis komunitas.</span></li>
+            <li><i class="fas fa-bullhorn"></i> <span>Melakukan advokasi berbasis bukti untuk mendorong kebijakan yang berpihak pada kesehatan dan keselamatan komunitas.</span></li>
+            <li><i class="fas fa-handshake"></i> <span>Membangun kolaborasi lintas sektor untuk mendukung program PPPR yang terintegrasi dengan isu perubahan iklim.</span></li>
+        </ul>
+        <p>Terima kasih telah menyelesaikan program e-learning ini. Teruslah berjejaring dan berbagi praktik baik!</p>
+
+        <div class="navigation-buttons">
+            <button onclick="window.location.href='sesi4.html'">Kembali ke Sesi 4</button>
+            <button onclick="window.location.href='evaluasi-pelatihan.html'">Selesai Program</button>
+        </div>
+    </div>
+
+    <footer>
+        Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+    </footer>
+
+    <script>
+        // Fungsi untuk memuat status penyelesaian sesi dari localStorage
+        function loadSessionStatus() {
+            return JSON.parse(localStorage.getItem('eLearningSessionStatus')) || {};
+        }
+
+        // Fungsi untuk menyimpan status penyelesaian sesi ke localStorage
+        function saveSessionStatus(status) {
+            localStorage.setItem('eLearningSessionStatus', JSON.stringify(status));
+        }
+
+        // Fungsi untuk menyelesaikan sesi dan melanjutkan ke sesi berikutnya
+        function completeSession(sessionId) {
+            let sessionCompletionStatus = loadSessionStatus();
+
+            // Tandai sesi saat ini sebagai selesai
+            sessionCompletionStatus[`session-${sessionId}`] = { completed: true, unlocked: true };
+
+            // Aktifkan sesi berikutnya (jika ada, untuk sesi 5 ini adalah sesi terakhir)
+            const nextSessionNum = sessionId + 1;
+            if (nextSessionNum <= 5) { // Asumsi ada 5 sesi total
+                sessionCompletionStatus[`session-${nextSessionNum}`] = { completed: false, unlocked: true };
+            }
+
+            saveSessionStatus(sessionCompletionStatus);
+
+            // Arahkan ke sesi berikutnya atau kembali ke landing page jika sudah sesi terakhir
+            if (nextSessionNum <= 5) { // For Sesi 5, this condition will be false, so it goes to index.html
+                // This part is not strictly needed for Sesi 5 as it's the last, but kept for consistency
+                // window.location.href = `sesi${nextSessionNum}.html`;
+            } else {
+                window.location.href = 'index.html'; // Kembali ke landing page jika semua sesi selesai
+            }
+        }
+
+        /* --- Accordion Logic --- */
+        function setupAccordions() {
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    if (content.classList.contains('active')) {
+                        content.style.maxHeight = (content.scrollHeight + 50) + "px"; // Added 50px buffer
+                        content.style.padding = "1.5rem";
+                    } else {
+                        content.style.maxHeight = "0";
+                        content.style.padding = "0 1.5rem";
+                    }
+                });
+            });
+        }
+
+        /* --- Flip Card Logic --- */
+        function setupFlipCards() {
+            document.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    card.querySelector('.flip-card-inner').style.transform = card.querySelector('.flip-card-inner').style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
+                });
+            });
+        }
+
+        /* --- Interactive Checklist Logic --- */
+        function setupChecklists() {
+            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const listItem = e.target.closest('.checklist-item');
+                    if (e.target.checked) {
+                        listItem.classList.add('completed');
+                    } else {
+                        listItem.classList.remove('completed');
+                    }
+                });
+            });
+        }
+
+        /* --- Quiz Logic --- */
+        const quizQuestions = [
+            {
+                question: "Apa tujuan utama advokasi berbasis bukti dalam program PPPR?",
+                options: [
+                    "Meningkatkan popularitas organisasi",
+                    "Mempengaruhi kebijakan atau keputusan dengan data yang kuat",
+                    "Mencari simpati dari masyarakat",
+                    "Mengumpulkan dana tanpa pertanggungjawaban"
+                ],
+                answer: "Mempengaruhi kebijakan atau keputusan dengan data yang kuat"
+            },
+            {
+                question: "Mengapa kolaborasi lintas sektor penting dalam PPPR?",
+                options: [
+                    "Agar program terlihat lebih besar",
+                    "Untuk mengatasi masalah kompleks dan memanfaatkan keahlian beragam",
+                    "Hanya untuk memenuhi persyaratan donor",
+                    "Membuat pekerjaan lebih rumit"
+                ],
+                answer: "Untuk mengatasi masalah kompleks dan memanfaatkan keahlian beragam"
+            },
+            {
+                question: "Manakah yang merupakan contoh sumber daya 'manusia' dalam mobilisasi sumber daya PPPR?",
+                options: [
+                    "Dana hibah",
+                    "Peralatan medis",
+                    "Relawan dan kader kesehatan",
+                    "Aplikasi mobile"
+                ],
+                answer: "Relawan dan kader kesehatan"
+            },
+            {
+                question: "Apa peran utama Monitoring dan Evaluasi (M&E) dalam keberlanjutan program PPPR?",
+                options: [
+                    "Hanya untuk melaporkan kegagalan program",
+                    "Mengukur kemajuan, mengidentifikasi perbaikan, dan meningkatkan akuntabilitas",
+                    "Menyalahkan pihak lain jika ada masalah",
+                    "Menyediakan data untuk tujuan politik"
+                ],
+                answer: "Mengukur kemajuan, mengidentifikasi perbaikan, dan meningkatkan akuntabilitas"
+            },
+            {
+                question: "Bagaimana komunitas dapat mengusulkan program PPPR ke dalam kebijakan lokal?",
+                options: [
+                    "Menunggu perintah dari pemerintah pusat",
+                    "Melalui Musrenbang desa/kecamatan",
+                    "Hanya melalui media sosial",
+                    "Cukup dengan membuat rencana sendiri tanpa melibatkan pemerintah"
+                ],
+                answer: "Melalui Musrenbang desa/kecamatan"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quizContainer');
+        const quizSubmitBtn = document.getElementById('quizSubmitBtn');
+        const quizResult = document.getElementById('quizResult');
+        const quizResetBtn = document.getElementById('quizResetBtn');
+
+        function loadQuiz() {
+            if (!quizContainer) return;
+            quizContainer.innerHTML = ''; // Clear previous questions
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                q.options.forEach((option, optIndex) => {
+                    const label = document.createElement('label');
+                    label.innerHTML = `
+                        <input type="radio" name="question${index}" value="${option}">
+                        ${option}
+                    `;
+                    optionsDiv.appendChild(label);
+                });
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+            quizSubmitBtn.style.display = 'block';
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            quizQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const questionDiv = quizContainer.children[index];
+
+                // Remove previous feedback classes
+                questionDiv.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct', 'incorrect');
+                });
+
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect');
+                        // Highlight correct answer
+                        questionDiv.querySelector(`input[value="${q.answer}"]`).parentElement.classList.add('correct');
+                    }
+                } else {
+                    allAnswered = false;
+                    // Optionally, highlight unanswered questions
+                    questionDiv.style.border = '1px solid #dc2626'; /* var(--danger) */
+                    questionDiv.style.borderRadius = '8px';
+                    questionDiv.style.padding = '0.5rem';
+                    setTimeout(() => {
+                        questionDiv.style.border = 'none';
+                        questionDiv.style.padding = '0';
+                    }, 1500);
+                }
+            });
+
+            if (!allAnswered) {
+                quizResult.textContent = "Mohon jawab semua pertanyaan sebelum mengirim!";
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+                return;
+            }
+
+            quizSubmitBtn.style.display = 'none';
+            quizResetBtn.style.display = 'block';
+
+            if (score === quizQuestions.length) {
+                quizResult.textContent = `Selamat! Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar.`;
+                quizResult.classList.remove('incorrect');
+                quizResult.classList.add('correct');
+            } else {
+                quizResult.textContent = `Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar. Coba lagi!`;
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+            }
+        }
+
+        function resetQuiz() {
+            loadQuiz();
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+            quizSubmitBtn.style.display = 'block';
+        }
+
+        // Add event listeners for quiz buttons
+        if (quizSubmitBtn) quizSubmitBtn.addEventListener('click', submitQuiz);
+        if (quizResetBtn) quizResetBtn.addEventListener('click', resetQuiz);
+
+        /* --- Reflection Logic --- */
+        function submitReflection(type) {
+            let inputElement;
+            let feedbackElement;
+            if (type === 'advocacyStrategy') {
+                inputElement = document.getElementById('advocacyStrategyInput');
+                feedbackElement = document.getElementById('advocacyStrategyFeedback');
+            } else if (type === 'followUpPlan') {
+                inputElement = document.getElementById('followUpPlanInput');
+                feedbackElement = document.getElementById('followUpPlanFeedback');
+            } else {
+                return;
+            }
+
+            if (inputElement.value.trim() === '') {
+                feedbackElement.textContent = 'Refleksi tidak boleh kosong!';
+                feedbackElement.style.color = '#dc2626';
+            } else {
+                feedbackElement.textContent = 'Refleksi Anda telah disimpan!';
+                feedbackElement.style.color = '#22c54e';
+                console.log(`Refleksi ${type} Sesi 5:`, inputElement.value);
+                inputElement.value = '';
+            }
+            setTimeout(() => {
+                feedbackElement.textContent = '';
+            }, 3000);
+        }
+
+        /* --- Drag and Drop Game Logic --- */
+        const dragItemsData = [
+            { id: 'item1', text: 'Mobilisasi Sumber Daya', correctTarget: 'target1' },
+            { id: 'item2', text: 'Advokasi Kebijakan', correctTarget: 'target2' },
+            { id: 'item3', text: 'Kolaborasi Lintas Sektor', correctTarget: 'target3' },
+            { id: 'item4', text: 'Monitoring & Evaluasi', correctTarget: 'target4' }
+        ];
+
+        const dropTargetsData = [
+            { id: 'target1', text: 'Mengumpulkan dukungan finansial, material, dan manusia dari dalam dan luar komunitas.' },
+            { id: 'target2', text: 'Mendorong perubahan kebijakan yang mendukung program PPPR berbasis bukti.' },
+            { id: 'target3', text: 'Membangun kemitraan dengan berbagai pihak (kesehatan, lingkungan, pendidikan, dll.) untuk solusi terpadu.' },
+            { id: 'target4', text: 'Mengukur kemajuan dan dampak program, serta mengidentifikasi area perbaikan.' }
+        ];
+
+        let draggedItem = null;
+
+        function createDragItems() {
+            const container = document.getElementById('dragItemsContainer');
+            container.innerHTML = '';
+            // Shuffle items to make it different each time
+            const shuffledItems = [...dragItemsData].sort(() => Math.random() - 0.5);
+            shuffledItems.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('drag-item');
+                div.setAttribute('draggable', 'true');
+                div.id = item.id;
+                div.textContent = item.text;
+                div.addEventListener('dragstart', (e) => {
+                    draggedItem = e.target;
+                    e.target.classList.add('dragging');
+                });
+                div.addEventListener('dragend', (e) => {
+                    e.target.classList.remove('dragging');
+                });
+                container.appendChild(div);
+            });
+        }
+
+        function createDropTargets() {
+            const container = document.getElementById('dropTargetsContainer');
+            container.innerHTML = '';
+            // Shuffle targets but keep track of original position for checking
+            const shuffledTargets = [...dropTargetsData].sort(() => Math.random() - 0.5);
+            shuffledTargets.forEach(target => {
+                const div = document.createElement('div');
+                div.classList.add('drop-target');
+                div.id = target.id;
+                div.innerHTML = `<p>${target.text}</p><span class="placed-item"></span>`; // Span for placed item
+                div.addEventListener('dragover', (e) => {
+                    e.preventDefault(); // Allow drop
+                    if (!div.classList.contains('filled')) { // Only show hover if not already filled
+                        div.classList.add('hovered');
+                    }
+                });
+                div.addEventListener('dragleave', () => {
+                    div.classList.remove('hovered');
+                });
+                div.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    div.classList.remove('hovered');
+
+                    if (draggedItem && !div.classList.contains('filled')) {
+                        const placedItemSpan = div.querySelector('.placed-item');
+                        placedItemSpan.textContent = draggedItem.textContent;
+                        placedItemSpan.dataset.itemId = draggedItem.id; // Store original item ID
+                        div.classList.add('filled');
+                        draggedItem.style.display = 'none'; // Hide dragged item from source
+                    }
+                });
+                container.appendChild(div);
+            });
+        }
+
+        function checkGame() {
+            let correctCount = 0;
+            const feedbackDiv = document.getElementById('gameFeedback');
+            const dropTargets = document.querySelectorAll('.drop-target');
+
+            dropTargets.forEach(target => {
+                target.classList.remove('correct', 'incorrect'); // Clear previous feedback
+                const placedItemSpan = target.querySelector('.placed-item');
+                const placedItemId = placedItemSpan.dataset.itemId;
+
+                if (placedItemId) {
+                    const originalItem = dragItemsData.find(item => item.id === placedItemId);
+                    if (originalItem && originalItem.correctTarget === target.id) {
+                        target.classList.add('correct');
+                        correctCount++;
+                    } else {
+                        target.classList.add('incorrect');
+                    }
+                } else {
+                    // If target is empty, it's implicitly incorrect for this check
+                    target.classList.add('incorrect');
+                }
+            });
+
+            if (correctCount === dragItemsData.length) {
+                feedbackDiv.textContent = 'Selamat! Anda mencocokkan semua dengan benar!';
+                feedbackDiv.classList.remove('incorrect');
+                feedbackDiv.classList.add('correct');
+            } else {
+                feedbackDiv.textContent = `Anda mencocokkan ${correctCount} dari ${dragItemsData.length} dengan benar. Coba lagi!`;
+                feedbackDiv.classList.remove('correct');
+                feedbackDiv.classList.add('incorrect');
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('gameFeedback').textContent = '';
+            document.getElementById('gameFeedback').classList.remove('correct', 'incorrect');
+            createDragItems();
+            createDropTargets();
+        }
+
+        // Event listeners for game buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial setup for the game
+            createDragItems();
+            createDropTargets();
+
+            const checkGameBtn = document.getElementById('checkGameBtn');
+            const resetGameBtn = document.getElementById('resetGameBtn');
+
+            if (checkGameBtn) checkGameBtn.addEventListener('click', checkGame);
+            if (resetGameBtn) resetGameBtn.addEventListener('click', resetGame);
+
+            // Other initial setups
+            setupAccordions();
+            setupFlipCards();
+            setupChecklists();
+            loadQuiz();
+        });
+    </script>
+</body>
+</html>
