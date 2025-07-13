@@ -1,67 +1,1010 @@
-<!-- Di dalam file sesi1.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sesi 1: Pengenalan PPPR</title>
-    <!-- Anda bisa menyertakan CSS yang sama atau CSS spesifik sesi di sini -->
+    <title>Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
     <style>
-        /* Sertakan CSS dasar dari landing page atau CSS khusus sesi */
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1f2937; line-height: 1.6; padding: 2rem; }
-        .content-wrapper { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        h1 { color: #0d9488; margin-bottom: 1.5rem; }
-        h2 { color: #4b5563; margin-top: 1.5rem; margin-bottom: 1rem; }
-        ul { margin-left: 1.5rem; margin-bottom: 1rem; }
-        .navigation-buttons { display: flex; justify-content: space-between; margin-top: 2rem; gap: 1rem; }
-        .navigation-buttons button { background: #0d9488; color: white; padding: 0.8rem 1.5rem; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease; }
-        .navigation-buttons button:hover { background: #14b8a6; }
+        :root {
+            --primary: #0d9488;
+            --secondary: #f0fdfa;
+            --accent: #14b8a6;
+            --danger: #dc2626;
+            --warning: #facc15;
+            --light: #f8fafc;
+            --success: #22c54e;
+            --info: #3b82f6;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --card-shadow: rgba(0,0,0,0.05);
+            --card-hover-shadow: rgba(0,0,0,0.1);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px var(--card-shadow);
+            flex-grow: 1;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.8rem;
+        }
+        h2 {
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px dashed var(--card-border);
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1.5rem;
+        }
+        .navigation-buttons button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .navigation-buttons button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .navigation-buttons button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        footer {
+            text-align:center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 3rem;
+            background-color: #e2e8f0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Interactive Elements Styling */
+        .interactive-section {
+            background-color: var(--secondary);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .interactive-section h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        /* Drag and Drop Game */
+        .drag-drop-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .drag-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: 8px;
+            border: 1px dashed var(--text-light);
+        }
+        .draggable {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            cursor: grab;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: 600;
+        }
+        .draggable:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .drop-zones {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+        .drop-zone {
+            background-color: var(--card-bg);
+            border: 2px dashed var(--accent);
+            border-radius: 8px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            position: relative;
+        }
+        .drop-zone.hovered {
+            background-color: #e6fffa;
+            border-color: var(--primary);
+        }
+        .drop-zone.correct {
+            background-color: #d4edda; /* Light green */
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .drop-zone.incorrect {
+            background-color: #f8d7da; /* Light red */
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .drop-zone .dropped-item {
+            margin-top: 0.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .drag-drop-feedback {
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .drag-drop-feedback.correct {
+            color: var(--success);
+        }
+        .drag-drop-feedback.incorrect {
+            color: var(--danger);
+        }
+        .drag-drop-reset-btn {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .drag-drop-reset-btn:hover {
+            background-color: #3672d9;
+        }
+
+        /* Quiz Styling */
+        .quiz-container {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            background-color: var(--light);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .options label:hover {
+            background-color: #e6fffa;
+            border-color: var(--accent);
+        }
+        .options input[type="radio"] {
+            margin-right: 0.8rem;
+        }
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: var(--danger);
+        }
+        .quiz-submit-btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            margin: 1.5rem auto 0;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-submit-btn:hover {
+            background: var(--accent);
+        }
+        .quiz-result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+        }
+        .quiz-reset-btn {
+            background-color: var(--info);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            transition: background-color 0.2s ease;
+        }
+        .quiz-reset-btn:hover {
+            background-color: #3672d9;
+        }
+
+        /* PPPR Cycle Animation */
+        .pppr-cycle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 3rem auto;
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+        .cycle-circle {
+            width: 100%;
+            height: 100%;
+            border: 3px dashed var(--primary);
+            border-radius: 50%;
+            position: absolute;
+            animation: rotateCircle 20s linear infinite;
+        }
+        .cycle-item {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        .cycle-item:hover {
+            transform: scale(1.1);
+        }
+        .cycle-item i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Positions for cycle items */
+        /* These are set dynamically by JS for better responsiveness */
+
+
+        @keyframes rotateCircle {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Accordion Styling */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease;
+        }
+        .accordion-header:hover {
+            background-color: var(--accent);
+        }
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active i {
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            background-color: var(--card-bg);
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Adjust as needed, large enough to contain content */
+            padding: 1.5rem;
+        }
+        .accordion-content ul {
+            margin-left: 0; /* Reset default list indent */
+            list-style: none; /* Remove default bullet */
+            padding-left: 0; /* Remove default padding */
+        }
+        .accordion-content ul li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem; /* Space for custom bullet */
+        }
+        .accordion-content ul li::before {
+            content: '•';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.3rem;
+            }
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .pppr-cycle-container {
+                width: 250px;
+                height: 250px;
+            }
+            .cycle-item {
+                width: 80px;
+                height: 80px;
+                font-size: 0.8rem;
+            }
+            .cycle-item i {
+                font-size: 1.5rem;
+            }
+            .drag-items, .drop-zones {
+                flex-direction: column;
+            }
+            .accordion-header {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .accordion-content {
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
-        <h1>Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas</h1>
+        <h1><i class="fas fa-book"></i> Sesi 1: Pengenalan PPPR dan Peran OMS/Komunitas</h1>
+
         <p>Selamat datang di Sesi 1! Di sesi ini, kita akan mempelajari dasar-dasar Pencegahan, Kesiapsiagaan, dan Respon (PPPR) serta peran vital Organisasi Masyarakat Sipil (OMS) dan komunitas dalam upaya ini.</p>
-        <h2>Topik:</h2>
+
+        <!-- Tujuan Pembelajaran -->
+        <h2>🎯 Tujuan Pembelajaran</h2>
+        <p>Setelah menyelesaikan sesi ini, peserta diharapkan memahami:</p>
         <ul>
-          <li>Apa itu PPPR? (Definisi, komponen, siklus)</li>
-          <li>Belajar dari pandemi COVID-19: pembelajaran dan tantangan</li>
-          <li>Peran OMS dan komunitas dalam PPPR</li>
-          <li>Pendekatan berbasis masyarakat dalam kesehatan</li>
-          <li>Prinsip-prinsip inklusivitas, keadilan, dan HAM dalam PPPR</li>
+            <li>Konsep dasar PPPR (Pencegahan, Kesiapsiagaan, dan Respon terhadap Pandemi)</li>
+            <li>Pelajaran penting dari pandemi COVID-19</li>
+            <li>Peran sentral OMS dan komunitas dalam sistem ketahanan kesehatan</li>
+            <li>Pendekatan berbasis masyarakat dalam kesehatan</li>
+            <li>Pentingnya inklusivitas, keadilan, dan HAM dalam kerja-kerja PPPR</li>
         </ul>
-        <h2>Aktivitas:</h2>
+
+        <!-- 1. Apa itu PPPR? -->
+        <h2>1. Apa itu PPPR?</h2>
+        <h3>📌 Definisi:</h3>
+        <p>PPPR merujuk pada serangkaian langkah sistematis untuk mencegah munculnya wabah, menyiapkan sistem dan masyarakat menghadapi potensi krisis kesehatan, serta merespon dengan cepat dan efektif saat terjadi wabah atau pandemi.</p>
+
+        <h3>🧱 Komponen Utama PPPR:</h3>
+        <p>Berikut adalah komponen utama dari PPPR. Mari kita coba cocokkan komponen dengan definisinya!</p>
+
+        <div class="interactive-section">
+            <h3>Drag and Drop: Cocokkan Komponen PPPR</h3>
+            <p>Seret komponen ke definisi yang benar.</p>
+            <div class="drag-drop-container">
+                <div class="drag-items" id="dragItems">
+                    <div class="draggable" draggable="true" data-match="pencegahan">Pencegahan</div>
+                    <div class="draggable" draggable="true" data-match="kesiapsiagaan">Kesiapsiagaan</div>
+                    <div class="draggable" draggable="true" data-match="respon">Respon</div>
+                </div>
+                <div class="drop-zones" id="dropZones">
+                    <div class="drop-zone" data-accept="pencegahan">
+                        <p>Deteksi dini penyakit menular, pengendalian zoonosis, sanitasi lingkungan</p>
+                    </div>
+                    <div class="drop-zone" data-accept="kesiapsiagaan">
+                        <p>Sistem peringatan dini, pelatihan masyarakat, logistik, dan komunikasi risiko</p>
+                    </div>
+                    <div class="drop-zone" data-accept="respon">
+                        <p>Tindakan cepat saat wabah muncul, pengobatan, perlindungan kelompok rentan, koordinasi sektor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="drag-drop-feedback" id="dragDropFeedback"></div>
+            <button class="drag-drop-reset-btn" onclick="resetDragDrop()">Reset Game</button>
+        </div>
+
+        <h3>🔄 Siklus PPPR:</h3>
+        <p>Siklus PPPR adalah proses berkelanjutan. Lihat animasi di bawah untuk memahami alurnya:</p>
+        <div class="pppr-cycle-container">
+            <div class="cycle-circle"></div>
+            <div class="cycle-item" data-item-name="Deteksi">
+                <i class="fas fa-search"></i> Deteksi
+            </div>
+            <div class="cycle-item" data-item-name="Persiapan">
+                <i class="fas fa-cogs"></i> Persiapan
+            </div>
+            <div class="cycle-item" data-item-name="Respon">
+                <i class="fas fa-hospital-alt"></i> Respon
+            </div>
+            <div class="cycle-item" data-item-name="Pemulihan & Evaluasi">
+                <i class="fas fa-sync-alt"></i> Pemulihan & Evaluasi
+            </div>
+        </div>
+
+
+        <!-- 2. Belajar dari Pandemi COVID-19 - Accordion -->
+        <h2>2. Belajar dari Pandemi COVID-19</h2>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                📚 Pembelajaran Kunci
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Pentingnya data dan komunikasi yang transparan</li>
+                    <li>Ketimpangan akses layanan kesehatan</li>
+                    <li>Peran vital komunitas dan relawan dalam distribusi informasi dan bantuan</li>
+                    <li>Kepercayaan masyarakat terhadap pemerintah sangat mempengaruhi efektivitas respon</li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                🧩 Tantangan yang Terjadi
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Disinformasi dan hoaks</li>
+                    <li>Stigma terhadap pasien</li>
+                    <li>Ketimpangan layanan kesehatan (desa vs kota, gender, disabilitas)</li>
+                    <li>Tidak siapnya banyak komunitas dalam respon awal</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 3. Peran OMS dan Komunitas dalam PPPR - Accordion -->
+        <h2>3. Peran OMS dan Komunitas dalam PPPR</h2>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                🧶 Kontribusi OMS/Komunitas
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Deteksi dini berbasis lokal (melalui kader, tokoh masyarakat, dsb.)</li>
+                    <li>Penyebaran informasi dan edukasi publik</li>
+                    <li>Menjangkau kelompok rentan (disabilitas, lansia, perempuan, masyarakat adat)</li>
+                    <li>Advokasi kebijakan lokal berbasis komunitas</li>
+                    <li>Monitoring partisipatif dan umpan balik masyarakat</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. Pendekatan Berbasis Masyarakat dalam Kesehatan - Accordion -->
+        <h2>4. Pendekatan Berbasis Masyarakat dalam Kesehatan</h2>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                🏘️ Karakteristik
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Dimulai dari kebutuhan dan konteks lokal</li>
+                    <li>Melibatkan masyarakat dalam seluruh tahapan (dari perencanaan hingga evaluasi)</li>
+                    <li>Meningkatkan kepemilikan dan keberlanjutan intervensi</li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                🛠️ Contoh Praktik
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Posyandu, Forum Warga, Jaringan relawan COVID-19, kelompok perempuan atau pemuda</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 5. Prinsip Inklusivitas, Keadilan, dan HAM dalam PPPR - Accordion -->
+        <h2>5. Prinsip Inklusivitas, Keadilan, dan HAM dalam PPPR</h2>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                ⚖️ Mengapa penting?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Pandemi memperparah ketimpangan sosial dan ekonomi</li>
+                    <li>Tanpa pendekatan berbasis HAM, banyak kelompok akan terpinggirkan dari layanan kesehatan</li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                🧭 Prinsip yang Ditegakkan
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="accordion-content">
+                <ul>
+                    <li>Non-diskriminasi</li>
+                    <li>Partisipasi penuh dan bermakna</li>
+                    <li>Akuntabilitas dan transparansi</li>
+                    <li>Akses setara terhadap layanan dan informasi</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Aktivitas Interaktif: Kuis -->
+        <h2>🧠 Aktivitas Interaktif: Kuis</h2>
+        <div class="interactive-section">
+            <h3>Uji Pemahaman Anda!</h3>
+            <div id="quizContainer" class="quiz-container">
+                <!-- Questions will be loaded here by JavaScript -->
+            </div>
+            <button id="quizSubmitBtn" class="quiz-submit-btn">Kirim Jawaban</button>
+            <div id="quizResult" class="quiz-result"></div>
+            <button id="quizResetBtn" class="quiz-reset-btn" style="display:none;">Ulangi Kuis</button>
+        </div>
+
+        <!-- Output Akhir Sesi 1 -->
+        <h2>📦 Output Akhir Sesi 1</h2>
+        <p>Selamat! Anda telah menyelesaikan Sesi 1. Setelah sesi ini, Anda diharapkan memiliki:</p>
         <ul>
-          <li>Studi kasus pendek (COVID-19, Ebola, dll.): Analisis bagaimana pandemi ini memengaruhi komunitas dan respon yang diberikan.</li>
-          <li>Refleksi peran organisasi peserta selama pandemi: Diskusikan peran yang dimainkan organisasi Anda dan pembelajaran yang didapat.</li>
+            <li>Pemahaman dasar PPPR</li>
+            <li>Kesadaran akan pentingnya peran OMS dan komunitas</li>
+            <li>Refleksi awal atas kesiapan dan pembelajaran dari pengalaman pandemi</li>
         </ul>
 
         <div class="navigation-buttons">
-            <button onclick="window.location.href='pelatihan.html'">Kembali ke Roadmap</button>
+            <button onclick="window.location.href='index.html'">Kembali ke Roadmap</button>
             <button onclick="completeSession(1)">Lanjut Sesi 2</button>
         </div>
     </div>
 
+    <footer>
+        Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+    </footer>
+
     <script>
+        // Fungsi untuk memuat status penyelesaian sesi dari localStorage
+        function loadSessionStatus() {
+            return JSON.parse(localStorage.getItem('eLearningSessionStatus')) || {};
+        }
+
+        // Fungsi untuk menyimpan status penyelesaian sesi ke localStorage
+        function saveSessionStatus(status) {
+            localStorage.setItem('eLearningSessionStatus', JSON.stringify(status));
+        }
+
+        // Fungsi untuk menyelesaikan sesi dan melanjutkan ke sesi berikutnya
         function completeSession(sessionId) {
-            let sessionCompletionStatus = JSON.parse(localStorage.getItem('eLearningSessionStatus')) || {};
+            let sessionCompletionStatus = loadSessionStatus();
 
             // Tandai sesi saat ini sebagai selesai
-            sessionCompletionStatus[`session-${sessionId}`].completed = true;
+            sessionCompletionStatus[`session-${sessionId}`] = { completed: true, unlocked: true };
 
             // Aktifkan sesi berikutnya
             const nextSessionNum = sessionId + 1;
-            if (nextSessionNum <= 5) {
-                sessionCompletionStatus[`session-${nextSessionNum}`].unlocked = true;
+            if (nextSessionNum <= 5) { // Asumsi ada 5 sesi total
+                sessionCompletionStatus[`session-${nextSessionNum}`] = { completed: false, unlocked: true };
             }
 
-            localStorage.setItem('eLearningSessionStatus', JSON.stringify(sessionCompletionStatus));
+            saveSessionStatus(sessionCompletionStatus);
 
-            // Kembali ke halaman landing page
-            window.location.href = 'sesi2.html';
+            // Arahkan ke sesi berikutnya atau kembali ke landing page jika sudah sesi terakhir
+            if (nextSessionNum <= 5) {
+                window.location.href = `sesi${nextSessionNum}.html`;
+            } else {
+                window.location.href = 'index.html'; // Kembali ke landing page jika semua sesi selesai
+            }
         }
+
+        /* --- Drag and Drop Game Logic --- */
+        let draggedItem = null;
+        const dragItemsContainer = document.getElementById('dragItems');
+        const dropZonesContainer = document.getElementById('dropZones');
+        const dragDropFeedback = document.getElementById('dragDropFeedback');
+
+        // Store initial HTML content to reset the game
+        const initialDragItemsHTML = dragItemsContainer ? dragItemsContainer.innerHTML : '';
+        const initialDropZonesHTML = dropZonesContainer ? dropZonesContainer.innerHTML : '';
+
+        function setupDragDropListeners() {
+            if (!dragItemsContainer || !dropZonesContainer) return;
+
+            document.querySelectorAll('.draggable').forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    draggedItem = e.target;
+                    e.dataTransfer.setData('text/plain', e.target.dataset.match);
+                    setTimeout(() => {
+                        e.target.style.opacity = '0.5';
+                    }, 0);
+                });
+
+                item.addEventListener('dragend', (e) => {
+                    e.target.style.opacity = '1';
+                    draggedItem = null;
+                });
+            });
+
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault(); // Allow drop
+                    zone.classList.add('hovered');
+                });
+
+                zone.addEventListener('dragleave', (e) => {
+                    zone.classList.remove('hovered');
+                });
+
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('hovered');
+
+                    const droppedMatch = e.dataTransfer.getData('text/plain');
+                    const acceptedMatch = zone.dataset.accept;
+
+                    if (droppedMatch === acceptedMatch && !zone.querySelector('.dropped-item')) {
+                        const droppedItemClone = draggedItem.cloneNode(true);
+                        droppedItemClone.classList.remove('draggable');
+                        droppedItemClone.style.opacity = '1'; // Ensure full opacity
+                        droppedItemClone.style.cursor = 'default';
+
+                        // Create a wrapper for the dropped item to keep original text
+                        const droppedItemWrapper = document.createElement('div');
+                        droppedItemWrapper.classList.add('dropped-item');
+                        droppedItemWrapper.textContent = draggedItem.textContent; // Display original text
+
+                        zone.appendChild(droppedItemWrapper); // Append the text content
+                        draggedItem.remove(); // Remove original draggable item
+
+                        zone.classList.add('correct');
+                        dragDropFeedback.textContent = 'Benar!';
+                        dragDropFeedback.classList.remove('incorrect');
+                        dragDropFeedback.classList.add('correct');
+
+                        // Check if all items are correctly placed
+                        checkAllDragDropCompleted();
+
+                    } else if (droppedMatch !== acceptedMatch) {
+                        dragDropFeedback.textContent = 'Salah, coba lagi!';
+                        dragDropFeedback.classList.remove('correct');
+                        dragDropFeedback.classList.add('incorrect');
+                        zone.classList.add('incorrect'); // Temporarily highlight incorrect drop
+                        setTimeout(() => {
+                            zone.classList.remove('incorrect');
+                        }, 1000);
+                    }
+                });
+            });
+        }
+
+        function checkAllDragDropCompleted() {
+            const allDraggables = document.querySelectorAll('.draggable').length;
+            const allCorrectDrops = document.querySelectorAll('.drop-zone.correct').length;
+
+            if (allDraggables === 0 && allCorrectDrops === 3) { // Assuming 3 draggable items
+                dragDropFeedback.textContent = 'Hebat! Semua sudah cocok!';
+                dragDropFeedback.classList.remove('incorrect');
+                dragDropFeedback.classList.add('correct');
+            }
+        }
+
+        function resetDragDrop() {
+            if (dragItemsContainer && dropZonesContainer) {
+                dragItemsContainer.innerHTML = initialDragItemsHTML;
+                dropZonesContainer.innerHTML = initialDropZonesHTML;
+                document.querySelectorAll('.drop-zone').forEach(zone => {
+                    zone.classList.remove('correct', 'incorrect', 'hovered');
+                    // Remove any previously dropped items
+                    const droppedItem = zone.querySelector('.dropped-item');
+                    if (droppedItem) {
+                        droppedItem.remove();
+                    }
+                });
+                dragDropFeedback.textContent = '';
+                dragDropFeedback.classList.remove('correct', 'incorrect');
+                setupDragDropListeners(); // Re-attach listeners to new elements
+            }
+        }
+
+        /* --- Quiz Logic --- */
+        const quizQuestions = [
+            {
+                question: "Apa tujuan utama dari komponen 'Pencegahan' dalam PPPR?",
+                options: [
+                    "Melakukan tindakan cepat saat wabah muncul",
+                    "Deteksi dini penyakit menular dan pengendalian zoonosis",
+                    "Menyusun rencana tanggap darurat",
+                    "Memulihkan kondisi pasca-wabah"
+                ],
+                answer: "Deteksi dini penyakit menular dan pengendalian zoonosis"
+            },
+            {
+                question: "Salah satu pembelajaran kunci dari pandemi COVID-19 adalah...",
+                options: [
+                    "Pemerintah harus selalu bekerja sendiri dalam respon",
+                    "Ketidakpentingan data transparan",
+                    "Peran vital komunitas dan relawan dalam distribusi informasi dan bantuan",
+                    "Stigma terhadap pasien tidak mempengaruhi efektivitas respon"
+                ],
+                answer: "Peran vital komunitas dan relawan dalam distribusi informasi dan bantuan"
+            },
+            {
+                question: "Manakah yang merupakan karakteristik dari 'Pendekatan Berbasis Masyarakat' dalam kesehatan?",
+                options: [
+                    "Dimulai dari arahan pemerintah pusat",
+                    "Melibatkan masyarakat hanya di tahap evaluasi",
+                    "Meningkatkan kepemilikan dan keberlanjutan intervensi",
+                    "Hanya fokus pada pengobatan medis"
+                ],
+                answer: "Meningkatkan kepemilikan dan keberlanjutan intervensi"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quizContainer');
+        const quizSubmitBtn = document.getElementById('quizSubmitBtn');
+        const quizResult = document.getElementById('quizResult');
+        const quizResetBtn = document.getElementById('quizResetBtn');
+
+        function loadQuiz() {
+            if (!quizContainer) return;
+            quizContainer.innerHTML = ''; // Clear previous questions
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                q.options.forEach((option, optIndex) => {
+                    const label = document.createElement('label');
+                    label.innerHTML = `
+                        <input type="radio" name="question${index}" value="${option}">
+                        ${option}
+                    `;
+                    optionsDiv.appendChild(label);
+                });
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+            quizSubmitBtn.style.display = 'block';
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            quizQuestions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const questionDiv = quizContainer.children[index];
+
+                // Remove previous feedback classes
+                questionDiv.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct', 'incorrect');
+                });
+
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect');
+                        // Highlight correct answer
+                        questionDiv.querySelector(`input[value="${q.answer}"]`).parentElement.classList.add('correct');
+                    }
+                } else {
+                    allAnswered = false;
+                    // Optionally, highlight unanswered questions
+                    questionDiv.style.border = '1px solid var(--danger)';
+                    questionDiv.style.borderRadius = '8px';
+                    questionDiv.style.padding = '0.5rem';
+                    setTimeout(() => {
+                        questionDiv.style.border = 'none';
+                        questionDiv.style.padding = '0';
+                    }, 1500);
+                }
+            });
+
+            if (!allAnswered) {
+                quizResult.textContent = "Mohon jawab semua pertanyaan sebelum mengirim!";
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+                return;
+            }
+
+            quizSubmitBtn.style.display = 'none';
+            quizResetBtn.style.display = 'block';
+
+            if (score === quizQuestions.length) {
+                quizResult.textContent = `Selamat! Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar.`;
+                quizResult.classList.remove('incorrect');
+                quizResult.classList.add('correct');
+            } else {
+                quizResult.textContent = `Anda menjawab ${score} dari ${quizQuestions.length} pertanyaan dengan benar. Coba lagi!`;
+                quizResult.classList.remove('correct');
+                quizResult.classList.add('incorrect');
+            }
+        }
+
+        function resetQuiz() {
+            loadQuiz();
+            quizResult.textContent = '';
+            quizResult.classList.remove('correct', 'incorrect');
+            quizResetBtn.style.display = 'none';
+            quizSubmitBtn.style.display = 'block';
+        }
+
+        // Add event listeners for quiz buttons
+        if (quizSubmitBtn) quizSubmitBtn.addEventListener('click', submitQuiz);
+        if (quizResetBtn) quizResetBtn.addEventListener('click', resetQuiz);
+
+        /* --- Accordion Logic --- */
+        function setupAccordions() {
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+
+                    if (content.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = "0";
+                    }
+                });
+            });
+        }
+
+        // PPPR Cycle Animation positioning (dynamic for responsiveness)
+        function positionCycleItems() {
+            const ppprCycleContainer = document.querySelector('.pppr-cycle-container');
+            if (ppprCycleContainer) {
+                const items = ppprCycleContainer.querySelectorAll('.cycle-item');
+                const numItems = items.length;
+                const radius = ppprCycleContainer.offsetWidth / 2; // Radius based on container width
+
+                items.forEach((item, index) => {
+                    const angle = (360 / numItems) * index;
+                    const x = radius * Math.cos(angle * Math.PI / 180);
+                    const y = radius * Math.sin(angle * Math.PI / 180);
+
+                    // Adjust for item's own size to center it on the circle
+                    item.style.left = `calc(50% + ${x}px - ${item.offsetWidth / 2}px)`;
+                    item.style.top = `calc(50% + ${y}px - ${item.offsetHeight / 2}px)`;
+                });
+            }
+        }
+
+
+        // Initial setup on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupDragDropListeners();
+            loadQuiz();
+            setupAccordions();
+            positionCycleItems(); // Initial positioning
+        });
+
+        // Re-position cycle items on window resize for responsiveness
+        window.addEventListener('resize', positionCycleItems);
     </script>
 </body>
 </html>
