@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pandemic Response 🇮🇩</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Modul Penilaian Mandiri – PPPR</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=wrap" rel="stylesheet" />
   <style>
     :root {
       --primary: #0d9488;
       --secondary: #f0fdfa;
       --accent: #14b8a6;
       --danger: #dc2626;
+      --warning: #facc15;
+      --light: #f8fafc;
+      --success: #22c55e;
+      --info: #3b82f6;
     }
     * {
       box-sizing: border-box;
@@ -36,6 +40,10 @@
       font-size: 1.8rem;
       margin-bottom: 0.2rem;
     }
+    header p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
     .language-toggle {
       position: absolute;
       top: 1rem;
@@ -55,11 +63,173 @@
     .language-toggle:hover {
       background: var(--secondary);
     }
-    .content-placeholder {
-      text-align: center;
-      padding: 4rem 2rem;
-      font-size: 1.25rem;
-      color: #475569;
+    .container {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    .step h2 {
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 0.5rem;
+    }
+    .question {
+      margin-bottom: 1.5rem;
+    }
+    .question label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.6rem;
+      color: #374151;
+    }
+    .question select,
+    .question input[type="number"] {
+      padding: 0.75rem;
+      width: 100%;
+      max-width: 450px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .question select:focus,
+    .question input[type="number"]:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+    }
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2.5rem;
+      gap: 1rem;
+    }
+    .navigation button {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      flex-grow: 1;
+      transition: background-color 0.2s ease;
+    }
+    .navigation button:hover:enabled {
+        background: var(--accent);
+    }
+    .navigation button:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+    .navigation button.submit-btn {
+      background: var(--success);
+    }
+    .navigation button.submit-btn:hover:enabled {
+        background: #15803d;
+    }
+    .results {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-top: 2px solid #e2e8f0;
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+    .results h2 {
+      color: var(--primary);
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .bar {
+      height: 25px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.5s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .recommendation {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      background: #fffbea;
+      border-left: 6px solid var(--warning);
+      color: #92400e;
+      border-radius: 6px;
+    }
+    .recommendation h3 {
+        margin-top: 0;
+        color: #b45309;
+        margin-bottom: 0.5rem;
+    }
+    .recommendation.good {
+      background: #dcfce7;
+      border-left-color: var(--success);
+      color: #166534;
+    }
+    .recommendation.good h3 {
+        color: #14532d;
+    }
+    .recommendation.moderate {
+      background: #eff6ff;
+      border-left-color: var(--info);
+      color: #1e40af;
+    }
+    .recommendation.moderate h3 {
+        color: #1e3a8a;
+    }
+    .recommendation.poor {
+      background: #fee2e2;
+      border-left-color: var(--danger);
+      color: #991b1b;
+    }
+    .recommendation.poor h3 {
+        color: #9f1239;
+    }
+    .sub-section {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .sub-section h3 {
+      color: #4b5563;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .error-message {
+        color: var(--danger);
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: none;
+    }
+    footer {
+        text-align:center;
+        padding: 1rem;
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-top: 3rem;
+        background-color: #e2e8f0;
     }
     @media (max-width: 768px) {
       .language-toggle {
@@ -68,9 +238,19 @@
         padding: 0.4rem 0.6rem;
         font-size: 0.85rem;
       }
-      .content-placeholder {
-        font-size: 1.1rem;
-        padding: 3rem 1rem;
+      header h1 {
+        font-size: 1.5rem;
+      }
+      header p {
+        font-size: 0.8rem;
+      }
+      .container {
+        margin: 1rem auto;
+        padding: 1rem;
+      }
+      .navigation button {
+        padding: 0.7rem 1rem;
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -80,45 +260,746 @@
     <button class="language-toggle" onclick="toggleLanguage()">
       <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
     </button>
-    <h1 id="title"><i class="fas fa-virus-covid"></i> Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)</h1>
-    <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
+    <h1 id="header-title"><i class="fas fa-virus-covid"></i> Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)</h1>
+    <p id="header-subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
   </header>
 
   <main>
-    <div class="content-placeholder" id="development-text">Halaman Ini Sedang Dikembangkan</div>
+    <div class="container">
+      <form id="assessmentForm">
+        <div class="step active" id="step-1">
+          <h2 data-section-title="1. Kesiapsiagaan SDM" data-section-title-en="1. Human Resources Preparedness"></h2>
+          <div class="question">
+            <label for="sdm_1" data-question-id="sdm_1_q" data-question-en="Are all core staff/volunteers fully vaccinated?"></label>
+            <select name="sdm_1" id="sdm_1">
+              <option value="" data-lang-key="sdm_1_option_default"></option>
+              <option value="2" data-lang-key="sdm_1_option_2"></option>
+              <option value="1" data-lang-key="sdm_1_option_1"></option>
+              <option value="0" data-lang-key="sdm_1_option_0"></option>
+            </select>
+            <div class="error-message" id="error-sdm_1" data-lang-key="sdm_1_error"></div>
+          </div>
+          <div class="question">
+            <label for="sdm_2" data-question-id="sdm_2_q" data-question-en="What percentage of staff are trained in First Aid and pandemic protocols?"></label>
+            <input type="number" name="sdm_2" id="sdm_2" min="0" max="100" placeholder="Contoh: 75" />
+            <div class="error-message" id="error-sdm_2" data-lang-key="sdm_2_error"></div>
+          </div>
+          <div class="question">
+            <label for="sdm_3" data-question-id="sdm_3_q" data-question-en="Is there a shift system to reduce the risk of transmission?"></label>
+            <select name="sdm_3" id="sdm_3">
+              <option value="" data-lang-key="sdm_3_option_default"></option>
+              <option value="2" data-lang-key="sdm_3_option_2"></option>
+              <option value="1" data-lang-key="sdm_3_option_1"></option>
+              <option value="0" data-lang-key="sdm_3_option_0"></option>
+            </select>
+            <div class="error-message" id="error-sdm_3" data-lang-key="sdm_3_error"></div>
+          </div>
+        </div>
+        <div class="step" id="step-2">
+          <h2 data-section-title="2. Kesiapsiagaan Logistik & Infrastruktur" data-section-title-en="2. Logistics & Infrastructure Preparedness"></h2>
+          <div class="question">
+            <label for="logistik_1" data-question-id="logistik_1_q" data-question-en="Is there adequate stock of PPE (masks, gloves, etc.)?"></label>
+            <select name="logistik_1" id="logistik_1">
+              <option value="" data-lang-key="logistik_1_option_default"></option>
+              <option value="2" data-lang-key="logistik_1_option_2"></option>
+              <option value="1" data-lang-key="logistik_1_option_1"></option>
+              <option value="0" data-lang-key="logistik_1_option_0"></option>
+            </select>
+            <div class="error-message" id="error-logistik_1" data-lang-key="logistik_1_error"></div>
+          </div>
+          <div class="question">
+            <label for="logistik_2" data-question-id="logistik_2_q" data-question-en="Is there a routine disinfection plan for the office/shelter?"></label>
+            <select name="logistik_2" id="logistik_2">
+              <option value="" data-lang-key="logistik_2_option_default"></option>
+              <option value="2" data-lang-key="logistik_2_option_2"></option>
+              <option value="1" data-lang-key="logistik_2_option_1"></option>
+              <option value="0" data-lang-key="logistik_2_option_0"></option>
+            </select>
+            <div class="error-message" id="error-logistik_2" data-lang-key="logistik_2_error"></div>
+          </div>
+          <div class="question">
+            <label for="logistik_3" data-question-id="logistik_3_q" data-question-en="Is there adequate access to clean water and sanitation facilities?"></label>
+            <select name="logistik_3" id="logistik_3">
+              <option value="" data-lang-key="logistik_3_option_default"></option>
+              <option value="2" data-lang-key="logistik_3_option_2"></option>
+              <option value="1" data-lang-key="logistik_3_option_1"></option>
+              <option value="0" data-lang-key="logistik_3_option_0"></option>
+            </select>
+            <div class="error-message" id="error-logistik_3" data-lang-key="logistik_3_error"></div>
+          </div>
+        </div>
+        <div class="step" id="step-3">
+          <h2 data-section-title="3. Kesiapsiagaan Program" data-section-title-en="3. Program Preparedness"></h2>
+          <div class="question">
+            <label for="program_1" data-question-id="program_1_q" data-question-en="Do core programs have emergency plans if the pandemic worsens?"></label>
+            <select name="program_1" id="program_1">
+              <option value="" data-lang-key="program_1_option_default"></option>
+              <option value="2" data-lang-key="program_1_option_2"></option>
+              <option value="1" data-lang-key="program_1_option_1"></option>
+              <option value="0" data-lang-key="program_1_option_0"></option>
+            </select>
+            <div class="error-message" id="error-program_1" data-lang-key="program_1_error"></div>
+          </div>
+          <div class="question">
+            <label for="program_2" data-question-id="program_2_q" data-question-en="How is the continuity of essential services ensured during lockdown?"></label>
+            <select name="program_2" id="program_2">
+              <option value="" data-lang-key="program_2_option_default"></option>
+              <option value="2" data-lang-key="program_2_option_2"></option>
+              <option value="1" data-lang-key="program_2_option_1"></option>
+              <option value="0" data-lang-key="program_2_option_0"></option>
+            </select>
+            <div class="error-message" id="error-program_2" data-lang-key="program_2_error"></div>
+          </div>
+          <div class="question">
+            <label for="program_3" data-question-id="program_3_q" data-question-en="Have operational adjustments been simulated during emergencies?"></label>
+            <select name="program_3" id="program_3">
+              <option value="" data-lang-key="program_3_option_default"></option>
+              <option value="2" data-lang-key="program_3_option_2"></option>
+              <option value="1" data-lang-key="program_3_option_1"></option>
+              <option value="0" data-lang-key="program_3_option_0"></option>
+            </select>
+            <div class="error-message" id="error-program_3" data-lang-key="program_3_error"></div>
+          </div>
+        </div>
+        <div class="step" id="step-4">
+          <h2 data-section-title="4. Kesiapsiagaan Keuangan" data-section-title-en="4. Financial Preparedness"></h2>
+          <div class="question">
+            <label for="finance_1" data-question-id="finance_1_q" data-question-en="Is emergency funding available for pandemic response?"></label>
+            <select name="finance_1" id="finance_1">
+              <option value="" data-lang-key="finance_1_option_default"></option>
+              <option value="2" data-lang-key="finance_1_option_2"></option>
+              <option value="1" data-lang-key="finance_1_option_1"></option>
+              <option value="0" data-lang-key="finance_1_option_0"></option>
+            </select>
+            <div class="error-message" id="error-finance_1" data-lang-key="finance_1_error"></div>
+          </div>
+          <div class="question">
+            <label for="finance_2" data-question-id="finance_2_q" data-question-en="Is there a strategy for diversifying funding sources?"></label>
+            <select name="finance_2" id="finance_2">
+              <option value="" data-lang-key="finance_2_option_default"></option>
+              <option value="2" data-lang-key="finance_2_option_2"></option>
+              <option value="1" data-lang-key="finance_2_option_1"></option>
+              <option value="0" data-lang-key="finance_2_option_0"></option>
+            </select>
+            <div class="error-message" id="error-finance_2" data-lang-key="finance_2_error"></div>
+          </div>
+          <div class="question">
+            <label for="finance_3" data-question-id="finance_3_q" data-question-en="Has emergency funding been used and its effectiveness evaluated?"></label>
+            <select name="finance_3" id="finance_3">
+              <option value="" data-lang-key="finance_3_option_default"></option>
+              <option value="2" data-lang-key="finance_3_option_2"></option>
+              <option value="1" data-lang-key="finance_3_option_1"></option>
+              <option value="0" data-lang-key="finance_3_option_0"></option>
+            </select>
+            <div class="error-message" id="error-finance_3" data-lang-key="finance_3_error"></div>
+          </div>
+        </div>
+        <div class="step" id="step-5">
+          <h2 data-section-title="5. Penilaian Kapasitas Kemitraan" data-section-title-en="5. Partnership Capacity Assessment"></h2>
+
+          <div class="sub-section">
+            <h3 data-sub-section-title="Kemitraan Publik" data-sub-section-title-en="Public Partnerships"></h3>
+            <div class="question">
+              <label for="partnership_public_1" data-question-id="partnership_public_1_q" data-question-en="How regularly is coordination done with the Health Department/BPBD?"></label>
+              <select name="partnership_public_1" id="partnership_public_1">
+                <option value="" data-lang-key="partnership_public_1_option_default"></option>
+                <option value="2" data-lang-key="partnership_public_1_option_2"></option>
+                <option value="1" data-lang-key="partnership_public_1_option_1"></option>
+                <option value="0" data-lang-key="partnership_public_1_option_0"></option>
+              </select>
+              <div class="error-message" id="error-partnership_public_1" data-lang-key="partnership_public_1_error"></div>
+            </div>
+            <div class="question">
+              <label for="partnership_public_2" data-question-id="partnership_public_2_q" data-question-en="Are emergency communication channels available with local government?"></label>
+              <select name="partnership_public_2" id="partnership_public_2">
+                <option value="" data-lang-key="partnership_public_2_option_default"></option>
+                <option value="2" data-lang-key="partnership_public_2_option_2"></option>
+                <option value="1" data-lang-key="partnership_public_2_option_1"></option>
+                <option value="0" data-lang-key="partnership_public_2_option_0"></option>
+              </select>
+              <div class="error-message" id="error-partnership_public_2" data-lang-key="partnership_public_2_error"></div>
+            </div>
+          </div>
+
+          <div class="sub-section">
+            <h3 data-sub-section-title="Kemitraan Swasta" data-sub-section-title-en="Private Partnerships"></h3>
+            <div class="question">
+              <label for="partnership_private_1" data-question-id="partnership_private_1_q" data-question-en="Does the organization have key contacts in the private sector (logistics, pharma, tech)?"></label>
+              <select name="partnership_private_1" id="partnership_private_1">
+                <option value="" data-lang-key="partnership_private_1_option_default"></option>
+                <option value="2" data-lang-key="partnership_private_1_option_2"></option>
+                <option value="1" data-lang-key="partnership_private_1_option_1"></option>
+                <option value="0" data-lang-key="partnership_private_1_option_0"></option>
+              </select>
+              <div class="error-message" id="error-partnership_private_1" data-lang-key="partnership_private_1_error"></div>
+            </div>
+            <div class="question">
+              <label for="partnership_private_2" data-question-id="partnership_private_2_q" data-question-en="Is there an MoU or agreement with private partners for pandemic support?"></label>
+              <select name="partnership_private_2" id="partnership_private_2">
+                <option value="" data-lang-key="partnership_private_2_option_default"></option>
+                <option value="2" data-lang-key="partnership_private_2_option_2"></option>
+                <option value="1" data-lang-key="partnership_private_2_option_1"></option>
+                <option value="0" data-lang-key="partnership_private_2_option_0"></option>
+              </select>
+              <div class="error-message" id="error-partnership_private_2" data-lang-key="partnership_private_2_error"></div>
+            </div>
+          </div>
+
+          <div class="sub-section">
+            <h3 data-sub-section-title="Kemitraan Komunitas" data-sub-section-title-en="Community Partnerships"></h3>
+            <div class="question">
+              <label for="partnership_community_1" data-question-id="partnership_community_1_q" data-question-en="Is there a network with local community organizations?"></label>
+              <select name="partnership_community_1" id="partnership_community_1">
+                <option value="" data-lang-key="partnership_community_1_option_default"></option>
+                <option value="2" data-lang-key="partnership_community_1_option_2"></option>
+                <option value="1" data-lang-key="partnership_community_1_option_1"></option>
+                <option value="0" data-lang-key="partnership_community_1_option_0"></option>
+              </select>
+              <div class="error-message" id="error-partnership_community_1" data-lang-key="partnership_community_1_error"></div>
+            </div>
+            <div class="question">
+              <label for="partnership_community_2" data-question-id="partnership_community_2_q" data-question-en="How does the organization share information and resources with other communities?"></label>
+              <select name="partnership_community_2" id="partnership_community_2">
+                <option value="" data-lang-key="partnership_community_2_option_default"></option>
+                <option value="2" data-lang-key="partnership_community_2_option_2"></option>
+                <option value="1" data-lang-key="partnership_community_2_option_1"></option>
+                <option value="0" data-lang-key="partnership_community_2_option_0"></option>
+              </select>
+              <div class="error-message" id="error-partnership_community_2" data-lang-key="partnership_community_2_error"></div>
+            </div>
+          </div>
+        </div> <div class="navigation">
+          <button type="button" id="prevBtn" data-lang-key="prevButton" disabled></button>
+          <button type="button" id="nextBtn" data-lang-key="nextButton"></button>
+          <button type="submit" id="submitBtn" class="submit-btn" style="display: none;" data-lang-key="submitButton"></button>
+        </div>
+      </form>
+
+      <div id="resultsSection" class="results" style="display: none;">
+        <h2 data-lang-key="resultsTitle"></h2>
+        <p><span data-lang-key="totalScoreText"></span> <strong id="totalScore">0</strong> <span data-lang-key="outOf"></span> <strong id="maxScore"></strong></p>
+        <div class="bar">
+          <div class="fill" id="progressBar"></div>
+        </div>
+        <div class="recommendation" id="recommendation">
+          <h3 data-lang-key="recommendationTitle"></h3>
+          <p id="recommendationText"></p>
+        </div>
+        <button type="button" id="restartBtn" class="navigation button" style="width: auto; margin-top: 1rem;" data-lang-key="restartButton"></button>
+      </div>
+    </div>
   </main>
+
+  <footer>
+    Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
+  </footer>
 
   <script>
     let currentLang = 'id';
 
     const translations = {
       en: {
-        title: "Pandemic Prevention, Preparedness and Response (PPPR)",
-        subtitle: "Toolkit for Civil Society Organizations and Communities",
+        headerTitle: "Pandemic Prevention, Preparedness and Response (PPPR)",
+        headerSubtitle: "Toolkit for Civil Society Organizations and Communities",
         langLabel: "EN",
-        development: "This page is under development"
+        // H2 Section Titles
+        "1. Kesiapsiagaan SDM": "1. Human Resources Preparedness",
+        "2. Kesiapsiagaan Logistik & Infrastruktur": "2. Logistics & Infrastructure Preparedness",
+        "3. Kesiapsiagaan Program": "3. Program Preparedness",
+        "4. Kesiapsiagaan Keuangan": "4. Financial Preparedness",
+        "5. Penilaian Kapasitas Kemitraan": "5. Partnership Capacity Assessment",
+        // H3 Sub-section Titles
+        "Kemitraan Publik": "Public Partnerships",
+        "Kemitraan Swasta": "Private Partnerships",
+        "Kemitraan Komunitas": "Community Partnerships",
+
+        // Question Labels (new structure with _q suffix)
+        sdm_1_q: "Are all core staff/volunteers fully vaccinated?",
+        sdm_2_q: "What percentage of staff are trained in First Aid and pandemic protocols?",
+        sdm_3_q: "Is there a shift system to reduce the risk of transmission?",
+        logistik_1_q: "Is there adequate stock of PPE (masks, gloves, etc.)?",
+        logistik_2_q: "Is there a routine disinfection plan for the office/shelter?",
+        logistik_3_q: "Is there adequate access to clean water and sanitation facilities?",
+        program_1_q: "Do core programs have emergency plans if the pandemic worsens?",
+        program_2_q: "How is the continuity of essential services ensured during lockdown?",
+        program_3_q: "Have operational adjustments been simulated during emergencies?",
+        finance_1_q: "Is emergency funding available for pandemic response?",
+        finance_2_q: "Is there a strategy for diversifying funding sources?",
+        finance_3_q: "Has emergency funding been used and its effectiveness evaluated?",
+        partnership_public_1_q: "How regularly is coordination done with the Health Department/BPBD?",
+        partnership_public_2_q: "Are emergency communication channels available with local government?",
+        partnership_private_1_q: "Does the organization have key contacts in the private sector (logistics, pharma, tech)?",
+        partnership_private_2_q: "Is there an MoU or agreement with private partners for pandemic support?",
+        partnership_community_1_q: "Is there a network with local community organizations?",
+        partnership_community_2_q: "How does the organization share information and resources with other communities?",
+
+        // Option values
+        sdm_1_option_default: "Select an answer",
+        sdm_1_option_2: "Yes",
+        sdm_1_option_1: "Partially",
+        sdm_1_option_0: "No",
+        sdm_1_error: "Please select an answer.",
+        sdm_2_error: "Enter a percentage between 0-100.",
+        sdm_3_option_default: "Select an answer",
+        sdm_3_option_2: "Yes",
+        sdm_3_option_1: "Partially",
+        sdm_3_option_0: "No",
+        sdm_3_error: "Please select an answer.",
+
+        logistik_1_option_default: "Select an answer",
+        logistik_1_option_2: "Yes",
+        logistik_1_option_1: "Partially",
+        logistik_1_option_0: "No",
+        logistik_1_error: "Please select an answer.",
+        logistik_2_option_default: "Select an answer",
+        logistik_2_option_2: "Yes",
+        logistik_2_option_1: "Sometimes",
+        logistik_2_option_0: "No",
+        logistik_2_error: "Please select an answer.",
+        logistik_3_option_default: "Select an answer",
+        logistik_3_option_2: "Yes",
+        logistik_3_option_1: "Partially",
+        logistik_3_option_0: "No",
+        logistik_3_error: "Please select an answer.",
+
+        program_1_option_default: "Select an answer",
+        program_1_option_2: "Yes",
+        program_1_option_1: "Partially",
+        program_1_option_0: "No",
+        program_1_error: "Please select an answer.",
+        program_2_option_default: "Select an answer",
+        program_2_option_2: "Designed in detail",
+        program_2_option_1: "Some services designed",
+        program_2_option_0: "No plan yet",
+        program_2_error: "Please select an answer.",
+        program_3_option_default: "Select an answer",
+        program_3_option_2: "Done and documented",
+        program_3_option_1: "Done occasionally, not routinely",
+        program_3_option_0: "Never done",
+        program_3_error: "Please select an answer.",
+
+        finance_1_option_default: "Select an answer",
+        finance_1_option_2: "Yes, available and allocated",
+        finance_1_option_1: "Available but limited",
+        finance_1_option_0: "Not available",
+        finance_1_error: "Please select an answer.",
+        finance_2_option_default: "Select an answer",
+        finance_2_option_2: "Written strategy in place",
+        finance_2_option_1: "In design process",
+        finance_2_option_0: "Not yet",
+        finance_2_error: "Please select an answer.",
+        finance_3_option_default: "Select an answer",
+        finance_3_option_2: "Used and evaluated",
+        finance_3_option_1: "Used but not yet evaluated",
+        finance_3_option_0: "Never used",
+        finance_3_error: "Please select an answer.",
+
+        partnership_public_1_option_default: "Select an answer",
+        partnership_public_1_option_2: "Regularly with documentation",
+        partnership_public_1_option_1: "Occasionally without formal documentation",
+        partnership_public_1_option_0: "Never",
+        partnership_public_1_error: "Please select an answer.",
+        partnership_public_2_option_default: "Select an answer",
+        partnership_public_2_option_2: "Yes, actively used",
+        partnership_public_2_option_1: "Available but rarely used",
+        partnership_public_2_option_0: "Not available",
+        partnership_public_2_error: "Please select an answer.",
+
+        partnership_private_1_option_default: "Select an answer",
+        partnership_private_1_option_2: "Yes, active contacts exist",
+        partnership_private_1_option_1: "Exist but not active",
+        partnership_private_1_option_0: "None",
+        partnership_private_1_error: "Please select an answer.",
+        partnership_private_2_option_default: "Select an answer",
+        partnership_private_2_option_2: "Active MoU in place",
+        partnership_private_2_option_1: "In drafting process",
+        partnership_private_2_option_0: "None yet",
+        partnership_private_2_error: "Please select an answer.",
+
+        partnership_community_1_option_default: "Select an answer",
+        partnership_community_1_option_2: "Active and regularly interacting network",
+        partnership_community_1_option_1: "Exists but not active",
+        partnership_community_1_option_0: "No network",
+        partnership_community_1_error: "Please select an answer.",
+        partnership_community_2_option_default: "Select an answer",
+        partnership_community_2_option_2: "Through collaborative system/platform",
+        partnership_community_2_option_1: "Through informal communication",
+        partnership_community_2_option_0: "No sharing system yet",
+        partnership_community_2_error: "Please select an answer.",
+
+        prevButton: "Previous",
+        nextButton: "Next",
+        submitButton: "Submit Assessment",
+        resultsTitle: "Self-Assessment Results",
+        totalScoreText: "Your Total Score:",
+        outOf: "out of",
+        recommendationTitle: "Recommendation:",
+        restartButton: "Restart Assessment",
+        rec_poor_0_20: "Your organization has a very low level of preparedness. The top priority is to develop emergency plans and train staff. Immediately conduct a thorough audit.",
+        rec_poor_21_40: "Your organization's level of preparedness is still lacking. Focus on improving logistics, infrastructure, and program development. Consider seeking expert assistance.",
+        rec_moderate_41_60: "Your organization has moderate preparedness. Some areas are good, but many gaps need to be filled. Strengthen financial aspects and partnerships.",
+        rec_good_61_80: "Your organization's preparedness is good. Continue to improve HR training and ensure all documents and simulations are well-documented. Maintain active communication with partners.",
+        rec_good_81_80: "Your organization's preparedness is good. Continue to improve HR training and ensure all documents and simulations are well-documented. Maintain active communication with partners.", // Duplicate key, fixed below
+        rec_good_81_100: "Your organization is very well prepared for a pandemic. Maintain this high standard and continue to conduct regular evaluations to ensure ongoing preparedness. Share your best practices."
       },
       id: {
-        title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
-        subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
+        headerTitle: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
+        headerSubtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
         langLabel: "ID",
-        development: "Halaman Ini Sedang Dikembangkan"
+        // H2 Section Titles
+        "1. Kesiapsiagaan SDM": "1. Kesiapsiagaan SDM",
+        "2. Kesiapsiagaan Logistik & Infrastruktur": "2. Kesiapsiagaan Logistik & Infrastruktur",
+        "3. Kesiapsiagaan Program": "3. Kesiapsiagaan Program",
+        "4. Kesiapsiagaan Keuangan": "4. Kesiapsiagaan Keuangan",
+        "5. Penilaian Kapasitas Kemitraan": "5. Penilaian Kapasitas Kemitraan",
+        // H3 Sub-section Titles
+        "Kemitraan Publik": "Kemitraan Publik",
+        "Kemitraan Swasta": "Kemitraan Swasta",
+        "Kemitraan Komunitas": "Kemitraan Komunitas",
+
+        // Question Labels (new structure with _q suffix)
+        sdm_1_q: "Apakah semua staf/relawan inti sudah divaksin lengkap?",
+        sdm_2_q: "Berapa persen staf yang terlatih dalam P3K dan protokol pandemi?",
+        sdm_3_q: "Apakah ada sistem shift untuk mengurangi risiko penularan?",
+        logistik_1_q: "Apakah ada stok APD (masker, sarung tangan, dsb) yang memadai?",
+        logistik_2_q: "Apakah ada rencana disinfeksi rutin di kantor/shelter?",
+        logistik_3_q: "Apakah tersedia akses ke air bersih dan fasilitas sanitasi yang memadai?",
+        program_1_q: "Apakah program inti memiliki rencana darurat jika pandemi memburuk?",
+        program_2_q: "Bagaimana kelangsungan layanan esensial dijamin selama lockdown?",
+        program_3_q: "Apakah sudah dilakukan simulasi penyesuaian operasional saat darurat?",
+        finance_1_q: "Apakah tersedia dana darurat untuk respons pandemi?",
+        finance_2_q: "Apakah ada strategi diversifikasi sumber pendanaan?",
+        finance_3_q: "Apakah dana darurat pernah digunakan dan dievaluasi efektivitasnya?",
+        partnership_public_1_q: "Seberapa rutin koordinasi dilakukan dengan Dinas Kesehatan/BPBD?",
+        partnership_public_2_q: "Apakah tersedia saluran komunikasi darurat dengan pemerintah daerah?",
+        partnership_private_1_q: "Apakah organisasi memiliki kontak penting di sektor swasta (logistik, farmasi, teknologi)?",
+        partnership_private_2_q: "Apakah tersedia MoU atau kesepahaman dengan mitra swasta untuk dukungan saat pandemi?",
+        partnership_community_1_q: "Apakah ada jaringan dengan organisasi masyarakat lokal?",
+        partnership_community_2_q: "Bagaimana cara organisasi berbagi informasi dan sumber daya dengan komunitas lain?",
+
+        // Option values
+        sdm_1_option_default: "Pilih jawaban",
+        sdm_1_option_2: "Ya",
+        sdm_1_option_1: "Sebagian",
+        sdm_1_option_0: "Tidak",
+        sdm_1_error: "Pilih salah satu jawaban.",
+        sdm_2_error: "Masukkan persentase antara 0-100.",
+        sdm_3_option_default: "Pilih jawaban",
+        sdm_3_option_2: "Ya",
+        sdm_3_option_1: "Sebagian",
+        sdm_3_option_0: "Tidak",
+        sdm_3_error: "Pilih salah satu jawaban.",
+
+        logistik_1_option_default: "Pilih jawaban",
+        logistik_1_option_2: "Ya",
+        logistik_1_option_1: "Sebagian",
+        logistik_1_option_0: "Tidak",
+        logistik_1_error: "Pilih salah satu jawaban.",
+        logistik_2_option_default: "Pilih jawaban",
+        logistik_2_option_2: "Ya",
+        logistik_2_option_1: "Kadang-kadang",
+        logistik_2_option_0: "Tidak",
+        logistik_2_error: "Pilih salah satu jawaban.",
+        logistik_3_option_default: "Pilih jawaban",
+        logistik_3_option_2: "Ya",
+        logistik_3_option_1: "Sebagian",
+        logistik_3_option_0: "Tidak",
+        logistik_3_error: "Pilih salah satu jawaban.",
+
+        program_1_option_default: "Pilih jawaban",
+        program_1_option_2: "Ya",
+        program_1_option_1: "Sebagian",
+        program_1_option_0: "Tidak",
+        program_1_error: "Pilih salah satu jawaban.",
+        program_2_option_default: "Pilih jawaban",
+        program_2_option_2: "Telah dirancang dengan detail",
+        program_2_option_1: "Sebagian layanan dirancang",
+        program_2_option_0: "Belum ada rencana",
+        program_2_error: "Pilih salah satu jawaban.",
+        program_3_option_default: "Pilih jawaban",
+        program_3_option_2: "Sudah dan didokumentasikan",
+        program_3_option_1: "Pernah dilakukan tidak rutin",
+        program_3_option_0: "Belum pernah dilakukan",
+        program_3_error: "Pilih salah satu jawaban.",
+
+        finance_1_option_default: "Pilih jawaban",
+        finance_1_option_2: "Ya, tersedia dan teralokasi",
+        finance_1_option_1: "Ada namun terbatas",
+        finance_1_option_0: "Tidak tersedia",
+        finance_1_error: "Pilih salah satu jawaban.",
+        finance_2_option_default: "Pilih jawaban",
+        finance_2_option_2: "Sudah ada strategi tertulis",
+        finance_2_option_1: "Sedang dirancang",
+        finance_2_option_0: "Belum ada",
+        finance_2_error: "Pilih salah satu jawaban.",
+        finance_3_option_default: "Pilih jawaban",
+        finance_3_option_2: "Sudah digunakan dan dievaluasi",
+        finance_3_option_1: "Pernah digunakan tapi belum dievaluasi",
+        finance_3_option_0: "Belum pernah digunakan",
+        finance_3_error: "Pilih salah satu jawaban.",
+
+        partnership_public_1_option_default: "Pilih jawaban",
+        partnership_public_1_option_2: "Secara berkala dengan dokumentasi",
+        partnership_public_1_option_1: "Sesekali tanpa dokumentasi formal",
+        partnership_public_1_option_0: "Tidak pernah",
+        partnership_public_1_error: "Pilih salah satu jawaban.",
+        partnership_public_2_option_default: "Pilih jawaban",
+        partnership_public_2_option_2: "Ya, aktif digunakan",
+        partnership_public_2_option_1: "Ada tapi jarang digunakan",
+        partnership_public_2_option_0: "Tidak tersedia",
+        partnership_public_2_error: "Pilih salah satu jawaban.",
+
+        partnership_private_1_option_default: "Pilih jawaban",
+        partnership_private_1_option_2: "Ya, sudah ada kontak aktif",
+        partnership_private_1_option_1: "Ada namun belum aktif",
+        partnership_private_1_option_0: "Tidak ada",
+        partnership_private_1_error: "Pilih salah satu jawaban.",
+        partnership_private_2_option_default: "Pilih jawaban",
+        partnership_private_2_option_2: "Sudah ada MoU aktif",
+        partnership_private_2_option_1: "Dalam proses penyusunan",
+        partnership_private_2_option_0: "Belum ada",
+        partnership_private_2_error: "Pilih salah satu jawaban.",
+
+        partnership_community_1_option_default: "Pilih jawaban",
+        partnership_community_1_option_2: "Jaringan aktif dan rutin berinteraksi",
+        partnership_community_1_option_1: "Ada namun tidak aktif",
+        partnership_community_1_option_0: "Tidak ada jaringan",
+        partnership_community_1_error: "Pilih salah satu jawaban.",
+        partnership_community_2_option_default: "Pilih jawaban",
+        partnership_community_2_option_2: "Melalui sistem/platform kolaboratif",
+        partnership_community_2_option_1: "Melalui komunikasi informal",
+        partnership_community_2_option_0: "Belum ada sistem berbagi",
+        partnership_community_2_error: "Pilih salah satu jawaban.",
+
+        prevButton: "Sebelumnya",
+        nextButton: "Selanjutnya",
+        submitButton: "Submit Penilaian",
+        resultsTitle: "Hasil Penilaian Mandiri",
+        totalScoreText: "Skor Total Anda:",
+        outOf: "dari",
+        recommendationTitle: "Rekomendasi:",
+        restartButton: "Mulai Ulang Penilaian",
+        rec_poor_0_20: "Organisasi Anda memiliki tingkat kesiapsiagaan yang sangat rendah. Prioritas utama adalah mengembangkan rencana darurat dan melatih staf. Segera lakukan audit menyeluruh.",
+        rec_poor_21_40: "Tingkat kesiapsiagaan organisasi Anda masih kurang. Fokus pada peningkatan logistik, infrastruktur, dan pengembangan program. Pertimbangkan untuk mencari bantuan ahli.",
+        rec_moderate_41_60: "Organisasi Anda memiliki kesiapsiagaan moderat. Ada beberapa area yang sudah baik, namun banyak celah yang perlu diisi. Perkuat aspek keuangan dan kemitraan.",
+        rec_good_61_80: "Kesiapsiagaan organisasi Anda baik. Terus tingkatkan pelatihan SDM dan pastikan semua dokumen serta simulasi telah terdokumentasi dengan baik. Jaga komunikasi aktif dengan mitra.",
+        rec_good_81_100: "Organisasi Anda sangat siap menghadapi pandemi. Pertahankan standar tinggi ini dan terus lakukan evaluasi rutin untuk memastikan kesiapsiagaan berkelanjutan. Bagikan praktik terbaik Anda."
       }
     };
 
+    function applyTranslations(lang) {
+        const t = translations[lang];
+
+        // Translate header elements
+        document.getElementById('header-title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.headerTitle;
+        document.getElementById('header-subtitle').textContent = t.headerSubtitle;
+        document.getElementById('lang-label').textContent = t.langLabel;
+
+        // Translate H2 titles using data-section-title and data-section-title-en
+        document.querySelectorAll('h2[data-section-title]').forEach(el => {
+            el.textContent = el.dataset[lang === 'id' ? 'sectionTitle' : 'sectionTitleEn'];
+        });
+
+        // Translate H3 titles using data-sub-section-title and data-sub-section-title-en
+        document.querySelectorAll('h3[data-sub-section-title]').forEach(el => {
+            el.textContent = el.dataset[lang === 'id' ? 'subSectionTitle' : 'subSectionTitleEn'];
+        });
+
+        // Translate question labels using data-question-id and data-question-en
+        document.querySelectorAll('label[data-question-id]').forEach(el => {
+            const questionKey = el.dataset[lang === 'id' ? 'questionId' : 'questionEn'];
+            // If the key exists in translations, use it. Otherwise, use the data attribute directly (fallback)
+            el.textContent = t[questionKey] || (lang === 'id' ? el.dataset.questionId : el.dataset.questionEn);
+        });
+
+        // Translate elements using data-lang-key attribute (for options, buttons, error messages, and spans)
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+            const key = el.dataset.langKey;
+            if (t[key]) {
+                if (el.tagName === 'OPTION' || el.tagName === 'BUTTON' || el.tagName === 'SPAN' || el.classList.contains('error-message')) {
+                    el.textContent = t[key];
+                }
+            }
+        });
+
+        // Re-apply recommendation text based on current score and new language if results are visible
+        if (resultsSection.style.display !== 'none') {
+            const currentScore = parseInt(totalScoreSpan.textContent);
+            const currentPercentage = (totalMaxScore === 0) ? 0 : (currentScore / totalMaxScore) * 100;
+            updateRecommendationText(currentPercentage);
+        }
+    }
+
     function toggleLanguage() {
       currentLang = currentLang === 'id' ? 'en' : 'id';
-      const t = translations[currentLang];
-
-      document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
-      document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('lang-label').textContent = t.langLabel;
-      document.getElementById('development-text').textContent = t.development;
+      applyTranslations(currentLang);
     }
-  </script>
 
-  <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
-  Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
-</footer>
+    const form = document.getElementById('assessmentForm');
+    const steps = Array.from(document.querySelectorAll('.step'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const resultsSection = document.getElementById('resultsSection');
+    const totalScoreSpan = document.getElementById('totalScore');
+    const maxScoreSpan = document.getElementById('maxScore');
+    const progressBar = document.getElementById('progressBar');
+    const recommendationDiv = document.getElementById('recommendation');
+    const recommendationText = document.getElementById('recommendationText');
+    const restartBtn = document.getElementById('restartBtn');
+
+    let currentStep = 0;
+    let totalMaxScore = 0;
+
+    const recommendationsData = [
+        { range: [0, 20], class: "poor", textKey: "rec_poor_0_20" },
+        { range: [21, 40], class: "poor", textKey: "rec_poor_21_40" },
+        { range: [41, 60], class: "moderate", textKey: "rec_moderate_41_60" },
+        { range: [61, 80], class: "good", textKey: "rec_good_61_80" },
+        { range: [81, 100], class: "good", textKey: "rec_good_81_100" }
+    ];
+
+    function showStep(stepIndex) {
+      steps.forEach((step, index) => {
+        step.classList.toggle('active', index === stepIndex);
+      });
+      prevBtn.disabled = stepIndex === 0;
+      nextBtn.style.display = (stepIndex === steps.length - 1) ? 'none' : 'inline-block';
+      submitBtn.style.display = (stepIndex === steps.length - 1) ? 'inline-block' : 'none';
+      resultsSection.style.display = 'none'; // Hide results when navigating steps
+      form.style.display = 'block'; // Show form
+    }
+
+    function validateStep(stepIndex) {
+        let isValid = true;
+        const currentStepElement = steps[stepIndex];
+        const inputs = currentStepElement.querySelectorAll('select, input[type="number"]');
+
+        inputs.forEach(input => {
+            const errorElement = document.getElementById(`error-${input.id}`);
+            if (errorElement) {
+                errorElement.style.display = 'none'; // Hide previous errors
+            }
+
+            if (input.tagName === 'SELECT') {
+                if (input.value === "") {
+                    isValid = false;
+                    if (errorElement) errorElement.style.display = 'block';
+                }
+            } else if (input.type === 'number') {
+                const value = input.value.trim();
+                if (value === "" || isNaN(value) || parseInt(value) < parseInt(input.min) || parseInt(value) > parseInt(input.max)) {
+                    isValid = false;
+                    if (errorElement) errorElement.style.display = 'block';
+                }
+            }
+        });
+        return isValid;
+    }
+
+    function calculateMaxScore() {
+        let maxScore = 0;
+        form.querySelectorAll('select, input[type="number"]').forEach(input => {
+            if (input.tagName === 'SELECT') {
+                maxScore += 2; // Max score for select options is 2
+            } else if (input.type === 'number') {
+                if (input.id === 'sdm_2') {
+                    maxScore += 100; // Max score for sdm_2 (percentage) is 100
+                }
+            }
+        });
+        return maxScore;
+    }
+
+    function calculateScore() {
+        let score = 0;
+        const formData = new FormData(form);
+
+        for (let [name, value] of formData.entries()) {
+            if (name === 'sdm_2') {
+                const percentage = parseInt(value);
+                if (!isNaN(percentage) && percentage >= 0 && percentage <= 100) {
+                    score += percentage;
+                }
+            } else {
+                const val = parseInt(value);
+                if (!isNaN(val)) {
+                    score += val;
+                }
+            }
+        }
+        return score;
+    }
+
+    function updateRecommendationText(percentage) {
+        let recommendedText = translations[currentLang][recommendationsData[0].textKey];
+        let recommendationClass = recommendationsData[0].class;
+
+        for (const rec of recommendationsData) {
+            if (percentage >= rec.range[0] && percentage <= rec.range[1]) {
+                recommendedText = translations[currentLang][rec.textKey];
+                recommendationClass = rec.class;
+                break;
+            }
+        }
+        recommendationText.textContent = recommendedText;
+        recommendationDiv.className = `recommendation ${recommendationClass}`;
+    }
+
+    function displayResults(score) {
+        form.style.display = 'none';
+        resultsSection.style.display = 'block';
+
+        totalMaxScore = calculateMaxScore();
+        totalScoreSpan.textContent = score;
+        maxScoreSpan.textContent = totalMaxScore;
+
+        const percentage = (totalMaxScore === 0) ? 0 : (score / totalMaxScore) * 100;
+        progressBar.style.width = `${percentage}%`;
+        progressBar.textContent = `${Math.round(percentage)}%`;
+
+        updateRecommendationText(percentage);
+    }
+
+    // Event Listeners
+    nextBtn.addEventListener('click', () => {
+      if (validateStep(currentStep)) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentStep--;
+      showStep(currentStep);
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (validateStep(currentStep)) {
+        const finalScore = calculateScore();
+        displayResults(finalScore);
+      }
+    });
+
+    restartBtn.addEventListener('click', () => {
+        form.reset(); // Reset all form fields
+        currentStep = 0;
+        showStep(currentStep);
+        progressBar.style.width = '0%';
+        progressBar.textContent = '0%';
+        document.querySelectorAll('.error-message').forEach(el => {
+            el.style.display = 'none'; // Hide all error messages
+        });
+        applyTranslations(currentLang); // Re-apply translations after reset
+    });
+
+    // Run initial setup when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        totalMaxScore = calculateMaxScore(); // Calculate max score initially
+        showStep(currentStep);
+        applyTranslations(currentLang); // Apply translations based on initial language
+    });
+  </script>
 </body>
 </html>
