@@ -771,7 +771,8 @@
         
         // Anti-cheating variables
         let focusLossCount = 0;
-        const MAX_FOCUS_LOSSES = 3; // Max times user can switch tabs before a warning/action
+        // Changed MAX_FOCUS_LOSSES to 5 as requested
+        const MAX_FOCUS_LOSSES = 5; 
         let testStarted = false; // Flag to ensure anti-cheating only active during test
 
         // Function to format time in MM:SS
@@ -856,8 +857,9 @@
                     timerContainer.style.backgroundColor = 'var(--danger)';
                     googleFormEmbed.style.pointerEvents = 'none';
                     googleFormEmbed.style.opacity = '0.7';
-                    alert('Tes Anda dihentikan karena terlalu sering berpindah halaman/aplikasi. Anda akan diarahkan ke halaman penilaian.');
-                    window.location.href = './penilaian.html'; // Auto-redirect after exceeding limit
+                    // Changed alert message and redirect URL as requested
+                    alert('Anda telah melebihi batas perpindahan halaman. Ulangi Tes.');
+                    window.location.href = './evaluasi-pelatihan.html'; // Auto-redirect after exceeding limit
                 }
             }
         });
