@@ -718,7 +718,6 @@
     </style>
 </head>
 <body>
-    <!-- Timer Container - Moved outside content-wrapper -->
     <div id="timer-container">
         Waktu Tersisa: <span id="countdown">20:00</span>
     </div>
@@ -740,19 +739,8 @@
             <button id="startTestBtn">Mulai Tes</button>
         </div>
 
-        <!-- Google Form Embed -->
-        <iframe id="google-form-embed" src="<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSecp5Ef8cTYHSdVcxwta9qXqsEtE0TUsxQPpbUlwZLnE0sheg/viewform?embedded=true" width="640" height="5406" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
-        <!--
-            PENTING: Ganti "YOUR_GOOGLE_FORM_EMBED_URL_HERE" dengan URL embed Google Form Anda.
-            Untuk mendapatkan URL embed:
-            1. Buat Google Form Anda.
-            2. Klik "Kirim" (Send) di kanan atas.
-            3. Pilih tab "<>" (Embed HTML).
-            4. Salin kode `src` dari iframe yang diberikan.
-        -->
-
-        <!-- Removed the navigation-buttons div entirely -->
-    </div>
+        <iframe id="google-form-embed" src="https://docs.google.com/forms/d/e/1FAIpQLSecp5Ef8cTYHSdVcxwta9qXqsEtE0TUsxQPpbUlwZLnE0sheg/viewform?embedded=true" width="640" height="5406" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
+        </div>
 
     <footer>
         Developed by Anom Harjana with support from Jaringan Indonesia Positif, APCASO, and The Global Fund.
@@ -882,23 +870,6 @@
                 e.preventDefault();
                 alert('Inspeksi elemen dan alat pengembang dinonaktifkan selama tes.');
             }
-        });
-
-        // Dummy functions for session completion (not used in this evaluation page)
-        function loadSessionStatus() { return {}; }
-        function saveSessionStatus(status) {}
-        function completeSession(sessionId) {
-            // This function is not directly used for completing Sesi 5 in this context
-            // as it's the final evaluation. The "Selesai Program" button handles navigation.
-            // window.location.href = './index.html'; // This line is now removed as per user request
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // No need for accordions, flip cards, checklists, quizzes for this evaluation page
-            // setupAccordions();
-            // setupFlipCards();
-            // setupChecklists();
-            // loadQuiz();
         });
     </script>
 </body>
