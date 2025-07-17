@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skrining TB</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0d9488;
+      --secondary: #f0fdfa;
+      --accent: #14b8a6;
+      --danger: #dc2626;
+      --bg: #f8fafc;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: #1f2937;
+      line-height: 1.6;
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
+    }
+    .language-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: white;
+      color: var(--primary);
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .language-toggle:hover {
+      background: var(--secondary);
+    }
+    .announcement-card {
+      background: white;
+      margin: 2rem auto 1.5rem;
+      padding: 1.5rem;
+      max-width: 700px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-left: 6px solid var(--accent);
+    }
+    .announcement-card h2 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .announcement-card p {
+      font-size: 1rem;
+      color: #475569;
+    }
+    form {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    form h3 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+    }
+    .submit-btn {
+      background-color: var(--accent);
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+    .submit-btn:hover {
+      background-color: #0f766e;
+    }
+    .result-box {
+      max-width: 700px;
+      margin: 1rem auto;
+      background: #fff;
+      padding: 1.25rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      border-left: 5px solid var(--primary);
+    }
+    .result-box h4 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .result-box p {
+      font-size: 1rem;
+      color: #334155;
+    }
+    @media (max-width: 768px) {
+      .announcement-card, form, .result-box {
+        margin: 1rem;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="language-toggle" onclick="toggleLanguage()">
+      <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
+    </button>
+    <h1 id="title"><i class="fas fa-lungs-virus"></i> Skrining Tuberkulosis (TB)</h1>
+    <p id="subtitle">Deteksi dini melalui gejala utama TB</p>
+  </header>
+
+  <main>
+    <div class="announcement-card" id="announcement">
+      <h2><i class="fas fa-bullhorn"></i> Pengumuman</h2>
+      <p id="announcement-text">Silakan isi pertanyaan di bawah untuk mengetahui risiko TB.</p>
+    </div>
+
+    <form id="tb-form">
+      <h3 id="form-title">Pertanyaan Skrining</h3>
+
+      <div class="form-group">
+        <label id="q1-label">Apakah Anda mengalami batuk selama 2 minggu atau lebih?</label>
+        <select required>
+          <option value="">-- Pilih Jawaban --</option>
+          <option value="1">Ya</option>
+          <option value="0">Tidak</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label id="q2-label">Apakah Anda mengalami demam terus-menerus tanpa sebab yang jelas?</label>
+        <select required>
+          <option value="">-- Pilih Jawaban --</option>
+          <option value="1">Ya</option>
+          <option value="0">Tidak</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label id="q3-label">Apakah berat badan Anda menurun tanpa sebab yang jelas?</label>
+        <select required>
+          <option value="">-- Pilih Jawaban --</option>
+          <option value="1">Ya</option>
+          <option value="0">Tidak</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label id="q4-label">Apakah Anda berkeringat di malam hari tanpa aktivitas berat?</label>
+        <select required>
+          <option value="">-- Pilih Jawaban --</option>
+          <option value="1">Ya</option>
+          <option value="0">Tidak</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label id="q5-label">Apakah Anda mengalami nyeri dada atau sesak napas tanpa sebab yang jelas?</label>
+        <select required>
+          <option value="">-- Pilih Jawaban --</option>
+          <option value="1">Ya</option>
+          <option value="0">Tidak</option>
+        </select>
+      </div>
+
+      <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Kirim Jawaban</button>
+    </form>
+
+    <div class="result-box" id="result-box" style="display:none;">
+      <h4>Hasil Penilaian Risiko:</h4>
+      <p id="score-result"></p>
+      <p id="recommendation"></p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("tb-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const selects = document.querySelectorAll("form select");
+      let score = 0;
+      selects.forEach(sel => {
+        score += parseInt(sel.value);
+      });
+
+      let scoreText = `Skor Anda: ${score} dari 5`;
+      let rekomendasi = "";
+
+      if (score === 0) {
+        rekomendasi = "Risiko sangat rendah. Tidak ada indikasi TB saat ini.";
+      } else if (score <= 2) {
+        rekomendasi = "Risiko rendah. Pantau gejala Anda, konsultasi jika gejala menetap.";
+      } else {
+        rekomendasi = "Risiko tinggi. Segera lakukan pemeriksaan ke fasilitas kesehatan untuk diagnosis lebih lanjut.";
+      }
+
+      document.getElementById("result-box").style.display = "block";
+      document.getElementById("score-result").textContent = scoreText;
+      document.getElementById("recommendation").textContent = rekomendasi;
+    });
+
+    let currentLang = 'id';
+    const translations = {
+      en: {
+        title: "Tuberculosis (TB) Screening",
+        subtitle: "Early detection through main symptoms",
+        langLabel: "EN",
+        announcementTitle: "Announcement",
+        announcementText: "Please complete the questions below to assess your TB risk.",
+        formTitle: "Screening Questions",
+        q1: "Have you had a cough lasting 2 weeks or more?",
+        q2: "Have you had persistent fever with no clear cause?",
+        q3: "Have you experienced unexplained weight loss?",
+        q4: "Do you sweat at night without heavy activity?",
+        q5: "Do you have chest pain or shortness of breath with no clear cause?",
+        submit: "Submit Answers"
+      },
+      id: {
+        title: "Skrining Tuberkulosis (TB)",
+        subtitle: "Deteksi dini melalui gejala utama TB",
+        langLabel: "ID",
+        announcementTitle: "Pengumuman",
+        announcementText: "Silakan isi pertanyaan di bawah untuk mengetahui risiko TB.",
+        formTitle: "Pertanyaan Skrining",
+        q1: "Apakah Anda mengalami batuk selama 2 minggu atau lebih?",
+        q2: "Apakah Anda mengalami demam terus-menerus tanpa sebab yang jelas?",
+        q3: "Apakah berat badan Anda menurun tanpa sebab yang jelas?",
+        q4: "Apakah Anda berkeringat di malam hari tanpa aktivitas berat?",
+        q5: "Apakah Anda mengalami nyeri dada atau sesak napas tanpa sebab yang jelas?",
+        submit: "Kirim Jawaban"
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'id' ? 'en' : 'id';
+      const t = translations[currentLang];
+
+      document.getElementById('title').innerHTML = '<i class="fas fa-lungs-virus"></i> ' + t.title;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('lang-label').textContent = t.langLabel;
+      document.querySelector('#announcement h2').innerHTML = '<i class="fas fa-bullhorn"></i> ' + t.announcementTitle;
+      document.getElementById('announcement-text').textContent = t.announcementText;
+      document.getElementById('form-title').textContent = t.formTitle;
+      document.getElementById('q1-label').textContent = t.q1;
+      document.getElementById('q2-label').textContent = t.q2;
+      document.getElementById('q3-label').textContent = t.q3;
+      document.getElementById('q4-label').textContent = t.q4;
+      document.getElementById('q5-label').textContent = t.q5;
+      document.querySelector('.submit-btn').innerHTML = '<i class="fas fa-paper-plane"></i> ' + t.submit;
+    }
+  </script>
+
+  <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
+    Dikembangkan oleh Anom Harjana dan tim, berbasis panduan WHO dan Kemenkes RI.
+  </footer>
+</body>
+</html>
