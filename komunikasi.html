@@ -80,7 +80,7 @@
 
     .consultation-btn {
       display: inline-block;
-      margin-top: 2rem;
+      margin-top: 1.25rem;
       background-color: var(--accent);
       color: white;
       font-weight: 600;
@@ -109,7 +109,7 @@
       }
 
       .consultation-btn {
-        margin-top: 1.5rem;
+        margin-top: 1rem;
       }
     }
   </style>
@@ -130,8 +130,12 @@
     </div>
 
     <div style="text-align:center;">
-      <a class="consultation-btn" href="https://www.tanyanira.com/" target="_blank" rel="noopener noreferrer">
+      <a class="consultation-btn" href="https://www.tanyanira.com/" target="_blank" rel="noopener noreferrer" id="btn-consult">
         <i class="fas fa-stethoscope"></i> Konsultasi Kesehatan dengan AI
+      </a>
+      <br><br>
+      <a class="consultation-btn" href="skrining-tb.html" id="btn-tb">
+        <i class="fas fa-notes-medical"></i> Skrining Tuberkulosis
       </a>
     </div>
   </main>
@@ -145,14 +149,18 @@
         subtitle: "Toolkit for Civil Society Organizations and Communities",
         langLabel: "EN",
         announcementTitle: "Latest Announcement",
-        announcementText: "Start learning with the E-Learning platform here"
+        announcementText: "Start learning with the E-Learning platform here",
+        btnConsult: "AI Health Consultation",
+        btnTB: "Tuberculosis Screening"
       },
       id: {
         title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
         subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
         langLabel: "ID",
         announcementTitle: "Pengumuman Terbaru",
-        announcementText: "Mulai E-Learning belajar di platform ini"
+        announcementText: "Mulai E-Learning belajar di platform ini",
+        btnConsult: "Konsultasi Kesehatan dengan AI",
+        btnTB: "Skrining Tuberkulosis"
       }
     };
 
@@ -165,6 +173,8 @@
       document.getElementById('lang-label').textContent = t.langLabel;
       document.querySelector('#announcement h2').innerHTML = '<i class="fas fa-bullhorn"></i> ' + t.announcementTitle;
       document.getElementById('announcement-text').textContent = t.announcementText;
+      document.getElementById('btn-consult').innerHTML = '<i class="fas fa-stethoscope"></i> ' + t.btnConsult;
+      document.getElementById('btn-tb').innerHTML = '<i class="fas fa-notes-medical"></i> ' + t.btnTB;
     }
   </script>
 
