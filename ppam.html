@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Kebutuhan Dasar Bencana</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background: #0d9488;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    main {
+      max-width: 950px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-bottom: 1rem;
+      color: #0d9488;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+    input {
+      padding: 0.5rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 0.25rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      background: #14b8a6;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #0f766e;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    th {
+      background: #0d9488;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    .card {
+      background: #ecfeff;
+      border-left: 5px solid #0d9488;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-radius: 8px;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Kalkulator Kebutuhan Paket Pelayanan Awal Minimal (PPAM)</h1>
+    <p>Berdasarkan standar Sphere, WHO, UNFPA, dan Kemenkes</p>
+  </header>
+  <main>
+    <h2>Masukkan Data Jumlah Orang</h2>
+    <form id="calcForm">
+      <label>Total Populasi Terdampak
+        <input type="number" id="total" placeholder="contoh: 100" required>
+      </label>
+      <label>Anak-anak (0–9 thn)
+        <input type="number" id="anak" placeholder="contoh: 20">
+      </label>
+      <label>Remaja (10–18 thn)
+        <input type="number" id="remaja" placeholder="contoh: 15">
+      </label>
+      <label>Laki-laki Dewasa (18+ thn)
+        <input type="number" id="pria" placeholder="contoh: 30">
+      </label>
+      <label>Perempuan Dewasa  (18+ thn)
+        <input type="number" id="wanita" placeholder="contoh: 35">
+      </label>
+      <label>ODHIV
+        <input type="number" id="odhiv" placeholder="contoh: 5">
+      </label>
+      <label>Penyintas TB
+        <input type="number" id="tb" placeholder="contoh: 3">
+      </label>
+      <label>Ibu Hamil
+        <input type="number" id="hamil" placeholder="contoh: 4">
+      </label>
+      <label>Ibu Menyusui
+        <input type="number" id="menyusui" placeholder="contoh: 6">
+      </label>
+      <label>Bayi Baru Lahir
+        <input type="number" id="bayi" placeholder="contoh: 2">
+      </label>
+      <label>Lansia (60+ thn)
+        <input type="number" id="lansia" placeholder="contoh: 8">
+      </label>
+      <label>Periode Tanggap Darurat (hari)
+        <input type="number" id="hari" placeholder="contoh: 7" required>
+      </label>
+      <button type="button" onclick="hitung()">Hitung Kebutuhan</button>
+    </form>
+
+    <div id="hasil"></div>
+  </main>
+
+  <script>
+    function hitung() {
+      const total = parseInt(document.getElementById('total').value) || 0;
+      const anak = parseInt(document.getElementById('anak').value) || 0;
+      const remaja = parseInt(document.getElementById('remaja').value) || 0;
+      const pria = parseInt(document.getElementById('pria').value) || 0;
+      const wanita = parseInt(document.getElementById('wanita').value) || 0;
+      const odhiv = parseInt(document.getElementById('odhiv').value) || 0;
+      const tb = parseInt(document.getElementById('tb').value) || 0;
+      const hamil = parseInt(document.getElementById('hamil').value) || 0;
+      const menyusui = parseInt(document.getElementById('menyusui').value) || 0;
+      const bayi = parseInt(document.getElementById('bayi').value) || 0;
+      const lansia = parseInt(document.getElementById('lansia').value) || 0;
+      const hari = parseInt(document.getElementById('hari').value) || 0;
+
+      if (hari <= 0) {
+        alert("Masukkan jumlah hari yang valid!");
+        return;
+      }
+
+      // aturan air
+      let airPerHari = hari <= 3 ? 7.5 : 15;
+
+      // kebutuhan dasar
+      const air = total * airPerHari * hari;
+      const makanan = total * 3 * hari;
+      const shelter = Math.ceil(total / 5);
+
+      // kelompok rentan
+      const susuAnak = anak * hari;
+      const imunisasi = anak * 1;
+      const kitRemaja = remaja * 1;
+      const hygieneWanita = wanita * hari;
+      const kitPria = pria * 1;
+
+      const arv = odhiv * hari;
+      const oat = tb * hari;
+      const tablet_ibu = hamil * hari;
+      const kit_ibu = hamil * 1;
+      const kit_hygiene = menyusui * 1;
+      const kit_bayi = bayi * 1;
+      const obat_kronis = lansia * hari;
+
+      // rekomendasi sesuai periode
+      let rekomendasi = "";
+      if (hari <= 3) {
+        rekomendasi = `
+          <ul>
+            <li>Air darurat minimum 7,5 L/orang/hari.</li>
+            <li>Makanan siap saji, prioritas bayi, anak-anak, lansia.</li>
+            <li>Pertolongan medis gawat darurat & evakuasi.</li>
+            <li>Distribusi selimut, pakaian, hygiene kit dasar.</li>
+            <li>Dukungan psikososial awal bagi anak & remaja.</li>
+            <li>Identifikasi & pemisahan aman bagi perempuan & anak.</li>
+          </ul>`;
+      } else if (hari <= 7) {
+        rekomendasi = `
+          <ul>
+            <li>Air penuh: 15 L/orang/hari + fasilitas sanitasi darurat.</li>
+            <li>Makanan bergizi 3 kali/hari, tambahan susu & MPASI untuk anak-anak.</li>
+            <li>Pendidikan darurat untuk anak & aktivitas aman bagi remaja.</li>
+            <li>Distribusi hygiene kit perempuan (termasuk kebutuhan menstruasi).</li>
+            <li>Pencegahan GBV, ruang aman perempuan & anak.</li>
+            <li>Layanan kesehatan reproduksi dasar (MISP).</li>
+          </ul>`;
+      } else if (hari <= 30) {
+        rekomendasi = `
+          <ul>
+            <li>Layanan kesehatan komprehensif semua kelompok.</li>
+            <li>Pendidikan darurat berkelanjutan (anak & remaja).</li>
+            <li>Program kesehatan reproduksi lebih lengkap untuk perempuan.</li>
+            <li>Dukungan psikososial terstruktur bagi remaja & lansia.</li>
+            <li>Distribusi pangan tambahan ibu hamil, menyusui, bayi, anak.</li>
+            <li>Hunian sementara dengan segregasi aman laki-laki/perempuan.</li>
+          </ul>`;
+      } else {
+        rekomendasi = `
+          <ul>
+            <li>Integrasi pengungsi ke layanan kesehatan & pendidikan reguler.</li>
+            <li>Pemulihan mata pencaharian untuk pria & wanita.</li>
+            <li>Pendidikan formal berkelanjutan untuk anak & remaja.</li>
+            <li>Kesehatan jiwa & konseling lanjutan semua kelompok rentan.</li>
+            <li>Hunian permanen sementara dengan fasilitas keluarga.</li>
+            <li>Penguatan perlindungan sosial & data terpilah.</li>
+          </ul>`;
+      }
+
+      document.getElementById('hasil').innerHTML = `
+        <div id="printArea">
+          <h2>📋 Rekap Kebutuhan (${hari} hari)</h2>
+          <table>
+            <tr>
+              <th>Kategori</th>
+              <th>Kebutuhan</th>
+              <th>Jumlah</th>
+              <th>Satuan</th>
+            </tr>
+            <tr><td>Total Populasi</td><td>Air Bersih</td><td>${air}</td><td>liter</td></tr>
+            <tr><td>Total Populasi</td><td>Makanan</td><td>${makanan}</td><td>porsi</td></tr>
+            <tr><td>Total Populasi</td><td>Hunian Sementara</td><td>${shelter}</td><td>unit</td></tr>
+
+            <tr><td>Anak-anak</td><td>Susu Tambahan</td><td>${susuAnak}</td><td>paket</td></tr>
+            <tr><td>Anak-anak</td><td>Imunisasi Darurat</td><td>${imunisasi}</td><td>dosis</td></tr>
+            <tr><td>Remaja</td><td>Kit Edukasi & Aktivitas</td><td>${kitRemaja}</td><td>paket</td></tr>
+            <tr><td>Perempuan Dewasa</td><td>Hygiene Kit Menstruasi</td><td>${hygieneWanita}</td><td>paket</td></tr>
+            <tr><td>Laki-laki Dewasa</td><td>Perlengkapan Dukungan</td><td>${kitPria}</td><td>paket</td></tr>
+
+            <tr><td>ODHIV</td><td>Obat ARV</td><td>${arv}</td><td>dosis</td></tr>
+            <tr><td>Penyintas TB</td><td>Obat OAT</td><td>${oat}</td><td>dosis</td></tr>
+            <tr><td>Ibu Hamil</td><td>Tablet Tambah Darah</td><td>${tablet_ibu}</td><td>tablet</td></tr>
+            <tr><td>Ibu Hamil</td><td>Kit Ibu Hamil</td><td>${kit_ibu}</td><td>paket</td></tr>
+            <tr><td>Ibu Menyusui</td><td>Hygiene Kit</td><td>${kit_hygiene}</td><td>paket</td></tr>
+            <tr><td>Bayi Baru Lahir</td><td>Kit Bayi Baru Lahir</td><td>${kit_bayi}</td><td>paket</td></tr>
+            <tr><td>Lansia / Disabilitas</td><td>Obat Kronis</td><td>${obat_kronis}</td><td>paket</td></tr>
+          </table>
+
+          <div class="card">
+            <h3>📌 Rekomendasi Tambahan</h3>
+            ${rekomendasi}
+          </div>
+        </div>
+        <button onclick="downloadPNG()">Download PNG</button>
+      `;
+    }
+
+    function downloadPNG() {
+      const element = document.getElementById("printArea");
+      html2canvas(element).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "kebutuhan_pengungsi.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>
