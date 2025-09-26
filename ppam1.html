@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Kebutuhan Dasar Bencana</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header {
+      background: #0d9488;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    main {
+      width: 90%;
+      max-width: 950px;
+      margin: 1rem auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      margin-bottom: 1rem;
+      color: #0d9488;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+    input {
+      padding: 0.5rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 0.25rem;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      background: #14b8a6;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+    button:hover {
+      background: #0f766e;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.6rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #0d9488;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f9fafb;
+    }
+    .chart-container {
+      margin-top: 2rem;
+      background: #f0fdfa;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .card {
+      background: #ecfeff;
+      border-left: 5px solid #0d9488;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #0d9488;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+      main {
+        padding: 1rem;
+      }
+      label {
+        font-size: 0.9rem;
+      }
+      input {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+      }
+      button {
+        padding: 0.6rem 1rem;
+        font-size: 0.95rem;
+      }
+      th, td {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Kalkulator Kebutuhan Paket Pelayanan Awal Minimal (PPAM)</h1>
+    <p>Berdasarkan standar Sphere, WHO, UNFPA, dan Kemenkes</p>
+  </header>
+  <main>
+    <h2>Masukkan Total Populasi</h2>
+    <form id="calcForm">
+      <label>Total Populasi Terdampak
+        <input type="number" id="total" placeholder="contoh: 1000" required>
+      </label>
+      <label>Periode Tanggap Darurat (hari)
+        <input type="number" id="hari" placeholder="contoh: 7" required>
+      </label>
+      <button type="button" onclick="hitung()">Hitung Kebutuhan</button>
+    </form>
+
+    <div id="hasil"></div>
+
+    <div class="chart-container">
+      <h3>📊 Diagram Batang Kelompok Rentan</h3>
+      <canvas id="barChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h3>👥 Piramida Penduduk</h3>
+      <canvas id="pyramidChart"></canvas>
+    </div>
+
+    <div id="kebutuhan"></div>
+    <div id="rekomendasi"></div>
+  </main>
+
+  <script>
+    let barChart, pyramidChart;
+
+    function hitung() {
+      const total = parseInt(document.getElementById('total').value) || 0;
+      const hari = parseInt(document.getElementById('hari').value) || 0;
+      if (total <= 0 || hari <= 0) {
+        alert("Masukkan data dengan benar!");
+        return;
+      }
+
+      // Estimasi proporsi
+      const estimasi = {
+        "Anak-anak (0–9 thn)": total * 0.20,
+        "Remaja (10–18 thn)": total * 0.15,
+        "Laki-laki Dewasa (18+)": total * 0.25,
+        "Perempuan Dewasa (18+)": total * 0.25,
+        "ODHIV": total * 0.01,
+        "Penyintas TB": total * 0.005,
+        "Ibu Hamil": total * 0.02,
+        "Ibu Menyusui": total * 0.02,
+        "Bayi Baru Lahir": total * 0.01,
+        "Lansia (60+)": total * 0.10
+      };
+
+      // Tabel estimasi
+      let tableHTML = `
+        <h2>📋 Estimasi Kelompok Rentan</h2>
+        <table>
+          <tr><th>Kelompok</th><th>Jumlah</th></tr>`;
+      for (const [key, val] of Object.entries(estimasi)) {
+        tableHTML += `<tr><td>${key}</td><td>${Math.round(val)}</td></tr>`;
+      }
+      tableHTML += `</table>`;
+      document.getElementById("hasil").innerHTML = tableHTML;
+
+      // Hitung kebutuhan minimal (contoh standar Sphere/WHO)
+      const airPerHari = hari <= 3 ? 7.5 : 15;
+      let kebutuhanHTML = `
+        <h2>💧 Kebutuhan Minimal per Kelompok (${hari} hari)</h2>
+        <table>
+          <tr>
+            <th>Kelompok</th><th>Air (liter)</th><th>Makanan (porsi)</th><th>Kebutuhan Khusus</th>
+          </tr>`;
+      for (const [key, val] of Object.entries(estimasi)) {
+        let jumlah = Math.round(val);
+        let air = jumlah * airPerHari * hari;
+        let makanan = jumlah * 3 * hari;
+        let khusus = "-";
+
+        if (key.includes("Anak-anak")) khusus = "Susu tambahan, imunisasi";
+        if (key.includes("Remaja")) khusus = "Kit edukasi & aktivitas";
+        if (key.includes("Perempuan Dewasa")) khusus = "Hygiene kit menstruasi";
+        if (key.includes("Laki-laki Dewasa")) khusus = "Perlengkapan kerja & dukungan";
+        if (key.includes("ODHIV")) khusus = "Obat ARV harian";
+        if (key.includes("TB")) khusus = "Obat OAT harian";
+        if (key.includes("Hamil")) khusus = "Tablet tambah darah, pemeriksaan ANC";
+        if (key.includes("Menyusui")) khusus = "Dukungan laktasi & hygiene kit";
+        if (key.includes("Bayi")) khusus = "Kit bayi baru lahir, imunisasi dasar";
+        if (key.includes("Lansia")) khusus = "Obat penyakit kronis, dukungan mobilitas";
+
+        kebutuhanHTML += `
+          <tr>
+            <td>${key}</td>
+            <td>${air}</td>
+            <td>${makanan}</td>
+            <td>${khusus}</td>
+          </tr>`;
+      }
+      kebutuhanHTML += `</table>`;
+      document.getElementById("kebutuhan").innerHTML = kebutuhanHTML;
+
+      // Rekomendasi berdasarkan periode
+      let rekom = "";
+      if (hari <= 3) {
+        rekom = `
+          <ul>
+            <li>Air minimum 7,5 L/orang/hari, distribusi darurat.</li>
+            <li>Makanan siap saji, prioritas bayi, anak, lansia.</li>
+            <li>Pertolongan medis gawat darurat & evakuasi.</li>
+            <li>Distribusi selimut, pakaian, hygiene kit dasar.</li>
+            <li>Identifikasi & pemisahan aman perempuan & anak.</li>
+          </ul>`;
+      } else if (hari <= 7) {
+        rekom = `
+          <ul>
+            <li>Air penuh 15 L/orang/hari + sanitasi darurat.</li>
+            <li>Makanan bergizi 3x/hari, susu & MPASI anak.</li>
+            <li>Pendidikan darurat anak & aktivitas aman remaja.</li>
+            <li>Distribusi hygiene kit perempuan.</li>
+            <li>Pencegahan GBV, ruang aman perempuan & anak.</li>
+            <li>Layanan kesehatan reproduksi dasar (MISP).</li>
+          </ul>`;
+      } else if (hari <= 30) {
+        rekom = `
+          <ul>
+            <li>Layanan kesehatan komprehensif semua kelompok.</li>
+            <li>Pendidikan darurat berkelanjutan.</li>
+            <li>Kesehatan reproduksi lebih lengkap perempuan.</li>
+            <li>Dukungan psikososial remaja & lansia.</li>
+            <li>Distribusi pangan tambahan ibu hamil, bayi, anak.</li>
+            <li>Hunian sementara dengan segregasi aman.</li>
+          </ul>`;
+      } else {
+        rekom = `
+          <ul>
+            <li>Integrasi ke layanan reguler kesehatan & pendidikan.</li>
+            <li>Pemulihan mata pencaharian pria & wanita.</li>
+            <li>Pendidikan formal berkelanjutan anak & remaja.</li>
+            <li>Kesehatan jiwa & konseling lanjutan.</li>
+            <li>Hunian permanen sementara berbasis keluarga.</li>
+            <li>Penguatan perlindungan sosial & data terpilah.</li>
+          </ul>`;
+      }
+
+      document.getElementById("rekomendasi").innerHTML = `
+        <div class="card">
+          <h3>📌 Rekomendasi Tindakan</h3>
+          ${rekom}
+        </div>
+      `;
+
+      // Chart batang
+      const labels = Object.keys(estimasi);
+      const dataVals = Object.values(estimasi).map(v => Math.round(v));
+      if (barChart) barChart.destroy();
+      barChart = new Chart(document.getElementById("barChart"), {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{ label: "Jumlah Orang", data: dataVals, backgroundColor: "#14b8a6" }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+
+      // Piramida penduduk
+      const male = [
+        Math.round(estimasi["Anak-anak (0–9 thn)"]/2),
+        Math.round(estimasi["Remaja (10–18 thn)"]/2),
+        Math.round(estimasi["Laki-laki Dewasa (18+)"]),
+        Math.round(estimasi["Lansia (60+)"]/2)
+      ];
+      const female = [
+        Math.round(estimasi["Anak-anak (0–9 thn)"]/2),
+        Math.round(estimasi["Remaja (10–18 thn)"]/2),
+        Math.round(estimasi["Perempuan Dewasa (18+)"]),
+        Math.round(estimasi["Lansia (60+)"]/2)
+      ];
+      const ageGroups = ["0–9", "10–18", "18+", "60+"];
+
+      if (pyramidChart) pyramidChart.destroy();
+      pyramidChart = new Chart(document.getElementById("pyramidChart"), {
+        type: "bar",
+        data: {
+          labels: ageGroups,
+          datasets: [
+            { label: "Laki-laki", data: male.map(v => -v), backgroundColor: "#0ea5e9" },
+            { label: "Perempuan", data: female, backgroundColor: "#f472b6" }
+          ]
+        },
+        options: {
+          indexAxis: "y",
+          scales: {
+            x: { stacked: true, ticks: { callback: val => Math.abs(val) } },
+            y: { stacked: true }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
