@@ -19,7 +19,7 @@
             font-family: 'Inter', sans-serif; 
             background-color: #E6EEF3; 
             color: #003B46; 
-            line-height: 1.4; /* TIGHTER LINE HEIGHT for better fitting */
+            line-height: 1.4; 
         }
 
         /* --- 60:90 Aspect Ratio Styling (2:3) --- */
@@ -31,6 +31,7 @@
             background-color: white; 
         }
         
+        /* VISUAL DISPLAY: Elemen ini memiliki dimensi 60x90 (2:3) di layar */
         .ratio-box {
             position: relative;
             width: 100%;
@@ -38,20 +39,21 @@
             padding-bottom: 150%; 
         }
 
-        .ratio-content {
+        /* Konten di dalam ratio-box, yang mengisi seluruh area poster. */
+        #poster-content { 
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Penting: Jaga agar konten bisa di-scroll jika di preview mobile/small window */
+            /* Penting: overflow-y: auto memungkinkan scrolling jika konten melebihi batas 60:90 */
             overflow-y: auto; 
             overflow-x: hidden; 
+            background-color: white; 
         }
         
         /* Ensures internal padding is proportional to the poster size */
         .internal-padding {
-            /* Padding yang lebih rapat untuk menghemat ruang vertikal */
             padding: 1.75rem 2rem; 
         }
         
@@ -73,10 +75,10 @@
         
         /* Flow Circle Styling (Used for vertical flow) */
         .flow-circle {
-            width: 2.5rem; height: 2.5rem; /* Lebih kecil lagi */
+            width: 2.5rem; height: 2.5rem;
             border-radius: 9999px;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 900; font-size: 0.8rem; /* Font lebih kecil */
+            font-weight: 900; font-size: 0.8rem;
             color: white;
             box-shadow: 0 4px 8px rgba(0, 59, 70, 0.2);
             margin-right: 0.75rem;
@@ -95,10 +97,11 @@
 <body class="selection:bg-[#F7B733] selection:text-[#003B46]">
 
     <!-- Main wrapper to enforce max-width and centering -->
-    <div class="poster-wrapper">
-        <div class="ratio-box">
+    <div id="poster-wrapper-id" class="poster-wrapper">
+        <!-- TARGET CAPTURE ELEMENT -->
+        <div id="poster-ratio-box" class="ratio-box">
             <!-- Content wrapper inside the ratio box -->
-            <div id="poster-content" class="ratio-content">
+            <div id="poster-content">
                 
                 <!-- HEADER SECTION -->
                 <header class="header-bg shadow-xl mb-5 md:mb-7 internal-padding">
@@ -178,7 +181,7 @@
                                         </div>
                                         <div class="ml-[3.2rem] mt-2">
                                             <!-- Ganti src ini dengan tautan foto kegiatan 1 Anda -->
-                                            <img src="https://placehold.co/400x150/C4DFE6/003B46?text=Foto+1:+Capacity+Building" alt="Foto kegiatan Capacity Building" class="w-full rounded-lg max-h-16 object-cover">
+                                            <img src="https://placehold.co/400x150/C4DFE6/003B46?text=Foto+1:+Capacity+Building" onerror="this.onerror=null; this.src='https://placehold.co/400x150/C4DFE6/003B46?text=Foto+Gagal+Dimuat';" alt="Foto kegiatan Capacity Building" class="w-full rounded-lg max-h-16 object-cover">
                                         </div>
                                     </div>
 
@@ -193,7 +196,7 @@
                                         </div>
                                         <div class="ml-[3.2rem] mt-2">
                                             <!-- Ganti src ini dengan tautan foto kegiatan 2 Anda -->
-                                            <img src="https://placehold.co/400x150/66A5AD/003B46?text=Foto+2:+Evidence+Gathering" alt="Foto kegiatan Evidence Gathering" class="w-full rounded-lg max-h-16 object-cover">
+                                            <img src="https://placehold.co/400x150/66A5AD/003B46?text=Foto+2:+Evidence+Gathering" onerror="this.onerror=null; this.src='https://placehold.co/400x150/66A5AD/003B46?text=Foto+Gagal+Dimuat';" alt="Foto kegiatan Evidence Gathering" class="w-full rounded-lg max-h-16 object-cover">
                                         </div>
                                     </div>
                                     
@@ -208,7 +211,7 @@
                                         </div>
                                         <div class="ml-[3.2rem] mt-2">
                                             <!-- Ganti src ini dengan tautan foto kegiatan 3 Anda -->
-                                            <img src="https://placehold.co/400x150/07575B/FFFFFF?text=Foto+3:+Coordination" alt="Foto kegiatan Coordination" class="w-full rounded-lg max-h-16 object-cover">
+                                            <img src="https://placehold.co/400x150/07575B/FFFFFF?text=Foto+3:+Coordination" onerror="this.onerror=null; this.src='https://placehold.co/400x150/07575B/FFFFFF?text=Foto+Gagal+Dimuat';" alt="Foto kegiatan Coordination" class="w-full rounded-lg max-h-16 object-cover">
                                         </div>
                                     </div>
                                     
@@ -223,7 +226,7 @@
                                         </div>
                                         <div class="ml-[3.2rem] mt-2">
                                             <!-- Ganti src ini dengan tautan foto kegiatan 4 Anda -->
-                                            <img src="https://placehold.co/400x150/F7B733/003B46?text=Foto+4:+Policy+Influence" alt="Foto kegiatan Policy Influence" class="w-full rounded-lg max-h-16 object-cover">
+                                            <img src="https://placehold.co/400x150/F7B733/003B46?text=Foto+4:+Policy+Influence" onerror="this.onerror=null; this.src='https://placehold.co/400x150/F7B733/003B46?text=Foto+Gagal+Dimuat';" alt="Foto kegiatan Policy Influence" class="w-full rounded-lg max-h-16 object-cover">
                                         </div>
                                     </div>
 
@@ -363,7 +366,9 @@
                     </div>
                 </footer>
             </div>
+            <!-- END: poster-content -->
         </div>
+        <!-- END: poster-ratio-box -->
     </div>
     <!-- END: poster-wrapper -->
 
@@ -374,75 +379,94 @@
             <i class="fas fa-download mr-3"></i> Download Poster (PNG)
         </button>
         <p class="text-xs mt-3 text-gray-500">
-            *Untuk hasil resolusi terbaik, gunakan fungsi 'Print to PDF' bawaan browser Anda.
+            <strong class="text-green-600">Fitur Baru:</strong> File PNG akan menangkap **seluruh halaman** dengan lebar 60 cm (proporsional), tanpa pemotongan.
         </p>
     </div>
 
     <script>
         /**
-         * Function to download the main poster content as a PNG image 
+         * Function to download the main poster content as a PNG image, 
+         * capturing the full height of the content while maintaining the proportional 60cm width.
          */
         function downloadPoster() {
-            const content = document.getElementById('poster-content').parentElement.parentElement; // Target the .poster-wrapper
-            const ratioBox = document.getElementById('poster-content').parentElement;
+            // Target yang akan dicapture (poster-ratio-box)
+            const contentToCapture = document.getElementById('poster-ratio-box'); 
+            // Elemen konten dalam (poster-content)
+            const contentInner = document.getElementById('poster-content'); 
+            // Elemen pembungkus luar
+            const outerWrapper = document.getElementById('poster-wrapper-id');
             const downloadButtonContainer = document.getElementById('download-btn-container');
-            
-            // 1. Temporarily hide download button
+
+            // --- 1. Simpan Style Asli ---
+            const originalRatioBoxPadding = contentToCapture.style.paddingBottom; 
+            const originalContentPosition = contentInner.style.position;
+            const originalContentHeight = contentInner.style.height;
+            const originalContentOverflow = contentInner.style.overflowY || 'auto';
+            const originalMargin = outerWrapper.style.margin;
+            const originalBoxShadow = outerWrapper.style.boxShadow;
+
+            // 2. Persiapan UI & Modifikasi Style (Membuat Konten Mengalir Penuh)
             downloadButtonContainer.style.display = 'none';
-
-            // 2. Temporarily adjust ratio box padding to prevent padding from shrinking the content during capture
-            const originalPaddingBottom = ratioBox.style.paddingBottom;
-            ratioBox.style.paddingBottom = '0'; // Remove padding hack for full height capture
+            outerWrapper.style.margin = '0'; 
+            outerWrapper.style.boxShadow = 'none'; 
             
-            // Set max width/height for high-res output 
-            content.style.maxWidth = '3000px'; 
-            content.style.width = '3000px';
-            content.style.margin = '0'; 
-            content.style.boxShadow = 'none'; 
+            // Hapus pembatasan rasio 60:90 pada container luar
+            contentToCapture.style.paddingBottom = '0'; 
 
-            html2canvas(content, {
-                scale: 2, 
-                useCORS: true, 
-                allowTaint: true,
-                backgroundColor: '#F0F4F8', 
-                width: content.scrollWidth,
-                height: content.scrollHeight,
-                scrollX: 0,
-                scrollY: 0,
-            }).then(canvas => {
-                // 3. Restore original styles and show button container
-                content.style.maxWidth = '900px'; 
-                content.style.width = '90%'; 
-                content.style.margin = '1.5rem auto'; 
-                content.style.boxShadow = '0 10px 30px rgba(0, 59, 70, 0.2)'; 
-                ratioBox.style.paddingBottom = originalPaddingBottom;
-                downloadButtonContainer.style.display = 'block';
+            // Izinkan konten dalam untuk mengalir penuh (height: auto, position: relative)
+            contentInner.style.position = 'relative'; 
+            contentInner.style.height = 'auto'; 
+            contentInner.style.overflowY = 'hidden'; 
+            
+            // Beri jeda singkat agar DOM reflow terjadi dan tinggi dihitung
+            setTimeout(() => {
 
-                // 4. Trigger Download
-                const link = document.createElement('a');
-                link.download = 'COPPER_Poster_60x90_Ratio.png';
-                link.href = canvas.toDataURL('image/png');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                // 3. Panggil html2canvas. Kita tidak mendefinisikan width/height, 
+                //    html2canvas akan menggunakan dimensi penuh yang sudah dialirkan.
+                html2canvas(contentToCapture, {
+                    scale: 3, // Faktor skala lebih tinggi untuk resolusi terbaik
+                    useCORS: true, 
+                    allowTaint: true,
+                    backgroundColor: '#F0F4F8', 
+                    scrollX: 0,
+                    scrollY: 0,
+                }).then(canvas => {
+                    // 4. Kembalikan semua style ke kondisi semula (Restore Visual Ratio 60:90)
+                    contentToCapture.style.paddingBottom = originalRatioBoxPadding;
+                    contentInner.style.position = originalContentPosition;
+                    contentInner.style.height = originalContentHeight;
+                    contentInner.style.overflowY = originalContentOverflow;
+                    outerWrapper.style.margin = originalMargin; 
+                    outerWrapper.style.boxShadow = originalBoxShadow; 
+                    downloadButtonContainer.style.display = 'block';
 
-            }).catch(error => {
-                console.error("Error generating PNG:", error);
-                
-                // 5. Restore styles on error
-                content.style.maxWidth = '900px'; 
-                content.style.width = '90%';
-                content.style.margin = '1.5rem auto';
-                content.style.boxShadow = '0 10px 30px rgba(0, 59, 70, 0.2)';
-                ratioBox.style.paddingBottom = originalPaddingBottom;
-                downloadButtonContainer.style.display = 'block';
+                    // 5. Picu Download
+                    const link = document.createElement('a');
+                    link.download = 'COPPER_Poster_Full_Proportional.png';
+                    link.href = canvas.toDataURL('image/png');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
 
-                const errorDiv = document.createElement('div');
-                errorDiv.textContent = 'Gagal membuat file PNG. Coba gunakan fungsi Print/Cetak bawaan browser untuk membuat PDF.';
-                errorDiv.className = 'fixed top-5 right-5 p-3 bg-red-600 text-white font-semibold rounded-lg shadow-xl z-50';
-                document.body.appendChild(errorDiv);
-                setTimeout(() => document.body.removeChild(errorDiv), 6000);
-            });
+                }).catch(error => {
+                    console.error("Error generating PNG:", error);
+                    
+                    // 6. Pastikan style dikembalikan bahkan jika terjadi error
+                    contentToCapture.style.paddingBottom = originalRatioBoxPadding;
+                    contentInner.style.position = originalContentPosition;
+                    contentInner.style.height = originalContentHeight;
+                    contentInner.style.overflowY = originalContentOverflow;
+                    outerWrapper.style.margin = originalMargin; 
+                    outerWrapper.style.boxShadow = originalBoxShadow; 
+                    downloadButtonContainer.style.display = 'block';
+
+                    const errorDiv = document.createElement('div');
+                    errorDiv.textContent = 'Gagal membuat file PNG. Coba gunakan fungsi Print/Cetak bawaan browser untuk membuat PDF.';
+                    errorDiv.className = 'fixed top-5 right-5 p-3 bg-red-600 text-white font-semibold rounded-lg shadow-xl z-50';
+                    document.body.appendChild(errorDiv);
+                    setTimeout(() => document.body.removeChild(errorDiv), 6000);
+                });
+            }, 100); 
         }
     </script>
 </body>
