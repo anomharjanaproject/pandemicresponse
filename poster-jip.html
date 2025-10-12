@@ -19,7 +19,7 @@
             font-family: 'Inter', sans-serif; 
             background-color: #E6EEF3; 
             color: #003B46; 
-            line-height: 1.6;
+            line-height: 1.4; /* TIGHTER LINE HEIGHT for better fitting */
         }
 
         /* --- 60:90 Aspect Ratio Styling (2:3) --- */
@@ -44,15 +44,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Crucial: Allows scrolling inside the fixed-ratio box if content overflows */
+            /* Penting: Jaga agar konten bisa di-scroll jika di preview mobile/small window */
             overflow-y: auto; 
             overflow-x: hidden; 
         }
         
         /* Ensures internal padding is proportional to the poster size */
         .internal-padding {
-            /* Tighter default padding */
-            padding: 2rem 2.5rem; 
+            /* Padding yang lebih rapat untuk menghemat ruang vertikal */
+            padding: 1.75rem 2rem; 
         }
         
         @media (max-width: 640px) {
@@ -67,105 +67,29 @@
             background-image: linear-gradient(to right, #C4DFE6, #66A5AD);
             position: relative;
             overflow: hidden;
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
+            border-bottom-left-radius: 30px; 
+            border-bottom-right-radius: 30px;
         }
         
-        /* Flow Diagram Styling - Vertical Stack for Mobile/Tablet */
-        .flow-step-container {
-            border-left: 3px solid #C4DFE6; 
-            padding-left: 1.5rem;
-            position: relative;
-            margin-bottom: 1rem; /* Reduced margin */
-        }
-        .flow-step-container:last-child {
-            border-left: none; 
-            margin-bottom: 0;
-        }
-        .flow-step-container .flow-circle {
-            position: absolute;
-            left: -1.75rem; 
-            top: 0;
-        }
-
-        /* Flow Diagram Styling - Desktop (lg+): Horizontal Stack */
-        @media (min-width: 1024px) { 
-            .flow-step-container {
-                border-left: none;
-                padding-left: 0;
-                flex: 1;
-                position: relative; 
-                margin-bottom: 0;
-            }
-            .flow-step-container .flow-circle {
-                position: static; 
-                margin: 0 auto 0.5rem;
-            }
-            .flow-line-h {
-                position: absolute; top: 1.75rem; height: 4px; 
-                background-color: #66A5AD; z-index: -1; 
-                width: calc(100% - 2rem); left: 1rem;
-            }
-            .flow-step-container:last-child .flow-line-h {
-                display: none;
-            }
-        }
-
+        /* Flow Circle Styling (Used for vertical flow) */
         .flow-circle {
-            width: 3rem; height: 3rem; /* Slightly smaller circle */
+            width: 2.5rem; height: 2.5rem; /* Lebih kecil lagi */
             border-radius: 9999px;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 900; font-size: 1rem; /* Smaller font inside circle */
+            font-weight: 900; font-size: 0.8rem; /* Font lebih kecil */
             color: white;
-            box-shadow: 0 4px 10px rgba(0, 59, 70, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 59, 70, 0.2);
+            margin-right: 0.75rem;
+            flex-shrink: 0;
         }
         
-        /* Gradient for Flow Circles */
         .c1 { background-color: #003B46; } 
         .c2 { background-color: #07575B; } 
         .c3 { background-color: #66A5AD; } 
         .c4 { background-color: #F7B733; } 
 
-        .quote-box { border-left: 6px solid #F7B733; padding-left: 1.5rem; }
-
-        /* PRINT STYLES FOR PDF GENERATION */
-        @media print {
-            #download-btn-container { display: none; }
-            @page { size: 60cm 90cm; margin: 2cm; }
-            
-            body { 
-                background-color: white !important; 
-                color: black !important;
-                max-width: 100% !important; 
-                width: 100% !important;
-                margin: 0 !important;
-            }
-
-            .poster-wrapper {
-                box-shadow: none !important;
-                max-width: none !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding-bottom: 0 !important; 
-            }
-            .ratio-content {
-                position: static !important;
-                height: auto !important;
-                overflow-y: visible !important;
-            }
-
-            .header-bg { background: none !important; background-color: white !important; padding-bottom: 2rem; border: none !important; box-shadow: none !important; }
-            .shadow-xl, .shadow-lg, .shadow-md { box-shadow: none !important; }
-            .bg-white, .bg-gray-50, .bg-gray-100 { background-color: white !important; border: 1px solid #ddd !important; }
-            .c1, .c2, .c3, .c4 { 
-                background-color: #f0f0f0 !important;
-                color: black !important; 
-                border: 2px solid #003B46;
-            }
-            .bg-[#003B46], .bg-[#07575B] { background-color: white !important; color: black !important; border: 2px solid #003B46 !important; }
-            .bg-[#003B46] p, .bg-[#003B46] h3, .bg-[#003B46] div, 
-            .bg-[#07575B] p, .bg-[#07575B] h3, .bg-[#07575B] div { color: black !important; }
-        }
+        .quote-box { border-left: 5px solid #F7B733; padding-left: 1rem; }
+        
     </style>
 </head>
 <body class="selection:bg-[#F7B733] selection:text-[#003B46]">
@@ -177,22 +101,22 @@
             <div id="poster-content" class="ratio-content">
                 
                 <!-- HEADER SECTION -->
-                <header class="header-bg shadow-xl mb-6 md:mb-8 internal-padding">
+                <header class="header-bg shadow-xl mb-5 md:mb-7 internal-padding">
                     <div class="text-center text-[#003B46]">
                         <!-- TOP BAR: Logos and Map Placeholder -->
-                        <div class="flex flex-col md:flex-row justify-between items-center mb-6 max-w-5xl mx-auto">
-                            <div class="text-sm font-semibold text-[#07575B] mb-4 md:mb-0">
+                        <div class="flex flex-col md:flex-row justify-between items-center mb-5 max-w-5xl mx-auto">
+                            <div class="text-xs font-semibold text-[#07575B] mb-3 md:mb-0">
                                 <p>[Partner Logos Placeholder: Global Fund, JIP, Ministry of Health, Community Networks]</p>
                             </div>
-                            <div class="w-20 h-20 md:w-24 md:h-24 bg-gray-100 rounded-full flex items-center justify-center border-4 border-[#07575B] flex-shrink-0">
+                            <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-100 rounded-full flex items-center justify-center border-3 border-[#07575B] flex-shrink-0">
                                 [Image Placeholder: Indonesia Map with 4 Project Sites]
                             </div>
                         </div>
                         
-                        <h1 class="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-snug">
+                        <h1 class="text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-snug">
                             COPPER: THE POWER OF INCLUSION
                         </h1>
-                        <h2 class="text-md md:text-lg font-semibold mt-4 text-[#07575B] max-w-4xl mx-auto">
+                        <h2 class="text-sm md:text-base font-semibold mt-3 text-[#07575B] max-w-4xl mx-auto">
                             Community-Led Inclusive Pandemic Preparedness and Response (PPR) in Indonesia.
                         </h2>
                     </div>
@@ -201,168 +125,191 @@
                 <main class="internal-padding pt-0">
                     
                     <!-- MAIN CONTENT GRID (3 COLUMNS) -->
-                    <!-- KOREKSI KRITIS: Grid diubah menjadi md:grid-cols-2 untuk tablet, dan semua kolom utama menjadi md:col-span-1 untuk pembagian yang seimbang. -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-7">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
 
                         <!-- COLUMN 1: CONTEXT, SCOPE, AND RATIONALE -->
-                        <div class="space-y-5 md:space-y-6 md:col-span-1">
+                        <div class="space-y-4 md:space-y-5 md:col-span-1">
                             
                             <!-- Project Objective -->
-                            <section class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-[#003B46]">
-                                <h3 class="text-lg font-bold mb-3 text-[#003B46]">Project Objective</h3>
-                                <p class="text-sm text-gray-700 leading-relaxed">
+                            <section class="p-3 bg-white rounded-xl shadow-lg border-t-3 border-[#003B46]">
+                                <h3 class="text-base font-bold mb-2 text-[#003B46]">Project Objective</h3>
+                                <p class="text-xs text-gray-700 leading-tight">
                                     To **strengthen Indonesia's national PPR framework** by integrating rights-based, gender-responsive, and community-led health mechanisms, focusing on the most excluded populations: **Ex-Prisoners** and **Key Populations (HTM)**.
                                 </p>
                             </section>
 
                             <!-- Project Sites & Local Leadership -->
-                            <section class="p-4 bg-[#07575B] text-white rounded-xl shadow-lg border-t-4 border-[#F7B733]">
-                                <h3 class="text-lg font-bold mb-3 text-[#C4DFE6]"><i class="fas fa-location-dot mr-2"></i>Project Sites</h3>
+                            <section class="p-3 bg-[#07575B] text-white rounded-xl shadow-lg border-t-3 border-[#F7B733]">
+                                <h3 class="text-base font-bold mb-2 text-[#C4DFE6]"><i class="fas fa-location-dot mr-2"></i>Project Sites</h3>
                                 <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
-                                    <div class="p-2 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Bandung</div>
-                                    <div class="p-2 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Makassar</div>
-                                    <div class="p-2 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Medan</div>
-                                    <div class="p-2 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Surabaya</div>
+                                    <div class="p-1 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Bandung</div>
+                                    <div class="p-1 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Makassar</div>
+                                    <div class="p-1 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Medan</div>
+                                    <div class="p-1 border border-[#66A5AD] rounded-lg text-center bg-[#003B46]/70">Surabaya</div>
                                 </div>
                             </section>
 
                             <!-- Rationale/Background -->
-                            <section class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-[#66A5AD]">
-                                <h3 class="text-lg font-bold mb-3 text-[#003B46]">The Rationale</h3>
-                                <p class="text-sm text-gray-700 leading-relaxed">
+                            <section class="p-3 bg-white rounded-xl shadow-lg border-t-3 border-[#66A5AD]">
+                                <h3 class="text-base font-bold mb-2 text-[#003B46]">The Rationale</h3>
+                                <p class="text-xs text-gray-700 leading-tight">
                                     Health crises disproportionately affect vulnerable groups due to systemic barriers, stigma, and lack of accessible services. COPPER tackles this by validating **community experience as evidence** for policy change, making PPR truly equitable.
                                 </p>
                             </section>
                         </div>
 
                         <!-- COLUMN 2: PROCESS AND KEY RESULTS -->
-                        <div class="space-y-5 md:space-y-6 md:col-span-1 lg:col-span-1">
+                        <div class="space-y-4 md:space-y-5 md:col-span-1 lg:col-span-1">
                             
-                            <!-- Implementation Journey (Flow Diagram) - CONTENT COMPRESSION APPLIED -->
-                            <section class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-[#F7B733]">
-                                <h3 class="text-lg font-bold mb-4 text-[#003B46] text-center">Implementation Journey</h3>
+                            <!-- Implementation Journey (VERTICAL FLOW WITH IMAGES) -->
+                            <section class="p-3 bg-white rounded-xl shadow-lg border-t-3 border-[#F7B733]">
+                                <h3 class="text-base font-bold mb-3 text-[#003B46] text-center">Implementation Journey</h3>
                                 
-                                <div class="flex flex-col lg:flex-row justify-between items-stretch space-y-4 lg:space-y-0 lg:space-x-3">
+                                <div class="space-y-3">
                                     
-                                    <div class="flow-step-container pb-4">
-                                        <div class="flow-line-h hidden lg:block"></div>
-                                        <div class="flow-circle c1">1</div>
-                                        <div class="text-left lg:text-center pt-1 lg:pt-0">
-                                            <p class="font-bold text-sm mb-0 text-[#07575B] mt-1 lg:mt-0">Capacity Building</p>
-                                            <p class="text-xs text-gray-600">PPR literacy and HR training (35 leaders).</p>
+                                    <!-- Step 1: Capacity Building -->
+                                    <div class="border-b border-gray-100 pb-3">
+                                        <div class="flex items-start">
+                                            <div class="flow-circle c1">1</div>
+                                            <div>
+                                                <p class="font-bold text-xs mb-0 text-[#07575B] leading-tight">Capacity Building</p>
+                                                <p class="text-[0.65rem] text-gray-600 leading-none">PPR literacy and HR training (35 leaders).</p>
+                                            </div>
+                                        </div>
+                                        <div class="ml-[3.2rem] mt-2">
+                                            <!-- Ganti src ini dengan tautan foto kegiatan 1 Anda -->
+                                            <img src="https://placehold.co/400x150/C4DFE6/003B46?text=Foto+1:+Capacity+Building" alt="Foto kegiatan Capacity Building" class="w-full rounded-lg max-h-16 object-cover">
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 2: Evidence Gathering -->
+                                    <div class="border-b border-gray-100 pb-3">
+                                        <div class="flex items-start">
+                                            <div class="flow-circle c2">2</div>
+                                            <div>
+                                                <p class="font-bold text-xs mb-0 text-[#07575B] leading-tight">Evidence Gathering</p>
+                                                <p class="text-[0.65rem] text-gray-600 leading-none">Lived experience data & Joint Advocacy Agenda.</p>
+                                            </div>
+                                        </div>
+                                        <div class="ml-[3.2rem] mt-2">
+                                            <!-- Ganti src ini dengan tautan foto kegiatan 2 Anda -->
+                                            <img src="https://placehold.co/400x150/66A5AD/003B46?text=Foto+2:+Evidence+Gathering" alt="Foto kegiatan Evidence Gathering" class="w-full rounded-lg max-h-16 object-cover">
                                         </div>
                                     </div>
                                     
-                                    <div class="flow-step-container pb-4">
-                                        <div class="flow-line-h hidden lg:block"></div>
-                                        <div class="flow-circle c2">2</div>
-                                        <div class="text-left lg:text-center pt-1 lg:pt-0">
-                                            <p class="font-bold text-sm mb-0 text-[#07575B] mt-1 lg:mt-0">Evidence Gathering</p>
-                                            <p class="text-xs text-gray-600">Lived experience data & Joint Advocacy Agenda.</p>
+                                    <!-- Step 3: Coordination -->
+                                    <div class="border-b border-gray-100 pb-3">
+                                        <div class="flex items-start">
+                                            <div class="flow-circle c3">3</div>
+                                            <div>
+                                                <p class="font-bold text-xs mb-0 text-[#07575B] leading-tight">Coordination</p>
+                                                <p class="text-[0.65rem] text-gray-600 leading-none">4 regional multi-sector Task Force formations.</p>
+                                            </div>
+                                        </div>
+                                        <div class="ml-[3.2rem] mt-2">
+                                            <!-- Ganti src ini dengan tautan foto kegiatan 3 Anda -->
+                                            <img src="https://placehold.co/400x150/07575B/FFFFFF?text=Foto+3:+Coordination" alt="Foto kegiatan Coordination" class="w-full rounded-lg max-h-16 object-cover">
                                         </div>
                                     </div>
                                     
-                                    <div class="flow-step-container pb-4">
-                                        <div class="flow-line-h hidden lg:block"></div>
-                                        <div class="flow-circle c3">3</div>
-                                        <div class="text-left lg:text-center pt-1 lg:pt-0">
-                                            <p class="font-bold text-sm mb-0 text-[#07575B] mt-1 lg:mt-0">Coordination</p>
-                                            <p class="text-xs text-gray-600">4 regional multi-sector Task Force formations.</p>
+                                    <!-- Step 4: Policy Influence -->
+                                    <div class="pb-0">
+                                        <div class="flex items-start">
+                                            <div class="flow-circle c4">4</div>
+                                            <div>
+                                                <p class="font-bold text-xs mb-0 text-[#07575B] leading-tight">Policy Influence</p>
+                                                <p class="text-[0.65rem] text-gray-600 leading-none">National/Local policy integration & dialogue.</p>
+                                            </div>
+                                        </div>
+                                        <div class="ml-[3.2rem] mt-2">
+                                            <!-- Ganti src ini dengan tautan foto kegiatan 4 Anda -->
+                                            <img src="https://placehold.co/400x150/F7B733/003B46?text=Foto+4:+Policy+Influence" alt="Foto kegiatan Policy Influence" class="w-full rounded-lg max-h-16 object-cover">
                                         </div>
                                     </div>
-                                    
-                                    <div class="flow-step-container pb-0">
-                                        <div class="flow-line-h hidden lg:block"></div>
-                                        <div class="flow-circle c4">4</div>
-                                        <div class="text-left lg:text-center pt-1 lg:pt-0">
-                                            <p class="font-bold text-sm mb-0 text-[#07575B] mt-1 lg:mt-0">Policy Influence</p>
-                                            <p class="text-xs text-gray-600">National/Local policy integration & dialogue.</p>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </section>
 
                             <!-- Quantitative Results (Expanded Metrics) -->
-                            <section class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-[#07575B]">
-                                <h3 class="text-lg font-bold mb-3 text-[#003B46] text-center">Key Quantitative Impacts</h3>
-                                <div class="grid grid-cols-2 gap-3 text-center">
-                                    <div class="p-3 bg-[#07575B] text-white rounded-lg">
-                                        <div class="text-3xl font-black">80+</div>
-                                        <p class="text-xs">Community Members Directly Engaged</p>
+                            <section class="p-3 bg-white rounded-xl shadow-lg border-t-3 border-[#07575B]">
+                                <h3 class="text-base font-bold mb-3 text-[#003B46] text-center">Key Quantitative Impacts</h3>
+                                <div class="grid grid-cols-2 gap-2 text-center">
+                                    <div class="p-2 bg-[#07575B] text-white rounded-lg">
+                                        <div class="text-2xl font-black">80+</div>
+                                        <p class="text-xs leading-none">Community Members Directly Engaged</p>
                                     </div>
-                                    <div class="p-3 bg-[#66A5AD] text-[#003B46] rounded-lg">
-                                        <div class="text-3xl font-black">4</div>
-                                        <p class="text-xs">Regional Task Forces Established</p>
+                                    <div class="p-2 bg-[#66A5AD] text-[#003B46] rounded-lg">
+                                        <div class="text-2xl font-black">4</div>
+                                        <p class="text-xs leading-none">Regional Task Forces Established</p>
                                     </div>
-                                    <div class="p-3 bg-[#F7B733] text-[#003B46] rounded-lg">
-                                        <div class="text-3xl font-black">2</div>
-                                        <p class="text-xs">National Policy Dialogues</p>
+                                    <div class="p-2 bg-[#F7B733] text-[#003B46] rounded-lg">
+                                        <div class="text-2xl font-black">2</div>
+                                        <p class="text-xs leading-none">National Policy Dialogues</p>
                                     </div>
-                                    <div class="p-3 bg-[#003B46] text-white rounded-lg">
-                                        <div class="text-3xl font-black">100%</div>
-                                        <p class="text-xs">Local Authority Sign-off on Recommendations</p>
+                                    <div class="p-2 bg-[#003B46] text-white rounded-lg">
+                                        <div class="text-2xl font-black">100%</div>
+                                        <p class="text-xs leading-none">Local Authority Sign-off on Recommendations</p>
                                     </div>
                                 </div>
                             </section>
 
                             <!-- Qualitative Outcomes -->
-                            <section class="p-4 bg-[#C4DFE6]/50 rounded-xl shadow-lg border-t-4 border-[#07575B]">
-                                <h3 class="text-lg font-bold mb-3 text-[#003B46]">Qualitative Outcomes</h3>
-                                <div class="space-y-3">
+                            <section class="p-3 bg-[#C4DFE6]/50 rounded-xl shadow-lg border-t-3 border-[#07575B]">
+                                <h3 class="text-base font-bold mb-2 text-[#003B46]">Qualitative Outcomes</h3>
+                                <div class="space-y-2">
                                     <div class="flex items-start">
                                         <div class="text-lg mr-3 text-[#07575B] flex-shrink-0"><i class="fas fa-handshake"></i></div>
-                                        <p class="text-sm text-gray-700">Increased trust and formalized communication channels between community leaders and local health services.</p>
+                                        <p class="text-xs text-gray-700 leading-tight">Increased trust and formalized communication channels between community leaders and local health services.</p>
                                     </div>
                                     <div class="flex items-start">
                                         <div class="text-lg mr-3 text-[#07575B] flex-shrink-0"><i class="fas fa-scroll"></i></div>
-                                        <p class="text-sm text-gray-700">Recommendations submitted led to broader recognition of key populations in regional health system reform planning.</p>
+                                        <p class="text-xs text-gray-700 leading-tight">Recommendations submitted led to broader recognition of key populations in regional health system reform planning.</p>
                                     </div>
                                 </div>
                             </section>
                         </div>
 
                         <!-- COLUMN 3: VOICES, CHALLENGES, AND LESSONS LEARNED -->
-                        <!-- PERBAIKAN: md:col-span-1 agar di tablet, kolom 3 tidak memakan 2 kolom penuh dan tetap seimbang. -->
-                        <div class="space-y-5 md:space-y-6 md:col-span-1 lg:col-span-1">
+                        <div class="space-y-4 md:space-y-5 md:col-span-1 lg:col-span-1">
                             
                             <!-- Voices from the Field -->
-                            <section class="p-4 bg-[#003B46] text-white rounded-xl shadow-lg">
-                                <h3 class="text-lg font-bold mb-3 text-[#C4DFE6]"><i class="fas fa-comments mr-2"></i>Voices from the Field</h3>
+                            <section class="p-3 bg-[#003B46] text-white rounded-xl shadow-lg">
+                                <h3 class="text-base font-bold mb-2 text-[#C4DFE6]"><i class="fas fa-comments mr-2"></i>Voices from the Field</h3>
                                 <div class="quote-box">
-                                    <p class="italic text-base leading-relaxed">
+                                    <p class="italic text-sm leading-snug">
                                         “Before COPPER, kami merasa tidak terlihat dalam diskusi kesehatan masyarakat. Sekarang, kami adalah bagian dari solusi.”
                                     </p>
-                                    <cite class="block text-right mt-3 text-sm font-semibold text-[#F7B733]">
+                                    <cite class="block text-right mt-2 text-xs font-semibold text-[#F7B733]">
                                         — Leader Komunitas Eks-Tahanan, Bandung
                                     </cite>
                                 </div>
                             </section>
 
                             <!-- Key Challenges -->
-                            <section class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-[#07575B]">
-                                <h3 class="text-lg font-bold mb-3 text-[#003B46]"><i class="fas fa-triangle-exclamation mr-2"></i>Key Challenges</h3>
-                                <ul class="space-y-2 text-sm text-gray-700 list-disc list-inside ml-2">
+                            <section class="p-3 bg-white rounded-xl shadow-lg border-t-3 border-[#07575B]">
+                                <h3 class="text-base font-bold mb-2 text-[#003B46]"><i class="fas fa-triangle-exclamation mr-2"></i>Key Challenges</h3>
+                                <ul class="space-y-1 text-xs text-gray-700 list-disc list-inside ml-2">
                                     <li>**Stigma & Trust Deficit:** Initial reluctance from local authorities to engage excluded groups.</li>
                                     <li>**Funding Disconnect:** Difficulty in channeling sustainable, non-project-based funding directly to community-based PPR initiatives.</li>
                                 </ul>
                             </section>
 
                             <!-- Lessons Learned -->
-                            <section class="p-4 bg-white rounded-xl shadow-lg border-t-4 border-[#66A5AD]">
-                                <h3 class="text-lg font-bold mb-4 text-[#003B46]"><i class="fas fa-book-open-reader mr-2"></i>Lessons Learned</h3>
-                                <div class="space-y-3">
+                            <section class="p-3 bg-white rounded-xl shadow-lg border-t-3 border-[#66A5AD]">
+                                <h3 class="text-base font-bold mb-3 text-[#003B46]"><i class="fas fa-book-open-reader mr-2"></i>Lessons Learned</h3>
+                                <div class="space-y-2">
                                     <div class="flex items-start">
                                         <div class="text-xl mr-3 text-[#F7B733] font-black flex-shrink-0">1.</div>
                                         <div>
-                                            <p class="font-bold text-base text-[#07575B]">Inclusion as a Core Resilience Factor</p>
-                                            <p class="text-xs text-gray-600">Community leadership builds responsive systems that are sustainable and reach the 'last mile' populations effectively.</p>
+                                            <p class="font-bold text-sm text-[#07575B] leading-snug">Inclusion as a Core Resilience Factor</p>
+                                            <p class="text-xs text-gray-600 leading-tight">Community leadership builds responsive systems that are sustainable and reach the 'last mile' populations effectively.</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
                                         <div class="text-xl mr-3 text-[#66A5AD] font-black flex-shrink-0">2.</div>
                                         <div>
-                                            <p class="font-bold text-base text-[#07575B]">Documentation is Paramount</p>
-                                            <p class="text-xs text-gray-600">Detailed evidence and policy briefs are non-negotiable for successful, technically accepted advocacy.</p>
+                                            <p class="font-bold text-sm text-[#07575B] leading-snug">Documentation is Paramount</p>
+                                            <p class="text-xs text-gray-600 leading-tight">Detailed evidence and policy briefs are non-negotiable for successful, technically accepted advocacy.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -370,21 +317,21 @@
                         </div>
                         
                         <!-- Full Width Recommendations Section -->
-                        <div class="lg:col-span-3 space-y-6 md:space-y-8">
-                            <section class="p-4 bg-[#07575B] text-white rounded-xl shadow-xl border-t-4 border-[#F7B733]">
-                                <h3 class="text-lg font-bold mb-3 text-[#C4DFE6]"><i class="fas fa-arrow-up-right-dots mr-2"></i>Moving Forward (Recommendations)</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                    <div class="flex items-start p-3 bg-[#003B46]/70 rounded-lg">
+                        <div class="lg:col-span-3 space-y-4 md:space-y-5">
+                            <section class="p-3 bg-[#07575B] text-white rounded-xl shadow-xl border-t-3 border-[#F7B733]">
+                                <h3 class="text-base font-bold mb-3 text-[#C4DFE6]"><i class="fas fa-arrow-up-right-dots mr-2"></i>Moving Forward (Recommendations)</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                    <div class="flex items-start p-2 bg-[#003B46]/70 rounded-lg">
                                         <div class="text-xl mr-3 flex-shrink-0">⏫</div>
-                                        <p class="text-sm">Mandate the integration of community PPR groups into local public health emergency action plans.</p>
+                                        <p class="text-xs leading-snug">Mandate the integration of community PPR groups into local public health emergency action plans.</p>
                                     </div>
-                                    <div class="flex items-start p-3 bg-[#003B46]/70 rounded-lg">
+                                    <div class="flex items-start p-2 bg-[#003B46]/70 rounded-lg">
                                         <div class="text-xl mr-3 flex-shrink-0">💰</div>
-                                        <p class="text-sm">Establish dedicated, flexible funding mechanisms for community PPR capacity maintenance.</p>
+                                        <p class="text-xs leading-snug">Establish dedicated, flexible funding mechanisms for community PPR capacity maintenance.</p>
                                     </div>
-                                    <div class="flex items-start p-3 bg-[#003B46]/70 rounded-lg">
+                                    <div class="flex items-start p-2 bg-[#003B46]/70 rounded-lg">
                                         <div class="text-xl mr-3 flex-shrink-0">🤝</div>
-                                        <p class="text-sm">Expand the COPPER model to 5 new regions across Eastern Indonesia for greater national coverage.</p>
+                                        <p class="text-xs leading-snug">Expand the COPPER model to 5 new regions across Eastern Indonesia for greater national coverage.</p>
                                     </div>
                                 </div>
                             </section>
@@ -394,21 +341,21 @@
                 </main>
 
                 <!-- FOOTER -->
-                <footer class="text-center py-4 mt-6 border-t-4 border-[#66A5AD] bg-white internal-padding pt-4 pb-6">
-                    <div class="text-sm text-[#003B46] ">
-                        <p class="font-semibold mb-3">Implemented by JIP, Supported by The Global Fund</p>
-                        <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-8">
-                            <div class="text-xs text-gray-600">
+                <footer class="text-center py-3 mt-5 border-t-3 border-[#66A5AD] bg-white internal-padding pt-3 pb-5">
+                    <div class="text-xs text-[#003B46] ">
+                        <p class="font-semibold mb-2">Implemented by JIP, Supported by The Global Fund</p>
+                        <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-6">
+                            <div class="text-[0.7rem] text-gray-600">
                                 <p>Contact: JIP Secretariat | info@jip-indonesia.org</p>
                             </div>
-                            <div class="flex items-center space-x-2 p-2 border border-[#07575B] rounded-lg bg-gray-50">
-                                <div class="w-8 h-8 bg-gray-200 flex items-center justify-center rounded-md">
-                                    <i class="fas fa-qrcode text-lg text-[#07575B]"></i>
+                            <div class="flex items-center space-x-2 p-1 border border-[#07575B] rounded-lg bg-gray-50">
+                                <div class="w-7 h-7 bg-gray-200 flex items-center justify-center rounded-md">
+                                    <i class="fas fa-qrcode text-base text-[#07575B]"></i>
                                 </div>
                                 <span class="font-bold text-[#003B46] text-xs">Scan for Full Report</span>
                             </div>
                         </div>
-                        <div class="mt-4 text-xs font-medium text-gray-600 space-x-2">
+                        <div class="mt-3 text-xs font-medium text-gray-600 space-x-2">
                             <span>#CommunityLedPPR</span>
                             <span>#LeaveNoOneBehind</span>
                             <span>#COPPERIndonesia</span>
