@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IKMT Calculator — Indeks Kerentanan Multihazard Terintegrasi</title>
+<style>
+  :root{
+    --bg:#f7f9fb;
+    --card:#ffffff;
+    --muted:#6b7280;
+    --accent:#0ea5a4;
+    --accent-2:#06b6d4;
+    --danger:#ef4444;
+    --glass: rgba(255,255,255,0.7);
+    --shadow: 0 6px 18px rgba(11,15,26,0.06);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  body{margin:0;background:linear-gradient(180deg,#eef2f7 0%,var(--bg) 100%);color:#0f172a;}
+  .container{max-width:1140px;margin:32px auto;padding:20px;}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:var(--shadow)}
+  h1{font-size:20px;margin:0}
+  p.lead{margin:0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:start}
+  .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+  .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  label.item{display:flex;flex-direction:column;gap:6px;font-size:13px}
+  select,input[type="number"]{padding:8px;border-radius:8px;border:1px solid #e6eef6;background:transparent}
+  .domain{border-left:4px solid var(--accent);padding:10px;border-radius:8px;background:linear-gradient(180deg,rgba(14,165,164,0.03),transparent)}
+  .domain.sus{border-left-color:#f97316}
+  .domain.adapt{border-left-color:#10b981}
+  .domain.marg{border-left-color:#7c3aed}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .muted{color:var(--muted);font-size:13px}
+  .btn{background:var(--accent);color:white;padding:10px 12px;border-radius:10px;border:0;cursor:pointer}
+  .btn.secondary{background:#eef2f7;color:#08303a}
+  .small{font-size:13px;padding:7px 10px;border-radius:9px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .results{margin-top:12px;display:grid;grid-template-columns:1fr;gap:12px}
+  .chart{width:100%;height:220px;background:linear-gradient(180deg,#ffffff, #fbfeff);border-radius:8px;padding:8px;overflow:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
+  .k{font-weight:700;color:#0f172a}
+  .muted-sm{font-size:12px;color:var(--muted)}
+  .hint{background:#fff7ed;padding:8px;border-radius:8px;border-left:4px solid #f59e0b}
+  footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center}
+  .csv-area{margin-top:8px;border:1px dashed #e6eef6;padding:10px;border-radius:8px;background:linear-gradient(180deg,rgba(236,253,245,0.6),transparent)}
+  @media(max-width:980px){.grid{grid-template-columns:1fr;}.form-grid{grid-template-columns:1fr}}
+  /* mini badges */
+  .badge{display:inline-block;padding:6px 8px;border-radius:999px;background:#eef2ff;color:#0f172a;font-size:12px}
+  .small-muted{font-size:12px;color:var(--muted)}
+  /* svg container */
+  .svg-wrap{width:100%;height:220px;display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">IKMT</div>
+    <div>
+      <h1>IKMT Calculator — Indeks Kerentanan Multihazard Terintegrasi</h1>
+      <p class="lead">Form input, perhitungan indeks, dan analisis Prevention / Preparedness / Response. Versi prototipe (offline).</p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- LEFT: form and controls -->
+    <div>
+      <div class="card">
+        <h3>Input: Kuesioner IKMT (H, S, A, M)</h3>
+        <p class="muted-sm">Isi semua item (skala 0–4). Untuk bulk processing, upload CSV format yang berisi kolom: <code>name,year,lat,lon,H1..H5,S1..S6,A1..A6,M1..M6</code>. Lihat petunjuk di bawah.</p>
+
+        <div style="margin-top:12px;" id="single-form">
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1">
+              <label class="small-muted">Area / Nama lokasi</label>
+              <input id="area-name" placeholder="Contoh: Kabupaten X" />
+            </div>
+            <div style="width:140px">
+              <label class="small-muted">Tahun</label>
+              <input id="area-year" type="number" value="2025" />
+            </div>
+            <div style="width:120px">
+              <label class="small-muted">Lat (opsional)</label>
+              <input id="area-lat" placeholder="eg -7.2" />
+            </div>
+            <div style="width:120px">
+              <label class="small-muted">Lon (opsional)</label>
+              <input id="area-lon" placeholder="eg 110.4" />
+            </div>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7"/>
+
+          <!-- Domains -->
+          <div style="display:grid;gap:10px">
+            <!-- H -->
+            <div class="domain">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>DOMAIN 1 — HAZARD / EXPOSURE (H)</strong>
+                <span class="muted-sm">Skala: 0 (tidak) — 4 (sangat sering)</span>
+              </div>
+              <div class="form-grid" style="margin-top:8px">
+                <label class="item">H1: Seberapa sering wilayah mengalami bencana dalam 5 tahun terakhir?
+                  <select id="H1"> <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">H2: Zona rawan menurut peta risiko?
+                  <select id="H2"> <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">H3: Bencana non-alam (pandemi, listrik, dll)?
+                  <select id="H3"> <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">H4: Konflik sosial dalam 3 tahun terakhir?
+                  <select id="H4"> <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">H5: Fasilitas penting berada di zona berisiko tinggi?
+                  <select id="H5"> <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+              </div>
+            </div>
+
+            <!-- S -->
+            <div class="domain sus">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>DOMAIN 2 — SUSCEPTIBILITY (S)</strong>
+                <span class="muted-sm">Skala: 0 (rendah) — 4 (sangat tinggi)</span>
+              </div>
+              <div class="form-grid" style="margin-top:8px">
+                <label class="item">S1: Prevalensi HIV vs rata-rata?
+                  <select id="S1"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">S2: Insiden TB vs rata-rata?
+                  <select id="S2"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">S3: Persentase disabilitas &gt;5%?
+                  <select id="S3"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">S4: Jumlah lanjut usia (>60)?
+                  <select id="S4"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">S5: Gangguan layanan rutin saat krisis?
+                  <select id="S5"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">S6: Ketergantungan pada fasilitas publik?
+                  <select id="S6"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+              </div>
+            </div>
+
+            <!-- A -->
+            <div class="domain adapt">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>DOMAIN 3 — ADAPTIVE CAPACITY / ACCESS (A)</strong>
+                <span class="muted-sm">Skala (kapasitas): 0 (tidak ada) — 4 (sangat baik) → akan dibalik pada perhitungan</span>
+              </div>
+              <div class="form-grid" style="margin-top:8px">
+                <label class="item">A1: Akses ke fasilitas kesehatan (≤30 menit)?
+                  <select id="A1"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">A2: SOP tanggap bencana di fasilitas kesehatan?
+                  <select id="A2"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">A3: Sistem komunikasi darurat ada?
+                  <select id="A3"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">A4: Cadangan logistik dasar (3 hari)?
+                  <select id="A4"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">A5: Kelompok rentan dilibatkan dalam perencanaan?
+                  <select id="A5"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">A6: Training/simulasi 12 bulan terakhir?
+                  <select id="A6"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+              </div>
+            </div>
+
+            <!-- M -->
+            <div class="domain marg">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong>DOMAIN 4 — SOCIAL MARGINALIZATION (M)</strong>
+                <span class="muted-sm">Skala: 0 (inklusif) — 4 (sangat tinggi)</span>
+              </div>
+              <div class="form-grid" style="margin-top:8px">
+                <label class="item">M1: Stigma/diskriminasi terhadap kelompok rentan?
+                  <select id="M1"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">M2: Individu tanpa dokumen kependudukan?
+                  <select id="M2"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">M3: Kebijakan lokal membatasi akses?
+                  <select id="M3"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">M4: Adanya jaringan dukungan komunitas aktif?
+                  <select id="M4"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">M5: Kasus kekerasan/pengusiran 2 tahun terakhir?
+                  <select id="M5"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+                <label class="item">M6: Perwakilan dalam forum pengambilan keputusan?
+                  <select id="M6"><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="controls">
+            <button class="btn" id="compute-btn">Compute IKMT (single)</button>
+            <button class="btn secondary" id="reset-btn">Reset Form</button>
+            <div style="flex:1"></div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="small-muted">Weights (H,S,A,M)</div>
+              <input id="wH" type="number" value="1" min="0" style="width:72px" />
+              <input id="wS" type="number" value="1" min="0" style="width:72px" />
+              <input id="wA" type="number" value="1" min="0" style="width:72px" />
+              <input id="wM" type="number" value="1" min="0" style="width:72px" />
+            </div>
+          </div>
+
+        </div>
+
+        <hr style="margin:12px 0;border:none;border-top:1px solid #eef2f7"/>
+
+        <div>
+          <h4>Batch: Upload CSV</h4>
+          <p class="muted-sm">CSV minimal: kolom <code>name,H1..H5,S1..S6,A1..A6,M1..M6</code>. Opsional: <code>year,lat,lon</code>. Separator koma.</p>
+          <div class="csv-area">
+            <input type="file" id="csv-file" accept=".csv" />
+            <div style="margin-top:8px">
+              <button class="btn" id="process-csv">Process CSV</button>
+              <button class="btn secondary" id="download-sample">Download sample CSV</button>
+              <label style="margin-left:12px" class="small-muted">K-means clusters:
+                <input id="kclusters" type="number" value="3" style="width:60px;margin-left:8px" />
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Results area -->
+      <div class="card" style="margin-top:12px">
+        <h3>Output & Analisis</h3>
+        <div id="results" class="results">
+          <div id="summary" class="card" style="padding:12px"></div>
+          <div id="rca" class="card"><strong>Root Cause Analysis</strong><div id="rca-chart" class="chart"></div></div>
+          <div id="sensitivity" class="card"><strong>Sensitivity Analysis (one-at-a-time)</strong><div id="sens-chart" class="chart"></div></div>
+          <div id="gap" class="card"><strong>Gap Analysis (A vs S)</strong><div id="gap-chart" class="chart"></div></div>
+          <div id="scenario" class="card"><strong>Scenario Modelling</strong>
+            <div style="display:flex;gap:8px;align-items:center">
+              <label class="small-muted">Increase A by (%)</label>
+              <input id="scenario-pct" type="number" value="20" style="width:80px" />
+              <button class="btn" id="run-scenario">Run</button>
+            </div>
+            <div id="scenario-result" style="margin-top:8px"></div>
+          </div>
+
+          <div id="batch-results" class="card" style="display:none">
+            <strong>Batch / Multi-area Results</strong>
+            <div id="batch-quick" style="margin-top:8px"></div>
+            <div id="map-svg" class="card" style="margin-top:8px;padding:6px">
+              <strong>Map scatter (lat/lon provided)</strong>
+              <div id="map-canvas" style="width:100%;height:260px"></div>
+            </div>
+            <div style="margin-top:8px"><strong>Clusters</strong><div id="clusters-list" style="margin-top:6px"></div></div>
+          </div>
+
+          <div id="download-area" style="display:flex;gap:8px;align-items:center">
+            <button class="btn" id="export-csv">Export Results CSV</button>
+            <button class="btn secondary" id="export-json">Copy JSON</button>
+            <div class="muted-sm">Results include domain scores, IKMT, RCA, cluster id (if any).</div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        Prototype IKMT Calculator — gunakan sebagai alat analisis awal. Metode default: domain weights equal. Untuk publikasi/keputusan resmi, verifikasi metode & data.
+      </footer>
+    </div>
+
+    <!-- RIGHT: help & methodology -->
+    <aside>
+      <div class="card">
+        <h4>Pedoman & Metodologi (ringkas)</h4>
+        <ul style="padding-left:18px;color:var(--muted)">
+          <li>Setiap indikator: skala 0–4. Domain A dibalik saat perhitungan: <code>A_vuln = 4 - mean(A)</code>.</li>
+          <li>Domain dinormalisasi ke 0–100: <code>domain_norm = (mean_domain / 4) * 100</code>.</li>
+          <li>Skor IKMT total: weighted mean domain_norm (H,S,A_vuln,M) ke 0–100.</li>
+          <li>RCA: menampilkan kontribusi indikator terhadap skor IKMT (berdasarkan sensitivity & share bobot).</li>
+          <li>Sensitivity (one-at-a-time): menaikkan indikator +1 (maks 4) untuk melihat penurunan/kenaikan IKMT → prioritization.</li>
+          <li>Cluster: K-means sederhana pada vektor domain_norm (H,S,A_vuln,M).</li>
+        </ul>
+        <div style="margin-top:8px" class="hint">
+          <strong>Catatan:</strong> untuk spatial correlation dan peta hazard nyata (InaRISK/BNPB) — upload shapefile atau gabungkan dengan layer GIS eksternal di tahap integrasi (dashboard). Versi ini menyediakan scatter map dari lat/lon jika tersedia.
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <strong>Quick tips</strong>
+        <ol style="padding-left:18px;color:var(--muted)">
+          <li>Isi form dan klik Compute untuk satu area.</li>
+          <li>Upload CSV untuk analisis multi-area dan clustering.</li>
+          <li>Ubah bobot domain bila ingin menekankan H atau S.</li>
+          <li>Simpan hasil dan gunakan untuk RPJ, RPB, dan advokasi.</li>
+        </ol>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* IKMT Calculator v1.0
+   - Single-area compute
+   - Batch CSV processing (basic CSV parser)
+   - RCA (indicator contribution), Sensitivity, Gap, Scenario, K-means
+   - Simple SVG charts
+*/
+
+/* Utility */
+function q(id){return document.getElementById(id)}
+function mean(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length }
+function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+
+/* List of indicators by domain */
+const IND = {
+  H: ['H1','H2','H3','H4','H5'],
+  S: ['S1','S2','S3','S4','S5','S6'],
+  A: ['A1','A2','A3','A4','A5','A6'],
+  M: ['M1','M2','M3','M4','M5','M6']
+}
+
+/* read form values */
+function readFormValues(prefixes){
+  const res={}
+  for(const d of Object.keys(IND)){
+    res[d]=[]
+    for(const id of IND[d]){
+      let el = q(id)
+      let v = el ? parseFloat(el.value) : 0
+      if(isNaN(v)) v=0
+      res[d].push(clamp(v,0,4))
+    }
+  }
+  res.meta = {
+    name: q('area-name').value || 'Unnamed area',
+    year: q('area-year').value || '',
+    lat: q('area-lat').value || '',
+    lon: q('area-lon').value || ''
+  }
+  return res
+}
+
+/* compute domain scores and IKMT */
+function computeIKMT(record, weights){
+  // record: {H:[],S:[],A:[],M:[], meta:{}}
+  // weights: {H,S,A,M} numeric - will be normalized
+  const out = {meta:record.meta, indicators:{}}
+  // means:
+  const meanH = mean(record.H)
+  const meanS = mean(record.S)
+  const meanA = mean(record.A)
+  const meanM = mean(record.M)
+  // A vulnerability is inverted:
+  const A_vuln = 4 - meanA
+
+  // normalize domain to 0-100
+  const dn = {}
+  dn.H = (meanH / 4) * 100
+  dn.S = (meanS / 4) * 100
+  dn.A = (A_vuln / 4) * 100
+  dn.M = (meanM / 4) * 100
+
+  // weights normalize
+  const totalW = (weights.H+weights.S+weights.A+weights.M) || 1
+  const w = {H:weights.H/totalW,S:weights.S/totalW,A:weights.A/totalW,M:weights.M/totalW}
+
+  // IKMT total 0-100
+  const ikmt = dn.H * w.H + dn.S * w.S + dn.A * w.A + dn.M * w.M
+
+  // indicator-level normalized contributions (simple share = (score/4)*(domain weight / nitems))
+  const contributions = {}
+  for(const d of Object.keys(IND)){
+    const arr = record[d]
+    const n = arr.length
+    arr.forEach((val,i)=>{
+      const id = IND[d][i]
+      // indicator normalized 0-1
+      const norm = val/4
+      // share to overall (percentage points)
+      const share = norm * ( (dn[d] / 100) * (w[d]) ) // a heuristic
+      contributions[id] = {val, norm, domain:d, share}
+    })
+  }
+
+  out.domainMean = {H:meanH,S:meanS,A:meanA,M:meanM}
+  out.domainNorm = dn
+  out.A_vuln = A_vuln
+  out.weightsNorm = w
+  out.ikmt = ikmt
+  out.indicatorContrib = contributions
+  return out
+}
+
+/* Draw simple bar chart for RCA (top indicators) */
+function drawRcaChart(result, containerId, topN=10){
+  const container = q(containerId)
+  container.innerHTML = ''
+  // compute percent contribution approximated from contributions.share
+  const entries = Object.entries(result.indicatorContrib).map(([k,v])=>({id:k,share:v.share,val:v.val,domain:v.domain}))
+  entries.sort((a,b)=>b.share - a.share)
+  const top = entries.slice(0,topN)
+  const svgNS = 'http://www.w3.org/2000/svg'
+  const svg = document.createElementNS(svgNS,'svg')
+  svg.setAttribute('width','100%')
+  svg.setAttribute('height','220')
+  svg.setAttribute('viewBox','0 0 600 220')
+  container.appendChild(svg)
+  const pad = 120
+  const barW = 420 / top.length
+  const maxShare = Math.max(0.0001, ...top.map(d=>d.share))
+  // draw bars vertical
+  top.forEach((d,i)=>{
+    const x = 10 + i*barW
+    const h = (d.share / maxShare) * 160
+    const y = 190 - h
+    const rect = document.createElementNS(svgNS,'rect')
+    rect.setAttribute('x', x)
+    rect.setAttribute('y', y)
+    rect.setAttribute('width', Math.max(18, barW-10))
+    rect.setAttribute('height', h)
+    // color by domain
+    let color='#0ea5a4'
+    if(d.domain==='S') color='#f97316'
+    if(d.domain==='A') color='#10b981'
+    if(d.domain==='M') color='#7c3aed'
+    rect.setAttribute('fill', color)
+    svg.appendChild(rect)
+    // label
+    const txt = document.createElementNS(svgNS,'text')
+    txt.setAttribute('x', x+6)
+    txt.setAttribute('y', 205)
+    txt.setAttribute('font-size', '11')
+    txt.textContent = d.id + ' ('+d.val+')'
+    svg.appendChild(txt)
+  })
+  // footer note
+  const note = document.createElement('div')
+  note.className='small-muted'
+  note.style.marginTop='8px'
+  note.innerHTML='Catatan: RCA memperlihatkan indikator dengan kontribusi relatif terhadap IKMT (heuristik). Gunakan sensitivity untuk prioritas intervensi.'
+  container.appendChild(note)
+}
+
+/* Sensitivity: one-at-a-time +1 (clamped to 4) */
+function computeSensitivity(record, weights){
+  const base = computeIKMT(record,weights)
+  const sims = []
+  for(const d of Object.keys(IND)){
+    for(let i=0;i<IND[d].length;i++){
+      const id = IND[d][i]
+      const rec2 = JSON.parse(JSON.stringify(record))
+      // increase that indicator by +1 (max 4)
+      rec2[d][i] = clamp(rec2[d][i] + 1, 0, 4)
+      const out2 = computeIKMT(rec2,weights)
+      const delta = out2.ikmt - base.ikmt
+      sims.push({id,domain:d,orig:record[d][i],new:rec2[d][i],delta})
+    }
+  }
+  sims.sort((a,b)=>b.delta - a.delta) // largest improvement (increase) first
+  return {base, sims}
+}
+
+/* Draw sens chart */
+function drawSensChart(sens, containerId, topN=12){
+  const container = q(containerId)
+  container.innerHTML=''
+  const data = sens.sims.slice(0,topN)
+  const svgNS = 'http://www.w3.org/2000/svg'
+  const svg = document.createElementNS(svgNS,'svg')
+  svg.setAttribute('width','100%')
+  svg.setAttribute('height','220')
+  svg.setAttribute('viewBox','0 0 700 220')
+  container.appendChild(svg)
+  const maxDelta = Math.max(...data.map(d=>Math.abs(d.delta)),0.0001)
+  data.forEach((d,i)=>{
+    const x = 10
+    const y = 10 + i*16
+    const w = (d.delta / maxDelta) * 300
+    const rect = document.createElementNS(svgNS,'rect')
+    rect.setAttribute('x', x)
+    rect.setAttribute('y', y)
+    rect.setAttribute('width', Math.abs(w))
+    rect.setAttribute('height', 12)
+    rect.setAttribute('fill', d.delta>=0 ? '#059669' : '#ef4444')
+    svg.appendChild(rect)
+    const txt = document.createElementNS(svgNS,'text')
+    txt.setAttribute('x', x + Math.abs(w) + 8)
+    txt.setAttribute('y', y+10)
+    txt.setAttribute('font-size','12')
+    txt.textContent = d.id + ' ('+d.domain+') ΔIKMT: ' + d.delta.toFixed(2)
+    svg.appendChild(txt)
+  })
+  const note = document.createElement('div'); note.className='small-muted'; note.style.marginTop='8px'
+  note.innerHTML='Interpretasi: semakin besar ΔIKMT saat menaikkan indikator +1, semakin strategis intervensi pada indikator tersebut.'
+  container.appendChild(note)
+}
+
+/* Gap chart: A vs S scatter-like bar */
+function drawGapChart(result, containerId){
+  const container = q(containerId); container.innerHTML=''
+  const svgNS='http://www.w3.org/2000/svg'
+  const svg=document.createElementNS(svgNS,'svg')
+  svg.setAttribute('width','100%'); svg.setAttribute('height','120'); svg.setAttribute('viewBox','0 0 600 120')
+  container.appendChild(svg)
+  const s = result.domainNorm.S
+  const a = result.domainNorm.A
+  // draw bars
+  const barW=120
+  const x0=60
+  const yBase=100
+  const hS = (s/100)*80
+  const hA = (a/100)*80
+  const rectS=document.createElementNS(svgNS,'rect'); rectS.setAttribute('x',x0); rectS.setAttribute('y',yBase-hS); rectS.setAttribute('width',barW); rectS.setAttribute('height',hS); rectS.setAttribute('fill','#f97316')
+  const rectA=document.createElementNS(svgNS,'rect'); rectA.setAttribute('x',x0+barW+40); rectA.setAttribute('y',yBase-hA); rectA.setAttribute('width',barW); rectA.setAttribute('height',hA); rectA.setAttribute('fill','#10b981')
+  svg.appendChild(rectS); svg.appendChild(rectA)
+  const txt1=document.createElementNS(svgNS,'text'); txt1.setAttribute('x',x0); txt1.setAttribute('y',yBase+15); txt1.setAttribute('font-size','12'); txt1.textContent='Susceptibility (S): '+s.toFixed(1)
+  const txt2=document.createElementNS(svgNS,'text'); txt2.setAttribute('x',x0+barW+40); txt2.setAttribute('y',yBase+15); txt2.setAttribute('font-size','12'); txt2.textContent='Adaptive vuln (A): '+a.toFixed(1)
+  svg.appendChild(txt1); svg.appendChild(txt2)
+  const gap = s - a
+  const note=document.createElement('div'); note.className='small-muted'; note.style.marginTop='8px'
+  note.innerHTML = 'Gap (S - A_vuln): '+gap.toFixed(2)+'. Positif = susceptibility lebih besar dari adaptive capacity vulnerability → butuh penguatan kapasitas.'
+  container.appendChild(note)
+}
+
+/* Scenario modelling: increase A by pct% */
+function runScenario(record, weights, pct){
+  const rec2 = JSON.parse(JSON.stringify(record))
+  // increase mean A by pct% but constrained per-item
+  for(let i=0;i<rec2.A.length;i++){
+    let inc = rec2.A[i] * (pct/100)
+    // We interpret increase of A as improving capacity: so add percentage of remaining to 4
+    const remain = 4 - rec2.A[i]
+    const add = remain * (pct/100)
+    rec2.A[i] = clamp(rec2.A[i] + add, 0, 4)
+  }
+  const before = computeIKMT(record,weights)
+  const after = computeIKMT(rec2,weights)
+  return {before, after, delta: after.ikmt - before.ikmt}
+}
+
+/* Simple CSV parser */
+function parseCSV(text){
+  // very simple CSV parser: split lines, split by comma respecting quoted fields naive
+  const lines = text.trim().split(/\r?\n/).filter(l=>l.trim().length>0)
+  if(lines.length<1) return []
+  const headers = lines[0].split(',').map(h=>h.trim())
+  const rows=[]
+  for(let i=1;i<lines.length;i++){
+    // naive split; handle quotes
+    const line = lines[i]
+    const cols=[]
+    let cur=''; let inq=false
+    for(let ch of line){
+      if(ch==='\"') { inq=!inq; continue }
+      if(ch===',' && !inq){ cols.push(cur); cur=''; } else cur+=ch
+    }
+    cols.push(cur)
+    const obj={}
+    for(let j=0;j<headers.length;j++){
+      obj[headers[j]] = (j<cols.length) ? cols[j].trim() : ''
+    }
+    rows.push(obj)
+  }
+  return {headers,rows}
+}
+
+/* process CSV file -> compute records */
+function processBatchCSV(text){
+  const parsed = parseCSV(text)
+  if(!parsed) return []
+  const rows = parsed.rows
+  const records=[]
+  for(const r of rows){
+    const rec = {H:[],S:[],A:[],M:[], meta:{}}
+    rec.meta.name = r.name || r.Name || r.nama || ('row'+(records.length+1))
+    rec.meta.year = r.year || ''
+    rec.meta.lat = r.lat || ''
+    rec.meta.lon = r.lon || ''
+    for(const id of IND.H) rec.H.push(clamp(parseFloat(r[id]||r[id.toLowerCase()]||0)||0,0,4))
+    for(const id of IND.S) rec.S.push(clamp(parseFloat(r[id]||r[id.toLowerCase()]||0)||0,0,4))
+    for(const id of IND.A) rec.A.push(clamp(parseFloat(r[id]||r[id.toLowerCase()]||0)||0,0,4))
+    for(const id of IND.M) rec.M.push(clamp(parseFloat(r[id]||r[id.toLowerCase()]||0)||0,0,4))
+    records.push(rec)
+  }
+  return records
+}
+
+/* K-means (simple) on domain vector [H,S,A,M] */
+function kmeans(records,k=3,iter=30){
+  // records: array of computeIKMT result objects or raw records
+  const X = records.map(r=>{
+    if(r.domainNorm) return [r.domainNorm.H,r.domainNorm.S,r.domainNorm.A,r.domainNorm.M]
+    else if(r.H) return [ mean(r.H)/4*100, mean(r.S)/4*100, (4-mean(r.A))/4*100, mean(r.M)/4*100 ]
+    else return [0,0,0,0]
+  })
+  const n = X.length
+  if(n===0) return []
+  // init centroids randomly
+  const centroids = []
+  const used = new Set()
+  while(centroids.length<k){
+    const idx = Math.floor(Math.random()*n)
+    if(!used.has(idx)){ used.add(idx); centroids.push(X[idx].slice()) }
+  }
+  let labels = new Array(n).fill(0)
+  for(let it=0;it<iter;it++){
+    // assign
+    for(let i=0;i<n;i++){
+      let best=0; let bestd=Infinity
+      for(let c=0;c<k;c++){
+        const d = X[i].reduce((s,v,idx)=> s + Math.pow(v-centroids[c][idx],2), 0)
+        if(d<bestd){bestd=d;best=c}
+      }
+      labels[i]=best
+    }
+    // update centroids
+    const sums = new Array(k).fill(0).map(()=>new Array(4).fill(0))
+    const counts = new Array(k).fill(0)
+    for(let i=0;i<n;i++){
+      const c = labels[i]; counts[c]++
+      for(let j=0;j<4;j++) sums[c][j]+=X[i][j]
+    }
+    for(let c=0;c<k;c++){
+      if(counts[c]===0) continue
+      for(let j=0;j<4;j++) centroids[c][j]=sums[c][j]/counts[c]
+    }
+  }
+  return {labels,centroids}
+}
+
+/* Export CSV for results */
+function exportResultsToCSV(resultsArr){
+  // resultsArr: array of computeIKMT output with meta
+  const headers = [
+    'name','year','lat','lon',
+    'H_mean','S_mean','A_mean','M_mean','A_vuln',
+    'H_norm','S_norm','A_norm','M_norm','IKMT'
+  ]
+  // plus indicator values
+  const indlist = [...IND.H,...IND.S,...IND.A,...IND.M]
+  const lines = [ headers.concat(indlist).join(',') ]
+  for(const r of resultsArr){
+    const row=[]
+    row.push(r.meta.name || '')
+    row.push(r.meta.year || '')
+    row.push(r.meta.lat || '')
+    row.push(r.meta.lon || '')
+    row.push((r.domainMean.H||0).toFixed(3))
+    row.push((r.domainMean.S||0).toFixed(3))
+    row.push((r.domainMean.A||0).toFixed(3))
+    row.push((r.domainMean.M||0).toFixed(3))
+    row.push((r.A_vuln||0).toFixed(3))
+    row.push((r.domainNorm.H||0).toFixed(3))
+    row.push((r.domainNorm.S||0).toFixed(3))
+    row.push((r.domainNorm.A||0).toFixed(3))
+    row.push((r.domainNorm.M||0).toFixed(3))
+    row.push((r.ikmt||0).toFixed(3))
+    for(const id of indlist){
+      row.push((r.indicatorContrib[id] ? r.indicatorContrib[id].val : '') )
+    }
+    lines.push(row.join(','))
+  }
+  return lines.join('\\n')
+}
+
+/* Render summary */
+function renderSummary(out){
+  const el = q('summary')
+  el.innerHTML = ''
+  const h = document.createElement('div')
+  h.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>'+ (out.meta.name || 'Unnamed') +'</strong><div class="muted-sm">Year: '+(out.meta.year||'')+'</div></div><div style="text-align:right"><div class="k">IKMT: '+out.ikmt.toFixed(2)+'</div><div class="muted-sm">0(low) — 100(high vulnerability)</div></div></div>'
+  el.appendChild(h)
+  // domain cards
+  const dcard = document.createElement('div')
+  dcard.style.display='flex'; dcard.style.gap='8px'; dcard.style.marginTop='10px'; dcard.style.flexWrap='wrap'
+  for(const d of ['H','S','A','M']){
+    const box = document.createElement('div')
+    box.style.padding='8px'; box.style.background='#fbfeff'; box.style.borderRadius='8px'; box.style.flex='1 1 120px'
+    box.innerHTML = '<div class="small-muted">Domain '+d+'</div><div class="k">'+ (out.domainNorm[d]||0).toFixed(1) +'<span class="muted-sm"> /100</span></div><div class="muted-sm">Mean raw: '+ (out.domainMean[d]||0).toFixed(2) + ' (0-4)</div>'
+    dcard.appendChild(box)
+  }
+  el.appendChild(dcard)
+  // add short RCA list
+  const topIndicator = Object.entries(out.indicatorContrib).map(([k,v])=>({id:k,share:v.share,val:v.val,domain:v.domain})).sort((a,b)=>b.share-a.share)[0]
+  const rcadiv = document.createElement('div'); rcadiv.style.marginTop='8px'; rcadiv.className='muted-sm'
+  rcadiv.innerHTML = '<strong>Top contributor:</strong> ' + (topIndicator ? topIndicator.id + ' (domain '+topIndicator.domain+', score '+topIndicator.val+')' : '—')
+  el.appendChild(rcadiv)
+}
+
+/* CSV download helper */
+function downloadFile(filename, text){
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(new Blob([text],{type:'text/csv'}))
+  a.download = filename
+  a.style.display='none'
+  document.body.appendChild(a)
+  a.click()
+  setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove()},2000)
+}
+
+/* Events */
+q('reset-btn').addEventListener('click', ()=>{
+  for(const d of Object.keys(IND)){
+    for(const id of IND[d]) q(id).value='0'
+  }
+  q('area-name').value=''; q('area-year').value=new Date().getFullYear()
+})
+
+q('compute-btn').addEventListener('click', ()=>{
+  const weights = {H:parseFloat(q('wH').value)||1,S:parseFloat(q('wS').value)||1,A:parseFloat(q('wA').value)||1,M:parseFloat(q('wM').value)||1}
+  const rec = readFormValues()
+  const out = computeIKMT(rec,weights)
+  renderSummary(out)
+  drawRcaChart(out,'rca-chart',10)
+  const sens = computeSensitivity(rec,weights)
+  drawSensChart(sens,'sens-chart',14)
+  drawGapChart(out,'gap-chart')
+  q('batch-results').style.display='none'
+  latestSingle = {record:rec,result:out}
+})
+
+let latestBatchResults = null
+let latestSingle = null
+
+q('download-sample').addEventListener('click', ()=>{
+  // create sample csv
+  const headers = ['name','year','lat','lon',...IND.H,...IND.S,...IND.A,...IND.M]
+  const sample = [headers.join(','),
+    ['Kabupaten-A','2025','-7.8','110.4',2,3,1,0,2,1,2,1,1,1,2,3,2,2,1,1,2,2,3,1,0,1,2,1,3].join(',')
+  ].join('\\n')
+  downloadFile('ikmt_sample.csv', sample)
+})
+
+q('process-csv').addEventListener('click', ()=>{
+  const f = q('csv-file').files[0]
+  if(!f){ alert('Pilih file CSV terlebih dahulu.'); return }
+  const reader = new FileReader()
+  reader.onload = function(e){
+    try{
+      const text = e.target.result
+      const recordsRaw = processBatchCSV(text)
+      const weights = {H:parseFloat(q('wH').value)||1,S:parseFloat(q('wS').value)||1,A:parseFloat(q('wA').value)||1,M:parseFloat(q('wM').value)||1}
+      const results = recordsRaw.map(rec=>computeIKMT(rec,weights))
+      latestBatchResults = results
+      // display quick table top 10 by IKMT
+      q('batch-results').style.display='block'
+      const quick = q('batch-quick'); quick.innerHTML=''
+      const table = document.createElement('table')
+      const thead = document.createElement('thead'); thead.innerHTML = '<tr><th>Rank</th><th>Name</th><th>Year</th><th>IKMT</th><th>H</th><th>S</th><th>A_vuln</th><th>M</th></tr>'
+      table.appendChild(thead)
+      const tbody = document.createElement('tbody')
+      results.sort((a,b)=>b.ikmt - a.ikmt)
+      for(let i=0;i<Math.min(50,results.length);i++){
+        const r = results[i]
+        const tr = document.createElement('tr')
+        tr.innerHTML = '<td>'+(i+1)+'</td><td>'+ (r.meta.name||'') +'</td><td>'+(r.meta.year||'')+'</td><td>'+ r.ikmt.toFixed(2) +'</td><td>'+ (r.domainNorm.H||0).toFixed(1) +'</td><td>'+ (r.domainNorm.S||0).toFixed(1) +'</td><td>'+ (r.domainNorm.A||0).toFixed(1) +'</td><td>'+ (r.domainNorm.M||0).toFixed(1) +'</td>'
+        tbody.appendChild(tr)
+      }
+      table.appendChild(tbody)
+      quick.appendChild(table)
+      // clusters
+      const k = parseInt(q('kclusters').value)||3
+      const km = kmeans(results,k,40)
+      const clusterList = q('clusters-list'); clusterList.innerHTML=''
+      for(let c=0;c<k;c++){
+        const items = results.filter((r,idx)=>km.labels[idx]===c)
+        const div = document.createElement('div')
+        div.innerHTML = '<strong>Cluster '+(c+1)+'</strong>: '+ items.length + ' areas. Centroid: '+ (km.centroids[c].map(v=>v.toFixed(1)).join(', '))
+        clusterList.appendChild(div)
+      }
+      // map scatter if lat/lon provided
+      const hasGeo = results.some(r=>r.meta.lat && r.meta.lon)
+      if(hasGeo){
+        drawMapScatter(results)
+      } else {
+        q('map-canvas').innerHTML = '<div class="muted-sm">No lat/lon data found in CSV.</div>'
+      }
+      // show export area active
+      q('export-csv').disabled = false
+      latestBatchResults = results.map((r,i)=>{ r.cluster = km.labels[i]; return r })
+    }catch(err){
+      alert('Gagal proses CSV: '+err.message)
+    }
+  }
+  reader.readAsText(f)
+})
+
+/* draw simple scatter map scaled */
+function drawMapScatter(results){
+  const container = q('map-canvas'); container.innerHTML=''
+  const svgNS='http://www.w3.org/2000/svg'
+  const svg=document.createElementNS(svgNS,'svg'); svg.setAttribute('width','100%'); svg.setAttribute('height','260'); svg.setAttribute('viewBox','0 0 800 260')
+  container.appendChild(svg)
+  const coords = results.filter(r=>r.meta.lat && r.meta.lon)
+  const lats = coords.map(r=>parseFloat(r.meta.lat))
+  const lons = coords.map(r=>parseFloat(r.meta.lon))
+  const minLat = Math.min(...lats), maxLat = Math.max(...lats)
+  const minLon = Math.min(...lons), maxLon = Math.max(...lons)
+  const pad = 40
+  coords.forEach(r=>{
+    const lat = parseFloat(r.meta.lat), lon = parseFloat(r.meta.lon)
+    const x = pad + ((lon - minLon) / (maxLon - minLon || 1)) * (720 - pad*2)
+    const y = 20 + ((maxLat - lat) / (maxLat - minLat || 1)) * (200)
+    const c = Math.round((r.ikmt/100)*255)
+    const circle = document.createElementNS(svgNS,'circle')
+    circle.setAttribute('cx',x); circle.setAttribute('cy',y); circle.setAttribute('r',6)
+    // color by IKMT: green low -> red high
+    const color = `rgb(${Math.min(255,Math.round((r.ikmt/100)*255))},${Math.max(0,255-Math.round((r.ikmt/100)*255))},60)`
+    circle.setAttribute('fill',color); circle.setAttribute('stroke','#fff'); circle.setAttribute('stroke-width','1')
+    svg.appendChild(circle)
+    const txt = document.createElementNS(svgNS,'text'); txt.setAttribute('x',x+8); txt.setAttribute('y',y+4); txt.setAttribute('font-size','10'); txt.textContent = r.meta.name + ' ('+r.ikmt.toFixed(1)+')'
+    svg.appendChild(txt)
+  })
+}
+
+/* Export handlers */
+q('export-csv').addEventListener('click', ()=>{
+  const arr = latestBatchResults ? latestBatchResults : (latestSingle ? [latestSingle.result] : [])
+  if(arr.length===0){ alert('Tidak ada hasil untuk diexport.'); return }
+  const csv = exportResultsToCSV(arr)
+  downloadFile('ikmt_results.csv', csv)
+})
+
+q('export-json').addEventListener('click', ()=>{
+  const obj = latestBatchResults ? latestBatchResults : (latestSingle ? [latestSingle.result] : [])
+  navigator.clipboard.writeText(JSON.stringify(obj,null,2)).then(()=> alert('JSON copied to clipboard'))
+})
+
+/* Scenario run */
+q('run-scenario').addEventListener('click', ()=>{
+  if(!latestSingle){ alert('Jalankan compute single area dulu.'); return }
+  const pct = parseFloat(q('scenario-pct').value)||0
+  const weights = {H:parseFloat(q('wH').value)||1,S:parseFloat(q('wS').value)||1,A:parseFloat(q('wA').value)||1,M:parseFloat(q('wM').value)||1}
+  const res = runScenario(latestSingle.record, weights, pct)
+  const el = q('scenario-result')
+  el.innerHTML = '<div class="muted-sm">Before IKMT: <strong>'+res.before.ikmt.toFixed(2)+'</strong>. After A +'+pct+'% → IKMT: <strong>'+res.after.ikmt.toFixed(2)+'</strong>. Δ = '+ (res.delta).toFixed(2) +'</div>'
+})
+
+/* initial reset */
+q('reset-btn').click()
+
+// End of script
+</script>
+
+</body>
+</html>
