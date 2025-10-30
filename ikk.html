@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalkulator Indeks Kerentanan Komunitas (IKK)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #f9fafb; }
+    #map { height: 400px; border-radius: 1rem; }
+    .card { background: white; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 1rem; }
+    label { font-weight: 600; }
+  </style>
+</head>
+<body class="p-6">
+  <h1 class="text-3xl font-bold mb-6 text-blue-800">Kalkulator Indeks Kerentanan Komunitas (IKK)</h1>
+  <p class="text-gray-700 mb-6">Isi data pada formulir di bawah untuk menghitung Indeks Kerentanan Komunitas (IKK) berdasarkan pendekatan <strong>Sendai Framework</strong> dan <strong>Health-EDRM</strong>. Formulir ini terdiri atas data <strong>individu/komunitas</strong> dan <strong>data kewilayahan</strong>.</p>
+
+  <div id="input-section" class="card mb-6">
+    <h2 class="text-xl font-semibold mb-2 text-blue-700">Input Data Wilayah</h2>
+    <form id="ikkForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label>Nama Wilayah</label>
+        <input type="text" id="namaWilayah" placeholder="Contoh: Kabupaten Bandung" class="border p-2 rounded w-full" required />
+      </div>
+
+      <div>
+        <label>Level Data</label>
+        <select id="levelData" class="border p-2 rounded w-full" required>
+          <option value="Individu">Individu / Komunitas</option>
+          <option value="Kabupaten">Kabupaten / Kota</option>
+          <option value="Provinsi">Provinsi</option>
+        </select>
+      </div>
+
+      <h3 class="col-span-2 text-lg mt-4 font-semibold text-blue-700">➡️ Data Individu / Komunitas</h3>
+
+      <div>
+        <label>Status kesehatan kronis (ODHIV / TB)</label>
+        <input type="number" id="statusKesehatan" placeholder="Persentase individu dengan HIV/TB" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Stigma sosial terhadap kelompok rentan</label>
+        <input type="number" id="stigma" placeholder="Skor 1–5 (1 = rendah, 5 = tinggi)" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Pendidikan rendah / literasi kesehatan rendah</label>
+        <input type="number" id="pendidikan" placeholder="Persentase masyarakat dengan pendidikan rendah" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Akses ke pelatihan kesiapsiagaan</label>
+        <input type="number" id="pelatihan" placeholder="Persentase individu yang pernah mengikuti pelatihan" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Dukungan jaringan komunitas</label>
+        <input type="number" id="dukunganKomunitas" placeholder="Skor 1–5 (semakin tinggi semakin baik)" class="border p-2 rounded w-full" />
+      </div>
+
+      <h3 class="col-span-2 text-lg mt-4 font-semibold text-blue-700">➡️ Data Kewilayahan</h3>
+
+      <div>
+        <label>Frekuensi kejadian bencana wilayah</label>
+        <input type="number" id="frekuensiBencana" placeholder="Jumlah kejadian per tahun" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Proporsi populasi rentan di zona bahaya</label>
+        <input type="number" id="popRentanZona" placeholder="Persentase populasi rentan (%)" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Kemiskinan atau ketimpangan sosial-ekonomi</label>
+        <input type="number" id="kemiskinan" placeholder="Persentase penduduk miskin atau nilai Gini" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Jumlah fasilitas kesehatan</label>
+        <input type="number" id="faskes" placeholder="Rasio fasilitas kesehatan / 10.000 penduduk" class="border p-2 rounded w-full" />
+      </div>
+
+      <div>
+        <label>Kebijakan DRR lokal inklusif kelompok rentan</label>
+        <input type="number" id="kebijakanDRR" placeholder="Skor 1–5 (1 = tidak inklusif, 5 = sangat inklusif)" class="border p-2 rounded w-full" />
+      </div>
+
+      <button type="submit" class="col-span-2 bg-blue-600 text-white rounded p-3 mt-4 hover:bg-blue-700 transition">+ Tambahkan Wilayah</button>
+    </form>
+  </div>
+
+  <div id="result-section" class="card mb-6 hidden">
+    <h2 class="text-xl font-semibold mb-4 text-blue-700">Hasil Perhitungan IKK</h2>
+    <p class="text-gray-600 mb-4">Tabel berikut menunjukkan nilai terstandarisasi untuk masing-masing dimensi (<strong>H</strong>, <strong>E</strong>, <strong>V</strong>, <strong>C</strong>, <strong>R</strong>) serta skor total <strong>IKK</strong>.</p>
+    <table id="resultTable" class="w-full border-collapse border text-sm">
+      <thead>
+        <tr class="bg-blue-100 text-left">
+          <th class="border p-2">Wilayah</th>
+          <th class="border p-2">H</th>
+          <th class="border p-2">E</th>
+          <th class="border p-2">V</th>
+          <th class="border p-2">C</th>
+          <th class="border p-2">R</th>
+          <th class="border p-2 font-bold">IKK Total</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="charts" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 hidden">
+    <canvas id="radarChart"></canvas>
+    <canvas id="barChart"></canvas>
+  </div>
+
+  <div id="pca-section" class="card mb-6 hidden">
+    <h2 class="text-xl font-semibold mb-4 text-blue-700">Analisis Komponen Utama (PCA)</h2>
+    <p class="text-gray-600 mb-4">Tabel berikut menunjukkan nilai eigenvalue, serta persentase kontribusi setiap komponen terhadap total varians data.</p>
+    <table id="pcaTable" class="w-full border-collapse border text-sm"></table>
+  </div>
+
+  <div id="map-section" class="card hidden">
+    <h2 class="text-xl font-semibold mb-4 text-blue-700">Peta Persebaran IKK</h2>
+    <p class="text-gray-600 mb-2">Warna penanda menunjukkan tingkat kerentanan: hijau (rendah), oranye (sedang), merah (tinggi).</p>
+    <div id="map"></div>
+  </div>
+
+  <script>
+    const dataWilayah = [];
+    const map = L.map('map').setView([-2.5, 118], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 10,
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    const wilayahCoords = {
+      "Kabupaten Bandung": [-6.9, 107.6],
+      "DKI Jakarta": [-6.2, 106.8],
+      "Bali": [-8.3, 115.1],
+      "Jawa Barat": [-7.1, 107.7]
+    };
+
+    function normalisasiData(arr) {
+      const min = Math.min(...arr);
+      const max = Math.max(...arr);
+      return arr.map(v => (v - min) / (max - min || 1));
+    }
+
+    function hitungPCA(matrix) {
+      const cov = math.multiply(1/(matrix.length-1), math.multiply(math.transpose(matrix), matrix));
+      const eig = math.eigs(cov);
+      return eig;
+    }
+
+    document.getElementById('ikkForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const wilayah = {
+        nama: document.getElementById('namaWilayah').value,
+        H: parseFloat(document.getElementById('frekuensiBencana').value || 0),
+        E: parseFloat(document.getElementById('popRentanZona').value || 0),
+        V: (parseFloat(document.getElementById('kemiskinan').value || 0) + parseFloat(document.getElementById('statusKesehatan').value || 0) + parseFloat(document.getElementById('stigma').value || 0) + parseFloat(document.getElementById('pendidikan').value || 0)) / 4,
+        C: (parseFloat(document.getElementById('faskes').value || 0) + parseFloat(document.getElementById('pelatihan').value || 0)) / 2,
+        R: (parseFloat(document.getElementById('kebijakanDRR').value || 0) + parseFloat(document.getElementById('dukunganKomunitas').value || 0)) / 2
+      };
+      dataWilayah.push(wilayah);
+      tampilkanHasil();
+    });
+
+    function tampilkanHasil() {
+      document.getElementById('result-section').classList.remove('hidden');
+      document.getElementById('charts').classList.remove('hidden');
+      document.getElementById('map-section').classList.remove('hidden');
+      document.getElementById('pca-section').classList.remove('hidden');
+
+      const tableBody = document.querySelector('#resultTable tbody');
+      tableBody.innerHTML = '';
+
+      const arrH = normalisasiData(dataWilayah.map(w => w.H));
+      const arrE = normalisasiData(dataWilayah.map(w => w.E));
+      const arrV = normalisasiData(dataWilayah.map(w => w.V));
+      const arrC = normalisasiData(dataWilayah.map(w => w.C));
+      const arrR = normalisasiData(dataWilayah.map(w => w.R));
+
+      const matrix = math.transpose([arrH, arrE, arrV, arrC, arrR]);
+      const pca = hitungPCA(matrix);
+
+      let pcaHTML = `<thead><tr><th class='border p-2'>Komponen</th><th class='border p-2'>Eigenvalue</th><th class='border p-2'>Explained Variance (%)</th></tr></thead><tbody>`;
+      const totalEig = pca.values.reduce((a,b) => a+b, 0);
+      pca.values.forEach((v,i)=>{
+        pcaHTML += `<tr><td class='border p-2'>PC${i+1}</td><td class='border p-2'>${v.toFixed(4)}</td><td class='border p-2'>${((v/totalEig)*100).toFixed(2)}</td></tr>`;
+      });
+      pcaHTML += '</tbody>';
+      document.getElementById('pcaTable').innerHTML = pcaHTML;
+
+      tableBody.innerHTML = dataWilayah.map((w,i)=>{
+        const IKK = (arrH[i] + arrE[i] + arrV[i] + (1-arrC[i]) + (1-arrR[i]))/5;
+        const marker = L.circleMarker(wilayahCoords[w.nama]||[-2.5,118], {radius:8, color: IKK>0.6?'red':IKK>0.3?'orange':'green'}).addTo(map);
+        marker.bindPopup(`<b>${w.nama}</b><br>IKK: ${IKK.toFixed(3)}`);
+        return `<tr><td class='border p-2'>${w.nama}</td><td class='border p-2'>${arrH[i].toFixed(3)}</td><td class='border p-2'>${arrE[i].toFixed(3)}</td><td class='border p-2'>${arrV[i].toFixed(3)}</td><td class='border p-2'>${arrC[i].toFixed(3)}</td><td class='border p-2'>${arrR[i].toFixed(3)}</td><td class='border p-2 font-bold'>${IKK.toFixed(3)}</td></tr>`;
+      }).join('');
+
+      const labels = dataWilayah.map(w => w.nama);
+      const ikkScores = dataWilayah.map((w,i)=>(arrH[i]+arrE[i]+arrV[i]+(1-arrC[i])+(1-arrR[i]))/5);
+
+      new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+          labels: ['H','E','V','C','R'],
+          datasets: dataWilayah.map((w,i)=>({label:w.nama, data:[arrH[i],arrE[i],arrV[i],arrC[i],arrR[i]]}))
+        }
+      });
+
+      new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{label:'IKK Total', backgroundColor:'#2563EB', data:ikkScores}]
+        }
+      });
+    }
+  </script>
+</body>
+</html>
