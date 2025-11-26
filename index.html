@@ -9,25 +9,21 @@
   <style>
     :root {
       --primary: #0d9488;
-      --accent: #14b8a6;
       --secondary: #f0fdfa;
+      --accent: #14b8a6;
       --danger: #dc2626;
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: 'Inter', sans-serif;
     }
-
     body {
       background-color: #f8fafc;
       color: #1f2937;
-      text-align: center;
       line-height: 1.6;
     }
-
     header {
       background: var(--primary);
       color: white;
@@ -36,12 +32,10 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       position: relative;
     }
-
     header h1 {
       font-size: 1.8rem;
       margin-bottom: 0.2rem;
     }
-
     .language-toggle {
       position: absolute;
       top: 1rem;
@@ -58,109 +52,142 @@
       gap: 0.4rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-
     .language-toggle:hover {
       background: var(--secondary);
     }
-
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 70vh;
-      padding: 2rem 1rem;
-      background: linear-gradient(135deg, #f0fdfa, #e0f2f1);
-    }
-
-    .countdown-container {
-      background: white;
-      padding: 2.5rem 2rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      max-width: 600px;
-      width: 100%;
-      animation: fadeIn 1s ease;
-    }
-
-    .countdown-container h2 {
-      color: var(--primary);
-      font-size: 1.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .countdown-container p {
-      color: #475569;
-      margin-bottom: 2rem;
-    }
-
-    .countdown {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 1rem;
+      padding: 2rem;
     }
-
-    .countdown-item {
-      background: var(--secondary);
-      border: 2px solid var(--primary);
-      color: var(--primary);
-      border-radius: 1rem;
+    .menu-card {
+      background: white;
       padding: 1rem;
-      width: 100px;
+      border-radius: 1rem;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: var(--primary);
     }
-
-    .countdown-item:hover {
+    .menu-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      color: var(--accent);
     }
-
-    .countdown-item span {
-      display: block;
+    .menu-card i {
       font-size: 2rem;
-      font-weight: 700;
+      margin-bottom: 0.5rem;
     }
-
-    .countdown-item label {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      color: #64748b;
+    main {
+      padding: 1rem 2rem 3rem;
     }
-
-    .highlight {
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 2rem;
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card h2.justify-between {
+      justify-content: space-between;
+    }
+    .responsive-iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .button-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .button-link:hover {
+      background: var(--accent);
+    }
+    .fullscreen-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.3rem;
+    }
+    .fullscreen-btn:hover {
+      color: var(--accent);
+    }
+    .fullscreen-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(15, 23, 42, 0.95);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .fullscreen-overlay.active {
+      display: flex;
+    }
+    .fullscreen-overlay iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 0.75rem;
+    }
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: white;
+      border: none;
+      padding: 0.5rem 0.6rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
       color: var(--danger);
-      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .close-btn:hover {
+      background: #fee2e2;
     }
-
-    footer {
-      text-align:center; 
-      padding: 1rem; 
-      font-size: 0.75rem; 
-      color: #64748b;
-      background: #f8fafc;
-    }
-
-    @media (max-width: 480px) {
-      .countdown-item {
-        width: 80px;
-        padding: 0.8rem;
+    @media (max-width: 768px) {
+      .menu-grid {
+        padding: 1rem;
       }
-      .countdown-item span {
-        font-size: 1.5rem;
+      main {
+        padding: 1rem;
+      }
+      .language-toggle {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
       }
     }
   </style>
 </head>
 <body>
-
-  <!-- HEADER Tetap -->
   <header>
     <button class="language-toggle" onclick="toggleLanguage()">
       <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
@@ -169,78 +196,77 @@
     <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
   </header>
 
-  <!-- MAIN: Countdown -->
-  <main>
-    <div class="countdown-container">
-      <h2 id="countdown-title">Peluncuran <span class="highlight">PPPR Platform</span></h2>
-      <p id="countdown-desc">Bersiaplah menyambut peluncuran resmi pada <b>Hari AIDS Sedunia – 1 Desember 2025</b></p>
+  <div class="menu-grid">
+    <a class="menu-card" href="penilaian.html"><i class="fas fa-clipboard-check"></i><div id="menu-penilaian">Penilaian Mandiri</div></a>
+    <a class="menu-card" href="pustaka.html"><i class="fas fa-book"></i><div id="menu-pustaka">Pustaka Sumber Daya</div></a>
+    <a class="menu-card" href="rencana.html"><i class="fas fa-tasks"></i><div id="menu-rencana">Rencana & Aksi</div></a>
+    <a class="menu-card" href="komunikasi.html"><i class="fas fa-comments"></i><div id="menu-komunikasi">Komunikasi</div></a>
+    <a class="menu-card" href="pelatihan.html"><i class="fas fa-graduation-cap"></i><div id="menu-pelatihan">Pelatihan</div></a>
+  </div>
 
-      <div class="countdown" id="countdown">
-        <div class="countdown-item">
-          <span id="days">0</span>
-          <label>Hari</label>
-        </div>
-        <div class="countdown-item">
-          <span id="hours">0</span>
-          <label>Jam</label>
-        </div>
-        <div class="countdown-item">
-          <span id="minutes">0</span>
-          <label>Menit</label>
-        </div>
-        <div class="countdown-item">
-          <span id="seconds">0</span>
-          <label>Detik</label>
-        </div>
-      </div>
-    </div>
+  <main>
+    <!-- Peta Risiko Penyakit -->
+    <section class="card">
+      <h2 class="justify-between">
+        <span><i class="fas fa-database"></i> <span id="data-title">Pemetaan Risiko Penyakit</span></span>
+        <button class="fullscreen-btn" onclick="openFullscreen()" title="Buka layar penuh"><i class="fas fa-expand"></i></button>
+      </h2>
+      <iframe class="responsive-iframe" src="https://petarisikopie.id/"></iframe>
+    </section>
+
+    <!-- Peta Risiko Bencana Alam -->
+    <section class="card">
+      <h2>
+        <i class="fas fa-map-marked-alt"></i>
+        <span id="disaster-title">Pemetaan Risiko Bencana Alam</span>
+      </h2>
+      <p id="disaster-description">Halaman ini menampilkan peta risiko bencana alam dari situs resmi BNPB.</p>
+      <a class="button-link" id="disaster-link-text" href="https://inarisk.bnpb.go.id" target="_blank" rel="noopener">Buka Peta Risiko di Tab Baru</a>
+      <p id="disaster-description">Halaman ini menampilkan peta risiko cuaca ekstrim dari satelit dan CCTV Live.</p>
+      <a class="button-link" id="disaster-link-text" href="https://www.windy.com/id/-Hujan-guntur-rain?rain,-5.878,100.206,6" target="_blank" rel="noopener">Buka Peta Cuaca Ekstrim</a>
+    </section>
   </main>
 
-  <!-- FOOTER Tetap -->
-  <footer>
-    Developed by Jaringan Indonesia Positif.
-  </footer>
+  <!-- Fullscreen Overlay -->
+  <div id="fullscreen-overlay" class="fullscreen-overlay">
+    <button class="close-btn" onclick="closeFullscreen()"><i class="fas fa-times"></i></button>
+    <iframe src="https://petarisikopie.id/" allowfullscreen></iframe>
+  </div>
 
   <script>
-    // Hitung mundur menuju 1 Desember 2025, pukul 00:00
-    const launchDate = new Date("December 1, 2025 00:00:00").getTime();
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = launchDate - now;
-
-      if (distance < 0) {
-        document.getElementById("countdown").innerHTML = "<p style='color:var(--primary);font-weight:600;'>🎉 Platform PPPR Telah Diluncurkan! 🎉</p>";
-        clearInterval(timer);
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
-    }, 1000);
-
-    // Bahasa
     let currentLang = 'id';
+
     const translations = {
       en: {
         title: "Pandemic Prevention, Preparedness and Response (PPPR)",
         subtitle: "Toolkit for Civil Society Organizations and Communities",
-        countdownTitle: "Launch of the <span class='highlight'>PPPR Platform</span>",
-        countdownDesc: "Get ready for the official launch on <b>World AIDS Day – December 1, 2025</b>",
+        menu: {
+          penilaian: "Self-Assessment",
+          pustaka: "Resource Library",
+          rencana: "Action & Plan",
+          komunikasi: "Communication",
+          pelatihan: "Training"
+        },
+        data: "Disease Risk Mapping",
+        disaster: "Disaster Risk Mapping",
+        disasterDesc: "This page displays disaster risk maps from the official BNPB website.",
+        disasterLink: "Open Disaster Risk Map in New Tab",
         langLabel: "EN"
       },
       id: {
         title: "Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)",
         subtitle: "Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas",
-        countdownTitle: "Peluncuran <span class='highlight'>PPPR Platform</span>",
-        countdownDesc: "Bersiaplah menyambut peluncuran resmi pada <b>Hari AIDS Sedunia – 1 Desember 2025</b>",
+        menu: {
+          penilaian: "Penilaian Mandiri",
+          pustaka: "Pustaka Sumber Daya",
+          rencana: "Rencana & Aksi",
+          komunikasi: "Komunikasi",
+          pelatihan: "Pelatihan"
+        },
+        data: "Pemetaan Risiko Penyakit",
+        disaster: "Pemetaan Risiko Bencana Alam",
+        disasterDesc: "Halaman ini menampilkan peta risiko bencana alam dari situs resmi BNPB.",
+        disasterLink: "Buka Peta Risiko di Tab Baru",
         langLabel: "ID"
       }
     };
@@ -250,10 +276,29 @@
       const t = translations[currentLang];
       document.getElementById('title').innerHTML = '<i class="fas fa-virus-covid"></i> ' + t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('countdown-title').innerHTML = t.countdownTitle;
-      document.getElementById('countdown-desc').innerHTML = t.countdownDesc;
+      document.getElementById('menu-penilaian').textContent = t.menu.penilaian;
+      document.getElementById('menu-pustaka').textContent = t.menu.pustaka;
+      document.getElementById('menu-rencana').textContent = t.menu.rencana;
+      document.getElementById('menu-komunikasi').textContent = t.menu.komunikasi;
+      document.getElementById('menu-pelatihan').textContent = t.menu.pelatihan;
+      document.getElementById('data-title').textContent = t.data;
+      document.getElementById('disaster-title').textContent = t.disaster;
+      document.getElementById('disaster-description').textContent = t.disasterDesc;
+      document.getElementById('disaster-link-text').textContent = t.disasterLink;
       document.getElementById('lang-label').textContent = t.langLabel;
     }
+
+    function openFullscreen() {
+      document.getElementById("fullscreen-overlay").classList.add("active");
+    }
+
+    function closeFullscreen() {
+      document.getElementById("fullscreen-overlay").classList.remove("active");
+    }
   </script>
+
+  <footer style="text-align:center; padding: 1rem; font-size: 0.7rem; color: #64748b;">
+    Developed by Jaringan Indonesia Positif.
+  </footer>
 </body>
 </html>
