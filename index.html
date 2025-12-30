@@ -8,11 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #0d9488;
-      --secondary: #f0fdfa;
-      --accent: #14b8a6;
-      --danger: #dc2626;
-    }
+  --primary: #2563eb;   /* Biru utama (header, tombol utama) */
+  --secondary: #eff6ff; /* Biru muda (hover, latar lembut) */
+  --accent: #3b82f6;    /* Biru aksen (hover, icon) */
+  --danger: #dc2626;    /* Merah (tetap untuk tombol tutup / bahaya) */
+}
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -36,6 +37,26 @@
       font-size: 1.8rem;
       margin-bottom: 0.2rem;
     }
+    .header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-logo {
+  height: 48px;
+  max-width: 140px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .header-logo {
+    height: 40px;
+  }
+}
+
     .language-toggle {
       position: absolute;
       top: 1rem;
@@ -189,12 +210,26 @@
 </head>
 <body>
   <header>
-    <button class="language-toggle" onclick="toggleLanguage()">
-      <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
-    </button>
-    <h1 id="title"><i class="fas fa-virus-covid"></i> Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)</h1>
-    <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
-  </header>
+  <button class="language-toggle" onclick="toggleLanguage()">
+    <i class="fas fa-globe"></i> <span id="lang-label">ID</span> / EN
+  </button>
+
+  <div class="header-content">
+    <img 
+      src="https://res.cloudinary.com/djexglfns/image/upload/v1760247585/logo_mitra-removebg-preview_adxkpk.png" 
+      alt="Logo Mitra"
+      class="header-logo"
+    />
+
+    <h1 id="title">
+      <i class="fas fa-virus-covid"></i>
+      Pencegahan, Kesiapsiagaan dan Respon terhadap Pandemi (PPPR)
+    </h1>
+  </div>
+
+  <p id="subtitle">Toolkit untuk Organisasi Masyarakat Sipil dan Komunitas</p>
+</header>
+
 
   <div class="menu-grid">
     <a class="menu-card" href="penilaian.html"><i class="fas fa-clipboard-check"></i><div id="menu-penilaian">Penilaian Mandiri</div></a>
